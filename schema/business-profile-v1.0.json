@@ -1,0 +1,232 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vizai.io/schema/business-profile/v1.0",
+  "title": "VizAI Business Profile",
+  "description": "Structured business information designed for AI system consumption",
+  "type": "object",
+  "required": ["schemaVersion", "businessIdentifier", "description", "verification", "metadata"],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "description": "Version of the VizAI Business Profile schema",
+      "const": "1.0"
+    },
+    "businessIdentifier": {
+      "type": "object",
+      "description": "Core identifying information for the business",
+      "required": ["legalName", "commonName", "primaryDomain"],
+      "properties": {
+        "legalName": {
+          "type": "string",
+          "description": "Legal registered name of the business"
+        },
+        "commonName": {
+          "type": "string",
+          "description": "Common name or trading name (DBA)"
+        },
+        "aliases": {
+          "type": "array",
+          "description": "Other names the business is known by",
+          "items": {"type": "string"}
+        },
+        "primaryDomain": {
+          "type": "string",
+          "format": "hostname",
+          "description": "Primary business website domain"
+        },
+        "identifiers": {
+          "type": "object",
+          "description": "External identifiers for the business",
+          "properties": {
+            "linkedin": {"type": "string"},
+            "crunchbase": {"type": "string"},
+            "twitter": {"type": "string"},
+            "github": {"type": "string"}
+          }
+        }
+      }
+    },
+    "description": {
+      "type": "object",
+      "description": "Business descriptions at various levels of detail",
+      "required": ["elevator", "detailed"],
+      "properties": {
+        "elevator": {
+          "type": "string",
+          "description": "One-sentence description (max 280 characters)",
+          "maxLength": 280
+        },
+        "detailed": {
+          "type": "string",
+          "description": "2-3 paragraph detailed description"
+        },
+        "founding": {
+          "type": "string",
+          "description": "Founding story and context"
+        },
+        "yearFounded": {
+          "type": "integer",
+          "description": "Year the business was founded"
+        }
+      }
+    },
+    "offerings": {
+      "type": "object",
+      "description": "Products and services offered",
+      "properties": {
+        "primary": {
+          "type": "array",
+          "description": "Primary products or services",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "description": {"type": "string"}
+            }
+          }
+        },
+        "targetCustomers": {
+          "type": "string",
+          "description": "Description of ideal customer profile"
+        }
+      }
+    },
+    "location": {
+      "type": "object",
+      "description": "Business location information",
+      "required": ["headquarters"],
+      "properties": {
+        "headquarters": {
+          "type": "object",
+          "required": ["city", "country"],
+          "properties": {
+            "city": {"type": "string"},
+            "stateProvince": {"type": "string"},
+            "country": {"type": "string"}
+          }
+        },
+        "additionalLocations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "city": {"type": "string"},
+              "stateProvince": {"type": "string"},
+              "country": {"type": "string"},
+              "type": {"type": "string", "enum": ["office", "remote", "retail", "warehouse"]}
+            }
+          }
+        }
+      }
+    },
+    "contact": {
+      "type": "object",
+      "description": "Contact information",
+      "properties": {
+        "email": {"type": "string", "format": "email"},
+        "phone": {"type": "string"}
+      }
+    },
+    "leadership": {
+      "type": "object",
+      "description": "Key leadership information",
+      "properties": {
+        "ceo": {"type": "string"},
+        "founders": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "keyExecutives": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "title": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "description": "Verification and data quality metadata",
+      "required": ["status", "tier", "lastVerified"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["verified", "community", "pending"],
+          "description": "Verification status of this entry"
+        },
+        "tier": {
+          "type": "string",
+          "enum": ["verified", "community", "enterprise"],
+          "description": "VizAI service tier"
+        },
+        "method": {
+          "type": "string",
+          "enum": ["domain-ownership", "email-verification", "manual-review", "self-reported"],
+          "description": "How this entry was verified"
+        },
+        "lastVerified": {
+          "type": "string",
+          "format": "date",
+          "description": "Date of last verification"
+        },
+        "verificationUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL showing verification proof"
+        },
+        "qualityScore": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Data quality score (0-100)"
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "description": "Source attribution for information",
+      "items": {
+        "type": "object",
+        "required": ["type", "url", "accessed"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["official-website", "press-release", "linkedin", "news-article", "crunchbase", "other"]
+          },
+          "url": {"type": "string", "format": "uri"},
+          "accessed": {"type": "string", "format": "date"},
+          "description": {"type": "string"}
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Registry metadata",
+      "required": ["dateAdded", "lastUpdated"],
+      "properties": {
+        "dateAdded": {
+          "type": "string",
+          "format": "date",
+          "description": "Date added to registry"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date",
+          "description": "Date of last update"
+        },
+        "submittedBy": {
+          "type": "string",
+          "description": "Who submitted this entry"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Internal notes or context"
+        }
+      }
+    }
+  }
+}

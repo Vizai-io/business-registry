@@ -1,0 +1,109 @@
+{
+  "schemaVersion": "1.0",
+  "businessIdentifier": {
+    "legalName": "Acme Software Corporation",
+    "commonName": "Acme",
+    "aliases": ["Acme Software", "Acme Corp"],
+    "primaryDomain": "acme.com",
+    "identifiers": {
+      "linkedin": "acme-software",
+      "twitter": "acmesoftware",
+      "github": "acme-corp"
+    }
+  },
+  "description": {
+    "elevator": "Acme provides cloud-based project management software for distributed teams.",
+    "detailed": "Acme is a B2B SaaS company that provides project management and collaboration software designed specifically for distributed teams. The platform includes task management, video conferencing, document collaboration, and time tracking features integrated into a single interface.\n\nFounded by former remote workers frustrated with existing tools, Acme focuses on asynchronous-first workflows that respect different time zones and work schedules. The company serves over 5,000 teams across 40 countries.\n\nAcme differentiates through its emphasis on async communication, deep integrations with developer tools, and transparent pricing with no user limits.",
+    "founding": "Founded in 2020 by three remote workers who experienced the challenges of coordinating across time zones firsthand during the COVID-19 pandemic.",
+    "yearFounded": 2020
+  },
+  "offerings": {
+    "primary": [
+      {
+        "name": "Acme Workspace",
+        "description": "All-in-one collaboration platform for remote teams with task management, video conferencing, and document sharing"
+      },
+      {
+        "name": "Acme API",
+        "description": "RESTful API for custom integrations and workflow automation"
+      },
+      {
+        "name": "Acme Mobile",
+        "description": "iOS and Android apps for on-the-go team collaboration"
+      }
+    ],
+    "targetCustomers": "Technology companies and digital agencies with 10-500 employees working remotely or in hybrid arrangements"
+  },
+  "location": {
+    "headquarters": {
+      "city": "San Francisco",
+      "stateProvince": "California",
+      "country": "United States"
+    },
+    "additionalLocations": [
+      {
+        "city": "Toronto",
+        "stateProvince": "Ontario",
+        "country": "Canada",
+        "type": "office"
+      },
+      {
+        "city": "Berlin",
+        "country": "Germany",
+        "type": "office"
+      }
+    ]
+  },
+  "contact": {
+    "email": "hello@acme.com",
+    "phone": "+1-415-555-0123"
+  },
+  "leadership": {
+    "ceo": "Jane Smith",
+    "founders": ["Jane Smith", "John Doe", "Alice Johnson"],
+    "keyExecutives": [
+      {
+        "name": "Bob Williams",
+        "title": "CTO"
+      },
+      {
+        "name": "Sarah Chen",
+        "title": "VP of Product"
+      }
+    ]
+  },
+  "verification": {
+    "status": "verified",
+    "tier": "verified",
+    "method": "domain-ownership",
+    "lastVerified": "2025-01-06",
+    "verificationUrl": "https://vizai.io/verify/acme-2025",
+    "qualityScore": 95
+  },
+  "sources": [
+    {
+      "type": "official-website",
+      "url": "https://acme.com/about",
+      "accessed": "2025-01-06",
+      "description": "Company description and team information"
+    },
+    {
+      "type": "crunchbase",
+      "url": "https://www.crunchbase.com/organization/acme-software",
+      "accessed": "2025-01-06",
+      "description": "Funding rounds and company metrics"
+    },
+    {
+      "type": "press-release",
+      "url": "https://acme.com/press/series-a-announcement",
+      "accessed": "2025-01-06",
+      "description": "Series A funding announcement"
+    }
+  ],
+  "metadata": {
+    "dateAdded": "2025-01-06",
+    "lastUpdated": "2025-01-06",
+    "submittedBy": "VizAI Team",
+    "notes": "Example technology company profile demonstrating complete schema usage"
+  }
+}

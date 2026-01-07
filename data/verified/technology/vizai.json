@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "1.0",
+  "businessIdentifier": {
+    "legalName": "VizAI",
+    "commonName": "VizAI",
+    "aliases": ["VizAI.io"],
+    "primaryDomain": "vizai.io",
+    "identifiers": {
+      "github": "vizai-io"
+    }
+  },
+  "description": {
+    "elevator": "VizAI helps businesses control how AI systems describe them through visibility monitoring and governance.",
+    "detailed": "VizAI is an AI visibility and governance service that helps businesses understand and improve how AI systems like ChatGPT, Claude, and Perplexity describe their company. We test how major AI systems currently describe businesses, analyze gaps between AI responses and the actual truth, help publish authoritative structured information AI can reference, and monitor drift over time. Our core value proposition is providing companies with insights into AI-generated information about their business and helping them influence those representations through strategic interventions.",
+    "founding": "VizAI was founded to address a growing problem: AI systems are increasingly the first place customers learn about businesses, but these systems often have incomplete, outdated, or confused information. We created structured solutions to help businesses take control of their AI representation.",
+    "yearFounded": 2024
+  },
+  "offerings": {
+    "primary": [
+      {
+        "name": "AI Visibility Scanning",
+        "description": "Automated and human-reviewed analysis of how AI systems describe your business"
+      },
+      {
+        "name": "Canonical Business Profiles",
+        "description": "Structured, verified business information in the VizAI Business Registry"
+      },
+      {
+        "name": "AI Drift Monitoring",
+        "description": "Ongoing monitoring to detect when AI representations change or become inaccurate"
+      },
+      {
+        "name": "AI Governance",
+        "description": "Comprehensive management of business representation across AI systems"
+      }
+    ],
+    "targetCustomers": "B2B companies, professional services firms, founders, and enterprise brands who care about how AI systems represent them to potential customers"
+  },
+  "location": {
+    "headquarters": {
+      "city": "Canada",
+      "country": "Canada"
+    }
+  },
+  "contact": {
+    "email": "hello@vizai.io"
+  },
+  "verification": {
+    "status": "verified",
+    "tier": "verified",
+    "method": "domain-ownership",
+    "lastVerified": "2025-01-06",
+    "verificationUrl": "https://vizai.io",
+    "qualityScore": 100
+  },
+  "sources": [
+    {
+      "type": "official-website",
+      "url": "https://www.vizai.io",
+      "accessed": "2025-01-06",
+      "description": "Official VizAI website"
+    }
+  ],
+  "metadata": {
+    "dateAdded": "2025-01-06",
+    "lastUpdated": "2025-01-06",
+    "submittedBy": "VizAI (self)",
+    "notes": "Founding entry for the VizAI Business Registry"
+  }
+}

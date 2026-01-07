@@ -1,0 +1,109 @@
+name: Check for Duplicate Entries
+
+on:
+  pull_request:
+    paths:
+      - 'data/**/*.json'
+
+jobs:
+  check-duplicates:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Check for duplicate domains
+      run: |
+        echo "Checking for duplicate primary domains..."
+
+        python3 << 'EOF'
+        import json
+        import sys
+        from pathlib import Path
+        from collections import defaultdict
+
+        domains = defaultdict(list)
+
+        # Find all JSON files in data directory
+        for profile_path in Path('data').rglob('*.json'):
+            try:
+                with open(profile_path, 'r') as f:
+                    profile = json.load(f)
+
+                domain = profile.get('businessIdentifier', {}).get('primaryDomain')
+                if domain:
+                    domains[domain].append(str(profile_path))
+            except Exception as e:
+                print(f"Error reading {profile_path}: {e}")
+                continue
+
+        # Check for duplicates
+        duplicates_found = False
+        for domain, files in domains.items():
+            if len(files) > 1:
+                duplicates_found = True
+                print(f"❌ Duplicate domain '{domain}' found in:")
+                for file in files:
+                    print(f"   - {file}")
+                print()
+
+        if duplicates_found:
+            print("Duplicate domains detected! Each business should have a unique primary domain.")
+            sys.exit(1)
+        else:
+            print("✅ No duplicate domains found!")
+            sys.exit(0)
+        EOF
+
+    - name: Check for duplicate legal names
+      run: |
+        echo "Checking for duplicate legal names..."
+
+        python3 << 'EOF'
+        import json
+        import sys
+        from pathlib import Path
+        from collections import defaultdict
+
+        legal_names = defaultdict(list)
+
+        # Find all JSON files in data directory
+        for profile_path in Path('data').rglob('*.json'):
+            try:
+                with open(profile_path, 'r') as f:
+                    profile = json.load(f)
+
+                legal_name = profile.get('businessIdentifier', {}).get('legalName')
+                if legal_name:
+                    # Normalize for comparison (lowercase, strip whitespace)
+                    normalized = legal_name.lower().strip()
+                    legal_names[normalized].append({
+                        'original': legal_name,
+                        'file': str(profile_path)
+                    })
+            except Exception as e:
+                print(f"Error reading {profile_path}: {e}")
+                continue
+
+        # Check for duplicates
+        duplicates_found = False
+        for normalized, entries in legal_names.items():
+            if len(entries) > 1:
+                duplicates_found = True
+                print(f"⚠️  Similar legal names found:")
+                for entry in entries:
+                    print(f"   - '{entry['original']}' in {entry['file']}")
+                print()
+
+        if duplicates_found:
+            print("Warning: Similar legal names detected. Please verify these are different businesses.")
+            # Note: This is a warning, not a failure - some legitimate businesses may have similar names
+        else:
+            print("✅ No duplicate legal names found!")
+        EOF

@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "1.0",
+  "businessIdentifier": {
+    "legalName": "Global Manufacturing Industries Inc.",
+    "commonName": "GMI",
+    "aliases": ["Global Manufacturing", "GMI Industries"],
+    "primaryDomain": "gmi-industries.com",
+    "identifiers": {
+      "linkedin": "global-manufacturing-industries",
+      "crunchbase": "global-manufacturing-industries"
+    }
+  },
+  "description": {
+    "elevator": "GMI is a multinational manufacturing corporation specializing in industrial automation and robotics systems.",
+    "detailed": "Global Manufacturing Industries (GMI) is a Fortune 500 manufacturing company that designs, builds, and services industrial automation systems and robotics for factories worldwide. With over 40 years of experience, GMI serves automotive, aerospace, electronics, and consumer goods manufacturers.\n\nThe company operates 27 manufacturing facilities across 15 countries and employs over 35,000 people globally. GMI's product portfolio includes robotic assembly systems, automated material handling solutions, and factory management software.\n\nGMI is recognized as an industry leader in sustainable manufacturing practices and has committed to achieving net-zero emissions across all operations by 2030.",
+    "founding": "Founded in 1982 by Dr. Robert Chen to bring advanced robotics technology to American manufacturing.",
+    "yearFounded": 1982
+  },
+  "offerings": {
+    "primary": [
+      {
+        "name": "RoboLine Assembly Systems",
+        "description": "Fully automated assembly line robotics for automotive and electronics manufacturing"
+      },
+      {
+        "name": "SmartFactory Platform",
+        "description": "IoT-enabled factory management and monitoring software"
+      },
+      {
+        "name": "Industrial Service & Support",
+        "description": "24/7 global service, maintenance, and training for automation systems"
+      }
+    ],
+    "targetCustomers": "Large-scale manufacturers in automotive, aerospace, electronics, and consumer goods sectors requiring industrial automation"
+  },
+  "location": {
+    "headquarters": {
+      "city": "Detroit",
+      "stateProvince": "Michigan",
+      "country": "United States"
+    },
+    "additionalLocations": [
+      {
+        "city": "Shanghai",
+        "country": "China",
+        "type": "office"
+      },
+      {
+        "city": "Munich",
+        "country": "Germany",
+        "type": "office"
+      },
+      {
+        "city": "Tokyo",
+        "country": "Japan",
+        "type": "office"
+      }
+    ]
+  },
+  "contact": {
+    "email": "corporate@gmi-industries.com",
+    "phone": "+1-313-555-0100"
+  },
+  "leadership": {
+    "ceo": "Jennifer Martinez",
+    "founders": ["Dr. Robert Chen"],
+    "keyExecutives": [
+      {
+        "name": "Thomas Anderson",
+        "title": "President & COO"
+      },
+      {
+        "name": "Dr. Lisa Kumar",
+        "title": "CTO"
+      },
+      {
+        "name": "James O'Brien",
+        "title": "CFO"
+      }
+    ]
+  },
+  "verification": {
+    "status": "verified",
+    "tier": "enterprise",
+    "method": "manual-review",
+    "lastVerified": "2025-01-06",
+    "verificationUrl": "https://vizai.io/verify/gmi-2025-enterprise",
+    "qualityScore": 100
+  },
+  "sources": [
+    {
+      "type": "official-website",
+      "url": "https://gmi-industries.com/about",
+      "accessed": "2025-01-06",
+      "description": "Corporate website and investor relations"
+    },
+    {
+      "type": "news-article",
+      "url": "https://manufacturing-today.com/gmi-sustainability-2024",
+      "accessed": "2025-01-06",
+      "description": "Sustainability commitment announcement"
+    },
+    {
+      "type": "crunchbase",
+      "url": "https://www.crunchbase.com/organization/global-manufacturing-industries",
+      "accessed": "2025-01-06",
+      "description": "Company overview and key metrics"
+    }
+  ],
+  "metadata": {
+    "dateAdded": "2025-01-06",
+    "lastUpdated": "2025-01-06",
+    "submittedBy": "GMI Corporate Communications",
+    "notes": "Enterprise tier example demonstrating comprehensive profile for large multinational"
+  }
+}

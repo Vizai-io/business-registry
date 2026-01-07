@@ -1,0 +1,81 @@
+{
+  "schemaVersion": "1.0",
+  "businessIdentifier": {
+    "legalName": "Sterling Consulting Group LLC",
+    "commonName": "Sterling Consulting",
+    "aliases": ["Sterling Group"],
+    "primaryDomain": "sterlingconsulting.com",
+    "identifiers": {
+      "linkedin": "sterling-consulting-group"
+    }
+  },
+  "description": {
+    "elevator": "Sterling Consulting provides strategic advisory services for mid-market companies navigating digital transformation.",
+    "detailed": "Sterling Consulting Group is a management consulting firm specializing in digital transformation strategy for mid-market businesses. We help companies develop and execute technology strategies that align with business objectives, with particular expertise in retail, manufacturing, and financial services sectors.\n\nOur approach combines strategic planning, technology assessment, and change management to ensure successful transformations. We work closely with C-suite executives and their teams to navigate the complexities of modernizing legacy systems while maintaining business continuity.",
+    "yearFounded": 2015
+  },
+  "offerings": {
+    "primary": [
+      {
+        "name": "Digital Transformation Strategy",
+        "description": "Comprehensive planning for technology modernization initiatives"
+      },
+      {
+        "name": "Technology Assessment",
+        "description": "Evaluation of current systems and recommendations for improvement"
+      },
+      {
+        "name": "Change Management",
+        "description": "Organizational change programs to support technology adoption"
+      }
+    ],
+    "targetCustomers": "Mid-market companies ($50M-$500M revenue) in retail, manufacturing, and financial services undergoing digital transformation"
+  },
+  "location": {
+    "headquarters": {
+      "city": "Chicago",
+      "stateProvince": "Illinois",
+      "country": "United States"
+    }
+  },
+  "contact": {
+    "email": "info@sterlingconsulting.com",
+    "phone": "+1-312-555-0199"
+  },
+  "leadership": {
+    "ceo": "Michael Sterling",
+    "founders": ["Michael Sterling", "Patricia Wong"],
+    "keyExecutives": [
+      {
+        "name": "David Park",
+        "title": "Managing Partner"
+      }
+    ]
+  },
+  "verification": {
+    "status": "community",
+    "tier": "community",
+    "method": "self-reported",
+    "lastVerified": "2025-01-06"
+  },
+  "sources": [
+    {
+      "type": "official-website",
+      "url": "https://sterlingconsulting.com",
+      "accessed": "2025-01-06",
+      "description": "Company website"
+    },
+    {
+      "type": "linkedin",
+      "url": "https://www.linkedin.com/company/sterling-consulting-group",
+      "accessed": "2025-01-06",
+      "description": "LinkedIn company page"
+    }
+  ],
+  "metadata": {
+    "dateAdded": "2025-01-06",
+    "lastUpdated": "2025-01-06",
+    "submittedBy": "Community",
+    "notes": "Example professional services firm with community verification"
+  }
+}
