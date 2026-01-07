@@ -3,7 +3,8 @@
     "allow": [
       "Bash(python -m pip install:*)",
       "Bash(python tools/validation/validate-profile.py:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nInitialize VizAI Business Registry\n\nThis commit establishes the complete structure for the VizAI Business Registry - an open database of structured business information designed for AI systems.\n\nFeatures:\n- JSON schema v1.0 for business profiles\n- Three-tier system \\(Community/Verified/Enterprise\\)\n- Automated validation workflows\n- Comprehensive documentation\n- Example profiles demonstrating schema usage\n- VizAI''s own profile as founding entry\n\nRepository structure:\n- /data/ - Business profiles organized by tier and category\n- /schema/ - JSON schema and examples\n- /docs/ - Complete documentation\n- /tools/ - Validation and submission tools\n- /.github/ - Issue templates and CI workflows\n\nGenerated with Claude Code \\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
     ]
   }
 }
