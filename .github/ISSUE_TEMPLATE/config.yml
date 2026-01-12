@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: VizAI Website
+    url: https://www.vizai.io
+    about: Visit our website to learn more about VizAI services
+  - name: Get Verified
+    url: https://www.vizai.io/packages.html
+    about: Purchase professional verification for your business
+  - name: Submit via Web Form
+    url: https://www.vizai.io/onboarding-form.html
+    about: Submit your business using our guided web form (recommended)
