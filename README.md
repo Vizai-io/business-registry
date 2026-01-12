@@ -103,10 +103,10 @@ print(profile['businessIdentifier']['commonName'])
 
 ## 📈 Stats
 
-- **Total businesses:** [Updated automatically]
-- **Verified entries:** [Updated automatically]
-- **Countries represented:** [Updated automatically]
-- **Last updated:** [Updated automatically]
+- **Total businesses:** 1 (and growing!)
+- **Verified entries:** 1
+- **Countries represented:** 1
+- **Last updated:** 2026-01-11
 
 ## 🤝 Contributing
 
