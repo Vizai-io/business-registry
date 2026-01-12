@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Business - VizAI Registry</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .form-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .form-section h2 {
+            color: #1e293b;
+            margin-bottom: 15px;
+            font-size: 1.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .required {
+            color: #ef4444;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="url"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .help-text {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        .char-count {
+            float: right;
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .success-message {
+            background: #10b981;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message {
+            background: #ef4444;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .tier-info {
+            background: #f0f9ff;
+            border-left: 4px solid #2563eb;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Submit Your Business to VizAI Registry</h1>
+        <p class="subtitle">Help AI systems describe your business accurately with authoritative information.</p>
+
+        <div class="tier-info">
+            <strong>Community Tier - Free</strong><br>
+            This submission will be added to the community tier. Upgrade to verified tier anytime for human review and quality monitoring.
+            <a href="https://www.vizai.io/packages.html" target="_blank">Learn about verified tier →</a>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            Thank you! Your submission has been received. We'll review it and contact you within 5-7 business days.
+        </div>
+
+        <div class="error-message" id="errorMessage">
+            There was an error submitting your form. Please try again or contact hello@vizai.io
+        </div>
+
+        <form id="businessForm">
+            <!-- Business Identity -->
+            <div class="form-section">
+                <h2>Business Identity</h2>
+
+                <div class="form-group">
+                    <label for="legalName">Legal Business Name <span class="required">*</span></label>
+                    <input type="text" id="legalName" name="legalName" required>
+                    <div class="help-text">Official registered name of your business</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="commonName">Common/Trading Name</label>
+                    <input type="text" id="commonName" name="commonName">
+                    <div class="help-text">Name commonly used (leave blank if same as legal name)</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="primaryDomain">Primary Website <span class="required">*</span></label>
+                    <input type="url" id="primaryDomain" name="primaryDomain" placeholder="https://example.com" required>
+                    <div class="help-text">Your main website domain</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="yearFounded">Year Founded</label>
+                    <input type="number" id="yearFounded" name="yearFounded" min="1800" max="2025">
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-section">
+                <h2>Business Description</h2>
+
+                <div class="form-group">
+                    <label for="elevator">
+                        Elevator Pitch <span class="required">*</span>
+                        <span class="char-count" id="elevatorCount">0/280</span>
+                    </label>
+                    <textarea id="elevator" name="elevator" maxlength="280" required></textarea>
+                    <div class="help-text">One-sentence description of what your business does (max 280 characters)</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="detailed">Detailed Description <span class="required">*</span></label>
+                    <textarea id="detailed" name="detailed" rows="8" required></textarea>
+                    <div class="help-text">2-3 paragraphs: What you do, who you serve, what makes you unique</div>
+                </div>
+            </div>
+
+            <!-- Location -->
+            <div class="form-section">
+                <h2>Location</h2>
+
+                <div class="form-group">
+                    <label for="city">Headquarters City <span class="required">*</span></label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="stateProvince">State/Province</label>
+                    <input type="text" id="stateProvince" name="stateProvince">
+                </div>
+
+                <div class="form-group">
+                    <label for="country">Country <span class="required">*</span></label>
+                    <input type="text" id="country" name="country" required>
+                </div>
+            </div>
+
+            <!-- Contact -->
+            <div class="form-section">
+                <h2>Contact Information</h2>
+
+                <div class="form-group">
+                    <label for="email">Contact Email <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                    <div class="help-text">General contact email for your business</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="text" id="phone" name="phone">
+                </div>
+            </div>
+
+            <!-- Optional Fields -->
+            <div class="form-section">
+                <h2>Additional Information (Optional)</h2>
+
+                <div class="form-group">
+                    <label for="offerings">Products/Services</label>
+                    <textarea id="offerings" name="offerings" rows="4"></textarea>
+                    <div class="help-text">Brief description of your main products or services</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="targetCustomers">Target Customers</label>
+                    <textarea id="targetCustomers" name="targetCustomers" rows="3"></textarea>
+                    <div class="help-text">Description of your ideal customer profile</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="linkedin">LinkedIn URL</label>
+                    <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/company/...">
+                </div>
+            </div>
+
+            <!-- Submission -->
+            <div class="form-section">
+                <h2>Submission Details</h2>
+
+                <div class="form-group">
+                    <label for="submitterName">Your Name <span class="required">*</span></label>
+                    <input type="text" id="submitterName" name="submitterName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="submitterEmail">Your Email <span class="required">*</span></label>
+                    <input type="email" id="submitterEmail" name="submitterEmail" required>
+                    <div class="help-text">We'll contact you at this email about your submission</div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="authorized" name="authorized" required>
+                        I am authorized to submit this business information <span class="required">*</span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="terms" name="terms" required>
+                        I agree that this information will be publicly available under CC BY 4.0 license <span class="required">*</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn">Submit Business</button>
+        </form>
+    </div>
+
+    <script>
+        // Character counter for elevator pitch
+        const elevatorField = document.getElementById('elevator');
+        const elevatorCount = document.getElementById('elevatorCount');
+
+        elevatorField.addEventListener('input', function() {
+            const count = this.value.length;
+            elevatorCount.textContent = `${count}/280`;
+
+            if (count > 250) {
+                elevatorCount.style.color = '#ef4444';
+            } else {
+                elevatorCount.style.color = '#9ca3af';
+            }
+        });
+
+        // Form submission
+        const form = document.getElementById('businessForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            // Collect form data
+            const formData = new FormData(form);
+            const data = {
+                legalName: formData.get('legalName'),
+                commonName: formData.get('commonName') || formData.get('legalName'),
+                primaryDomain: formData.get('primaryDomain'),
+                yearFounded: formData.get('yearFounded') ? parseInt(formData.get('yearFounded')) : null,
+                elevator: formData.get('elevator'),
+                detailed: formData.get('detailed'),
+                headquarters: {
+                    city: formData.get('city'),
+                    stateProvince: formData.get('stateProvince') || null,
+                    country: formData.get('country')
+                },
+                email: formData.get('email'),
+                phone: formData.get('phone') || null,
+                offerings: formData.get('offerings') || null,
+                targetCustomers: formData.get('targetCustomers') || null,
+                identifiers: {
+                    linkedin: formData.get('linkedin') || null
+                },
+                submitter: {
+                    name: formData.get('submitterName'),
+                    email: formData.get('submitterEmail')
+                }
+            };
+
+            try {
+                // Replace with your actual API endpoint
+                const response = await fetch('https://api.vizai.io/registry/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    // Success
+                    successMessage.style.display = 'block';
+                    errorMessage.style.display = 'none';
+                    form.reset();
+                    window.scrollTo(0, 0);
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (error) {
+                // Error
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                window.scrollTo(0, 0);
+            } finally {
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Business';
+            }
+        });
+    </script>
+</body>
+</html>
