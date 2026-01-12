@@ -33,22 +33,26 @@ jobs:
       id: find-profiles
       run: |
         echo "Finding business profiles..."
-        find data -name "*.json" -type f
+        find data -name "*.json" -type f -not -name "index.json"
 
     - name: Validate all profiles
       run: |
         echo "Validating business profiles against schema..."
         EXIT_CODE=0
 
-        for file in $(find data -name "*.json" -type f); do
+        for file in $(find data -name "*.json" -type f -not -name "index.json"); do
           echo "Validating: $file"
           if python tools/validation/validate-profile.py "$file"; then
-            echo "✅ Valid: $file"
+            echo "[VALID] $file"
           else
-            echo "❌ Invalid: $file"
+            echo "[INVALID] $file"
             EXIT_CODE=1
           fi
         done
+
+        if [ $EXIT_CODE -eq 0 ]; then
+          echo "All business profiles are valid!"
+        fi
 
         exit $EXIT_CODE
 
