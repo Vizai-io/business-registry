@@ -1,0 +1,23 @@
+{
+  "registryId": "acme-corp",
+  "domain": "acmecorp.com",
+  "name": "Acme Corporation",
+  "location": {
+    "country": "US",
+    "region": "CA",
+    "city": "San Francisco"
+  },
+  "industry": "technology",
+  "services": ["software-development", "cloud-services", "ai-solutions"],
+  "profileUrl": "https://hub.vizai.io/p/acme-corp",
+  "verification": {
+    "status": "community",
+    "tier": "community",
+    "method": "self-reported",
+    "lastVerified": "2025-06-01"
+  },
+  "metadata": {
+    "dateAdded": "2025-06-01",
+    "lastUpdated": "2025-06-01"
+  }
+}

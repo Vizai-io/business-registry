@@ -1,0 +1,34 @@
+{
+  "US": {
+    "CA": {
+      "San Francisco": [
+        {
+          "registryId": "acme-corp",
+          "domain": "acmecorp.com",
+          "name": "Acme Corporation",
+          "file": "us\\ca\\san-francisco\\acme-corp.json"
+        }
+      ]
+    }
+  },
+  "CA": {
+    "ON": {
+      "Perth": [
+        {
+          "registryId": "example-co",
+          "domain": "exampleco.ca",
+          "name": "Example Company",
+          "file": "ca\\on\\perth\\example-co.json"
+        }
+      ],
+      "Toronto": [
+        {
+          "registryId": "vizai",
+          "domain": "vizai.io",
+          "name": "VizAI",
+          "file": "ca\\on\\toronto\\vizai.json"
+        }
+      ]
+    }
+  }
+}

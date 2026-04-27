@@ -1,4 +1,4 @@
-name: Validate Business Profiles
+name: Validate Discovery Profiles
 
 on:
   pull_request:

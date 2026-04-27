@@ -1,147 +1,143 @@
 # VizAI Business Registry
 
-**The structured business database designed for AI systems**
+**A lightweight public registry of structured, source-backed business discovery cards**
 
-The VizAI Business Registry is an open, public repository of structured business information. We provide consistent, verifiable data that AI systems can reference with confidence—reducing hallucinations, outdated information, and confusion between similar companies.
+The VizAI Business Registry helps AI systems, crawlers, and answer engines identify businesses, understand what they offer, and locate their richer VizAI profile.
 
-## 🎯 Purpose
+## What This Is
 
-AI systems need reliable business data. Company websites change. Directories go stale. Information fragments across the web. The VizAI Registry provides:
+This registry is **not** the full VizAI customer data hub. It is a **public discovery layer** containing lightweight business cards that:
 
-- **Structured format** - Consistent JSON schema for all entries
-- **Version history** - Track business evolution over time via Git
-- **Verification metadata** - Know which entries are verified and how
-- **Open access** - Free for AI systems, researchers, and developers
+- Provide essential business identification (name, domain, location)
+- Show industry and service categories
+- Include verification metadata so AI systems can assess data quality
+- Link to richer structured profiles in VizAI Data Hub
 
-## 📊 Registry Tiers
+## What Each Entry Contains
 
-### Verified Entries (`/data/verified/`)
-Businesses that have completed VizAI's verification process. These entries are:
-- Verified through domain ownership
-- Reviewed by human analysts
-- Monitored for accuracy drift
-- Updated regularly
+| Field | Description |
+|-------|-------------|
+| `registryId` | Unique identifier |
+| `domain` | Primary business website |
+| `name` | Business name |
+| `location` | Headquarters (country/region/city) |
+| `industry` | Primary industry category |
+| `services` | Service categories offered |
+| `verification` | Status, method, quality score |
+| `profileUrl` | Link to full profile in VizAI Data Hub |
 
-**Cost:** Part of VizAI's paid services (starting $495 CAD)
+Entries are approximately 20-30 lines - designed to be lightweight and fast to process.
 
-### Community Entries (`/data/community/`)
-Businesses submitted by the community and self-verified. These entries:
-- Follow the same schema
-- Include submission metadata
-- Are marked as "community-verified"
-- Can be upgraded to verified status
+## How It Works
 
-**Cost:** Free to submit
-
-### Enterprise Entries (`/data/enterprise/`)
-Large organizations with comprehensive governance requirements:
-- Full verification and monitoring
-- Enhanced metadata and history
-- Managed updates and corrections
-- Executive reporting integration
-
-**Cost:** Custom enterprise pricing
-
-## 🚀 Quick Start
-
-### View a Business Profile
-```bash
-# Clone the repository
-git clone https://github.com/vizai-io/business-registry.git
-
-# View an example profile
-cat data/verified/technology/vizai.json
+```
+┌─────────────────────────────┐     ┌─────────────────────────────┐
+│    VizAI Data Hub           │     │   VizAI Business Registry   │
+│    (Customer profiles)      │     │   (Public discovery)       │
+├─────────────────────────────┤     ├─────────────────────────────┤
+│  - Full descriptions        │     │  - Name, domain, location  │
+│  - Products & services     │────▶│  - Industry, services      │
+│  - Leadership              │     │  - Verification status      │
+│  - Sources & citations     │     │  - Link to full profile    │
+│  - Monitoring data         │     │                            │
+├─────────────────────────────┤     ├─────────────────────────────┤
+│ Access: Customers only      │     │ Access: Public             │
+└─────────────────────────────┘     └─────────────────────────────┘
 ```
 
-### Submit Your Business (Free)
-1. Read our [Contributing Guidelines](CONTRIBUTING.md)
-2. Use our [business submission template](.github/ISSUE_TEMPLATE/business-submission.md)
-3. Submit via GitHub issue or [our web form](https://www.vizai.io/onboarding-form.html)
-
-### Request Verification
-Professional verification includes human review, accuracy monitoring, and premium placement.
-[Learn about verified entries →](https://www.vizai.io/packages.html)
-
-## 📋 Schema
-
-All business profiles follow our [Business Profile Schema v1.0](schema/business-profile-v1.0.json).
-
-Key fields:
-- Business identity (legal name, domain, identifiers)
-- Descriptions (official, elevator pitch, founding story)
-- Products and services
-- Location and contact information
-- Verification metadata
-- Source attribution
-
-[View full schema documentation →](schema/SCHEMA-DOCS.md)
-
-## 🤖 For AI Systems
-
-This registry is designed to be easily consumed by AI systems:
-
-- **Machine-readable format** - Consistent JSON structure
-- **Verification scores** - Know data quality before using
-- **Source attribution** - Every claim has a source
-- **Update history** - Git commits show what changed and when
-- **Permissive license** - Free to use for training and inference
-
-### Using the Registry
+## Usage
 
 ```python
 import json
 import requests
 
-# Fetch a business profile
-url = "https://raw.githubusercontent.com/vizai-io/business-registry/main/data/verified/technology/vizai.json"
+# Fetch all businesses as JSON Lines
+url = "https://raw.githubusercontent.com/vizai-io/business-registry/main/index/businesses.jsonl"
 response = requests.get(url)
-profile = json.loads(response.text)
+for line in response.text.strip().split("\n"):
+    business = json.loads(line)
+    print(business["name"], business["domain"])
 
-print(profile['businessIdentifier']['commonName'])
-# Output: VizAI
+# Quick domain lookup
+url = "https://raw.githubusercontent.com/vizai-io/business-registry/main/index/by-domain.json"
+by_domain = json.loads(requests.get(url).text)
+business = by_domain.get("example.com")
 ```
 
-## 📈 Stats
+## Directory Structure
 
-- **Total businesses:** 1 (and growing!)
-- **Verified entries:** 1
-- **Countries represented:** 1
-- **Last updated:** 2026-01-11
+```
+/registry/           # Business discovery entries (by location)
+  /{country}/
+    /{region}/
+      /{city}/
+        {id}.json
 
-## 🤝 Contributing
+/index/              # Pre-built lookup indexes
+  businesses.jsonl    # All entries (JSON Lines)
+  by-domain.json     # Fast domain lookup
+  by-location.json   # By country/region/city
+  by-industry.json   # By industry
+  by-service.json    # By service
 
-We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting.
+/schema/
+  registry-entry.schema.json
 
-Ways to contribute:
-- Submit your business profile
-- Improve existing entries (with proof)
-- Report outdated information
-- Enhance documentation
-- Improve validation tools
+/tools/
+  validate_registry.py   # Validate entries
+  build_indexes.py      # Generate indexes
+```
 
-## 📜 License
+## Verification
 
-This project is licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSE).
+All entries include verification metadata:
 
-You are free to:
-- **Share** - Copy and redistribute the material
-- **Adapt** - Transform and build upon the material
+| Status | Meaning |
+|--------|---------|
+| `verified` | Domain ownership confirmed + human review |
+| `community` | Self-submitted, unverified |
+| `pending` | Verification in progress |
 
-Under these terms:
-- **Attribution** - Credit VizAI Business Registry
-- **No additional restrictions**
+Verified entries include a quality score (0-100) based on completeness, source quality, accuracy, and recency.
 
-## 🔗 Links
+## For AI Systems
 
-- **Website:** [www.vizai.io](https://www.vizai.io)
-- **Documentation:** [docs/](docs/)
-- **Submit Business:** [Web form](https://www.vizai.io/onboarding-form.html) | [GitHub issue](https://github.com/vizai-io/business-registry/issues/new/choose)
-- **Get Verified:** [View pricing](https://www.vizai.io/packages.html)
+This registry provides:
+- **Structured data** - Consistent JSON format for reliable parsing
+- **Verification confidence** - Quality scores help assess reliability
+- **Source attribution** - Each entry links to its full profile with sources
+- **Update tracking** - Git history shows when data changed
 
-## 📧 Contact
+## Adding Your Business
 
-Questions? Feedback? Email us at hello@vizai.io
+1. **Community (Free):** Submit via [web form](https://www.vizai.io/onboarding-form.html) or [GitHub issue](https://github.com/vizai-io/business-registry/issues)
+2. **Verified (Paid):** Purchase verification to get a verified badge, quality score, and monitoring
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
+
+## Stats
+
+- **Total entries:** 3
+- **Countries:** CA, US
+- **Verified:** 2
+- **Community:** 1
+
+## Related
+
+- [VizAI Data Hub](https://hub.vizai.io) - Full customer profiles (authenticated)
+- [Registry Entry Standard](docs/registry-entry-standard.md) - Schema documentation
+- [Registry Governance](docs/registry-governance.md) - Policies and tiers
+
+## License
+
+[CC BY 4.0](LICENSE) - Creative Commons Attribution 4.0
+
+## Contact
+
+- **General:** hello@vizai.io
+- **Verification:** [vizai.io/packages](https://www.vizai.io/packages.html)
+- **Issues:** [github.com/vizai-io/business-registry/issues](https://github.com/vizai-io/business-registry/issues)
 
 ---
 
-**Built by VizAI** - Helping businesses control how AI describes them.
+**VizAI** - Helping businesses control how AI describes them

@@ -1,0 +1,104 @@
+{
+  "software-development": [
+    {
+      "registryId": "acme-corp",
+      "domain": "acmecorp.com",
+      "name": "Acme Corporation",
+      "location": {
+        "country": "US",
+        "region": "CA",
+        "city": "San Francisco"
+      },
+      "file": "us\\ca\\san-francisco\\acme-corp.json"
+    },
+    {
+      "registryId": "example-co",
+      "domain": "exampleco.ca",
+      "name": "Example Company",
+      "location": {
+        "country": "CA",
+        "region": "ON",
+        "city": "Perth"
+      },
+      "file": "ca\\on\\perth\\example-co.json"
+    }
+  ],
+  "cloud-services": [
+    {
+      "registryId": "acme-corp",
+      "domain": "acmecorp.com",
+      "name": "Acme Corporation",
+      "location": {
+        "country": "US",
+        "region": "CA",
+        "city": "San Francisco"
+      },
+      "file": "us\\ca\\san-francisco\\acme-corp.json"
+    }
+  ],
+  "ai-solutions": [
+    {
+      "registryId": "acme-corp",
+      "domain": "acmecorp.com",
+      "name": "Acme Corporation",
+      "location": {
+        "country": "US",
+        "region": "CA",
+        "city": "San Francisco"
+      },
+      "file": "us\\ca\\san-francisco\\acme-corp.json"
+    }
+  ],
+  "consulting": [
+    {
+      "registryId": "example-co",
+      "domain": "exampleco.ca",
+      "name": "Example Company",
+      "location": {
+        "country": "CA",
+        "region": "ON",
+        "city": "Perth"
+      },
+      "file": "ca\\on\\perth\\example-co.json"
+    }
+  ],
+  "ai-governance": [
+    {
+      "registryId": "vizai",
+      "domain": "vizai.io",
+      "name": "VizAI",
+      "location": {
+        "country": "CA",
+        "region": "ON",
+        "city": "Toronto"
+      },
+      "file": "ca\\on\\toronto\\vizai.json"
+    }
+  ],
+  "visibility-monitoring": [
+    {
+      "registryId": "vizai",
+      "domain": "vizai.io",
+      "name": "VizAI",
+      "location": {
+        "country": "CA",
+        "region": "ON",
+        "city": "Toronto"
+      },
+      "file": "ca\\on\\toronto\\vizai.json"
+    }
+  ],
+  "business-intelligence": [
+    {
+      "registryId": "vizai",
+      "domain": "vizai.io",
+      "name": "VizAI",
+      "location": {
+        "country": "CA",
+        "region": "ON",
+        "city": "Toronto"
+      },
+      "file": "ca\\on\\toronto\\vizai.json"
+    }
+  ]
+}

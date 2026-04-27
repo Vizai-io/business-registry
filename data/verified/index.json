@@ -1,0 +1,30 @@
+{
+  "tier": "verified",
+  "lastUpdated": "2026-04-27",
+  "lastIndexed": "2026-04-27",
+  "count": 1,
+  "byCategory": {
+    "technology": {
+      "count": 1,
+      "profiles": [
+        {
+          "file": "vizai.json",
+          "domain": "vizai.io",
+          "commonName": "VizAI"
+        }
+      ]
+    }
+  },
+  "profiles": [
+    {
+      "file": "vizai.json",
+      "domain": "vizai.io",
+      "commonName": "VizAI",
+      "legalName": "VizAI",
+      "category": "technology",
+      "status": "verified",
+      "lastVerified": "2025-01-06",
+      "qualityScore": 100
+    }
+  ]
+}

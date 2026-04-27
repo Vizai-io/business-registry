@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "https://vizai.io/schema/registry-entry/v1.0",
+  "title": "VizAI Registry Entry",
+  "description": "Lightweight business discovery entry - the public reference layer pointing to full profiles in VizAI Data Hub",
+  "type": "object",
+  "required": ["registryId", "domain", "name", "location", "profileUrl", "verification", "metadata"],
+  "properties": {
+    "registryId": {
+      "type": "string",
+      "description": "Unique identifier in the registry (e.g., 'example-co')"
+    },
+    "domain": {
+      "type": "string",
+      "format": "hostname",
+      "description": "Primary business website domain (unique identifier)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Common name used by the business"
+    },
+    "location": {
+      "type": "object",
+      "description": "Geographic location for discovery",
+      "required": ["country", "region", "city"],
+      "properties": {
+        "country": {
+          "type": "string",
+          "description": "Two-letter country code or full name (ISO 3166-1)",
+          "examples": ["CA", "US", "GB"]
+        },
+        "region": {
+          "type": "string",
+          "description": "State, province, or region",
+          "examples": ["ON", "California", "England"]
+        },
+        "city": {
+          "type": "string",
+          "description": "City name"
+        }
+      }
+    },
+    "industry": {
+      "type": "string",
+      "description": "Primary industry category",
+      "enum": ["technology", "professional-services", "financial", "healthcare", "manufacturing", "retail", "construction", "hospitality", "transportation", "education", "real-estate", "other"]
+    },
+    "services": {
+      "type": "array",
+      "description": "Service categories this business provides",
+      "items": {
+        "type": "string"
+      },
+      "examples": [
+        ["software-development", "consulting"],
+        ["accounting", "tax-preparation"]
+      ]
+    },
+    "profileUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to the full profile in VizAI Data Hub (private/customer access)"
+    },
+    "verification": {
+      "type": "object",
+      "description": "Verification status",
+      "required": ["status", "lastVerified"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["verified", "community", "pending"],
+          "description": "Verification status"
+        },
+        "tier": {
+          "type": "string",
+          "enum": ["verified", "community", "enterprise"]
+        },
+        "method": {
+          "type": "string",
+          "enum": ["domain-ownership", "email-verification", "manual-review", "self-reported"]
+        },
+        "lastVerified": {
+          "type": "string",
+          "format": "date"
+        },
+        "qualityScore": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["dateAdded", "lastUpdated"],
+      "properties": {
+        "dateAdded": {
+          "type": "string",
+          "format": "date"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+  }
+}
