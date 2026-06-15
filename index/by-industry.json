@@ -1,26 +1,68 @@
 {
+  "logistics": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
   "technology": [
     {
       "registryId": "acme-corp",
       "domain": "acmecorp.com",
       "name": "Acme Corporation",
-      "location": {
-        "country": "US",
-        "region": "CA",
-        "city": "San Francisco"
-      },
-      "file": "us\\ca\\san-francisco\\acme-corp.json"
+      "shape": "registry-entry",
+      "locations": [
+        {
+          "country": "US",
+          "region": "CA",
+          "city": "San Francisco"
+        }
+      ],
+      "file": "us/ca/san-francisco/acme-corp.json"
     },
     {
       "registryId": "vizai",
       "domain": "vizai.io",
       "name": "VizAI",
-      "location": {
-        "country": "CA",
-        "region": "ON",
-        "city": "Toronto"
-      },
-      "file": "ca\\on\\toronto\\vizai.json"
+      "shape": "registry-entry",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Toronto"
+        }
+      ],
+      "file": "ca/on/toronto/vizai.json"
     }
   ],
   "professional-services": [
@@ -28,12 +70,15 @@
       "registryId": "example-co",
       "domain": "exampleco.ca",
       "name": "Example Company",
-      "location": {
-        "country": "CA",
-        "region": "ON",
-        "city": "Perth"
-      },
-      "file": "ca\\on\\perth\\example-co.json"
+      "shape": "registry-entry",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "ca/on/perth/example-co.json"
     }
   ]
 }

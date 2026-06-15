@@ -1,24 +1,56 @@
 {
-  "US": {
-    "CA": {
-      "San Francisco": [
-        {
-          "registryId": "acme-corp",
-          "domain": "acmecorp.com",
-          "name": "Acme Corporation",
-          "file": "us\\ca\\san-francisco\\acme-corp.json"
-        }
-      ]
-    }
-  },
   "CA": {
     "ON": {
+      "Smiths Falls": [
+        {
+          "registryId": "wills-transfer",
+          "domain": "willstransfer.com",
+          "name": "Wills Transfer",
+          "shape": "entity-profile-v1.0",
+          "file": "wills-transfer/profile.json"
+        }
+      ],
+      "Brockville": [
+        {
+          "registryId": "wills-transfer",
+          "domain": "willstransfer.com",
+          "name": "Wills Transfer",
+          "shape": "entity-profile-v1.0",
+          "file": "wills-transfer/profile.json"
+        }
+      ],
+      "Cornwall": [
+        {
+          "registryId": "wills-transfer",
+          "domain": "willstransfer.com",
+          "name": "Wills Transfer",
+          "shape": "entity-profile-v1.0",
+          "file": "wills-transfer/profile.json"
+        }
+      ],
+      "Ottawa": [
+        {
+          "registryId": "wills-transfer",
+          "domain": "willstransfer.com",
+          "name": "Wills Transfer",
+          "shape": "entity-profile-v1.0",
+          "file": "wills-transfer/profile.json"
+        }
+      ],
       "Perth": [
+        {
+          "registryId": "wills-transfer",
+          "domain": "willstransfer.com",
+          "name": "Wills Transfer",
+          "shape": "entity-profile-v1.0",
+          "file": "wills-transfer/profile.json"
+        },
         {
           "registryId": "example-co",
           "domain": "exampleco.ca",
           "name": "Example Company",
-          "file": "ca\\on\\perth\\example-co.json"
+          "shape": "registry-entry",
+          "file": "ca/on/perth/example-co.json"
         }
       ],
       "Toronto": [
@@ -26,7 +58,21 @@
           "registryId": "vizai",
           "domain": "vizai.io",
           "name": "VizAI",
-          "file": "ca\\on\\toronto\\vizai.json"
+          "shape": "registry-entry",
+          "file": "ca/on/toronto/vizai.json"
+        }
+      ]
+    }
+  },
+  "US": {
+    "CA": {
+      "San Francisco": [
+        {
+          "registryId": "acme-corp",
+          "domain": "acmecorp.com",
+          "name": "Acme Corporation",
+          "shape": "registry-entry",
+          "file": "us/ca/san-francisco/acme-corp.json"
         }
       ]
     }

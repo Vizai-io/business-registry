@@ -1,26 +1,716 @@
 {
+  "Warehousing (dry, air-conditioned, cooler, frozen)": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Third-party logistics": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Distribution": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Fulfillment": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Pick and pack": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Kitting": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Asset tagging": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Container de-stuffing": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Cross docking": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Inventory management": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Rail car siding": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Refrigerated storage": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Outsourcing solutions": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Shunting services": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Managed 3PL labour services": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Warehouse management system (WMS) services": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Fleet management": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Transportation solutions": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
+  "Integration solutions": [
+    {
+      "registryId": "wills-transfer",
+      "domain": "willstransfer.com",
+      "name": "Wills Transfer",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Smiths Falls"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Brockville"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Cornwall"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Ottawa"
+        },
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "wills-transfer/profile.json"
+    }
+  ],
   "software-development": [
     {
       "registryId": "acme-corp",
       "domain": "acmecorp.com",
       "name": "Acme Corporation",
-      "location": {
-        "country": "US",
-        "region": "CA",
-        "city": "San Francisco"
-      },
-      "file": "us\\ca\\san-francisco\\acme-corp.json"
+      "shape": "registry-entry",
+      "locations": [
+        {
+          "country": "US",
+          "region": "CA",
+          "city": "San Francisco"
+        }
+      ],
+      "file": "us/ca/san-francisco/acme-corp.json"
     },
     {
       "registryId": "example-co",
       "domain": "exampleco.ca",
       "name": "Example Company",
-      "location": {
-        "country": "CA",
-        "region": "ON",
-        "city": "Perth"
-      },
-      "file": "ca\\on\\perth\\example-co.json"
+      "shape": "registry-entry",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "ca/on/perth/example-co.json"
     }
   ],
   "cloud-services": [
@@ -28,12 +718,15 @@
       "registryId": "acme-corp",
       "domain": "acmecorp.com",
       "name": "Acme Corporation",
-      "location": {
-        "country": "US",
-        "region": "CA",
-        "city": "San Francisco"
-      },
-      "file": "us\\ca\\san-francisco\\acme-corp.json"
+      "shape": "registry-entry",
+      "locations": [
+        {
+          "country": "US",
+          "region": "CA",
+          "city": "San Francisco"
+        }
+      ],
+      "file": "us/ca/san-francisco/acme-corp.json"
     }
   ],
   "ai-solutions": [
@@ -41,12 +734,15 @@
       "registryId": "acme-corp",
       "domain": "acmecorp.com",
       "name": "Acme Corporation",
-      "location": {
-        "country": "US",
-        "region": "CA",
-        "city": "San Francisco"
-      },
-      "file": "us\\ca\\san-francisco\\acme-corp.json"
+      "shape": "registry-entry",
+      "locations": [
+        {
+          "country": "US",
+          "region": "CA",
+          "city": "San Francisco"
+        }
+      ],
+      "file": "us/ca/san-francisco/acme-corp.json"
     }
   ],
   "consulting": [
@@ -54,12 +750,15 @@
       "registryId": "example-co",
       "domain": "exampleco.ca",
       "name": "Example Company",
-      "location": {
-        "country": "CA",
-        "region": "ON",
-        "city": "Perth"
-      },
-      "file": "ca\\on\\perth\\example-co.json"
+      "shape": "registry-entry",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Perth"
+        }
+      ],
+      "file": "ca/on/perth/example-co.json"
     }
   ],
   "ai-governance": [
@@ -67,12 +766,15 @@
       "registryId": "vizai",
       "domain": "vizai.io",
       "name": "VizAI",
-      "location": {
-        "country": "CA",
-        "region": "ON",
-        "city": "Toronto"
-      },
-      "file": "ca\\on\\toronto\\vizai.json"
+      "shape": "registry-entry",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Toronto"
+        }
+      ],
+      "file": "ca/on/toronto/vizai.json"
     }
   ],
   "visibility-monitoring": [
@@ -80,12 +782,15 @@
       "registryId": "vizai",
       "domain": "vizai.io",
       "name": "VizAI",
-      "location": {
-        "country": "CA",
-        "region": "ON",
-        "city": "Toronto"
-      },
-      "file": "ca\\on\\toronto\\vizai.json"
+      "shape": "registry-entry",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Toronto"
+        }
+      ],
+      "file": "ca/on/toronto/vizai.json"
     }
   ],
   "business-intelligence": [
@@ -93,12 +798,15 @@
       "registryId": "vizai",
       "domain": "vizai.io",
       "name": "VizAI",
-      "location": {
-        "country": "CA",
-        "region": "ON",
-        "city": "Toronto"
-      },
-      "file": "ca\\on\\toronto\\vizai.json"
+      "shape": "registry-entry",
+      "locations": [
+        {
+          "country": "CA",
+          "region": "ON",
+          "city": "Toronto"
+        }
+      ],
+      "file": "ca/on/toronto/vizai.json"
     }
   ]
 }
