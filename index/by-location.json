@@ -1,4 +1,17 @@
 {
+  "unknown": {
+    "unknown": {
+      "Ontario, Canada": [
+        {
+          "registryId": "vizai",
+          "domain": "vizai.io",
+          "name": "VizAI",
+          "shape": "entity-profile-v1.0",
+          "file": "vizai/profile.json"
+        }
+      ]
+    }
+  },
   "CA": {
     "ON": {
       "Smiths Falls": [
@@ -51,15 +64,6 @@
           "name": "Example Company",
           "shape": "registry-entry",
           "file": "ca/on/perth/example-co.json"
-        }
-      ],
-      "Toronto": [
-        {
-          "registryId": "vizai",
-          "domain": "vizai.io",
-          "name": "VizAI",
-          "shape": "registry-entry",
-          "file": "ca/on/toronto/vizai.json"
         }
       ]
     }

@@ -21,10 +21,9 @@ from collections import defaultdict
 REPO = Path(__file__).parent.parent.parent
 
 # Domains with a known, documented duplicate pending migration. Not a build failure.
-KNOWN_PENDING_DUPLICATES = {
-    "vizai.io": "VizAI exists in data/verified/vizai.json AND registry/ca/on/toronto/vizai.json "
-                "(two schemas, same entity). Resolve to one canonical registry/vizai/profile.json in migration.",
-}
+# (vizai.io retired: canonicalized to a single registry/vizai/profile.json; the two legacy
+#  records [data/verified/vizai.json + registry/ca/on/toronto/vizai.json] were removed.)
+KNOWN_PENDING_DUPLICATES = {}
 
 
 def primary_domain(entry):

@@ -1,4 +1,34 @@
 {
+  "technology": [
+    {
+      "registryId": "vizai",
+      "domain": "vizai.io",
+      "name": "VizAI",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "unknown",
+          "region": "unknown",
+          "city": "Ontario, Canada"
+        }
+      ],
+      "file": "vizai/profile.json"
+    },
+    {
+      "registryId": "acme-corp",
+      "domain": "acmecorp.com",
+      "name": "Acme Corporation",
+      "shape": "registry-entry",
+      "locations": [
+        {
+          "country": "US",
+          "region": "CA",
+          "city": "San Francisco"
+        }
+      ],
+      "file": "us/ca/san-francisco/acme-corp.json"
+    }
+  ],
   "logistics": [
     {
       "registryId": "wills-transfer",
@@ -33,36 +63,6 @@
         }
       ],
       "file": "wills-transfer/profile.json"
-    }
-  ],
-  "technology": [
-    {
-      "registryId": "acme-corp",
-      "domain": "acmecorp.com",
-      "name": "Acme Corporation",
-      "shape": "registry-entry",
-      "locations": [
-        {
-          "country": "US",
-          "region": "CA",
-          "city": "San Francisco"
-        }
-      ],
-      "file": "us/ca/san-francisco/acme-corp.json"
-    },
-    {
-      "registryId": "vizai",
-      "domain": "vizai.io",
-      "name": "VizAI",
-      "shape": "registry-entry",
-      "locations": [
-        {
-          "country": "CA",
-          "region": "ON",
-          "city": "Toronto"
-        }
-      ],
-      "file": "ca/on/toronto/vizai.json"
     }
   ],
   "professional-services": [

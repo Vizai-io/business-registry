@@ -1,4 +1,46 @@
 {
+  "vizai.io": {
+    "profile": {
+      "claims": [
+        "VizAI is an AI software platform for collecting, verifying, and organizing business facts into registry-ready profiles and export packages."
+      ],
+      "services": [
+        "Business fact intake and verification",
+        "Registry-ready business profile generation",
+        "Business intelligence and visibility reporting"
+      ],
+      "locations": [
+        {
+          "name": "Ontario, Canada"
+        }
+      ],
+      "businessType": "AI software / business intelligence platform",
+      "industriesServed": [
+        "Business operations",
+        "Business intelligence"
+      ]
+    },
+    "category": "technology",
+    "metadata": {
+      "dateAdded": "2026-06-27",
+      "lastUpdated": "2026-06-27"
+    },
+    "entitySlug": "vizai",
+    "verification": {
+      "tier": "claimed_verified",
+      "method": "customer-canon-approval",
+      "status": "claimed_verified",
+      "canonVersion": "3.0",
+      "lastVerified": "2026-06-27"
+    },
+    "schemaVersion": "1.0",
+    "profileVersion": 1,
+    "businessIdentifier": {
+      "legalName": "VizAI",
+      "commonName": "VizAI",
+      "primaryDomain": "vizai.io"
+    }
+  },
   "willstransfer.com": {
     "schemaVersion": "1.0",
     "entitySlug": "wills-transfer",
@@ -158,34 +200,6 @@
     "metadata": {
       "dateAdded": "2025-01-06",
       "lastUpdated": "2025-01-06"
-    }
-  },
-  "vizai.io": {
-    "registryId": "vizai",
-    "domain": "vizai.io",
-    "name": "VizAI",
-    "location": {
-      "country": "CA",
-      "region": "ON",
-      "city": "Toronto"
-    },
-    "industry": "technology",
-    "services": [
-      "ai-governance",
-      "visibility-monitoring",
-      "business-intelligence"
-    ],
-    "profileUrl": "https://hub.vizai.io/p/vizai",
-    "verification": {
-      "status": "verified",
-      "tier": "verified",
-      "method": "domain-ownership",
-      "lastVerified": "2025-01-06",
-      "qualityScore": 100
-    },
-    "metadata": {
-      "dateAdded": "2025-01-06",
-      "lastUpdated": "2026-01-11"
     }
   }
 }

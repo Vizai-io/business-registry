@@ -1,4 +1,52 @@
 {
+  "Business fact intake and verification": [
+    {
+      "registryId": "vizai",
+      "domain": "vizai.io",
+      "name": "VizAI",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "unknown",
+          "region": "unknown",
+          "city": "Ontario, Canada"
+        }
+      ],
+      "file": "vizai/profile.json"
+    }
+  ],
+  "Registry-ready business profile generation": [
+    {
+      "registryId": "vizai",
+      "domain": "vizai.io",
+      "name": "VizAI",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "unknown",
+          "region": "unknown",
+          "city": "Ontario, Canada"
+        }
+      ],
+      "file": "vizai/profile.json"
+    }
+  ],
+  "Business intelligence and visibility reporting": [
+    {
+      "registryId": "vizai",
+      "domain": "vizai.io",
+      "name": "VizAI",
+      "shape": "entity-profile-v1.0",
+      "locations": [
+        {
+          "country": "unknown",
+          "region": "unknown",
+          "city": "Ontario, Canada"
+        }
+      ],
+      "file": "vizai/profile.json"
+    }
+  ],
   "Warehousing (dry, air-conditioned, cooler, frozen)": [
     {
       "registryId": "wills-transfer",
@@ -759,54 +807,6 @@
         }
       ],
       "file": "ca/on/perth/example-co.json"
-    }
-  ],
-  "ai-governance": [
-    {
-      "registryId": "vizai",
-      "domain": "vizai.io",
-      "name": "VizAI",
-      "shape": "registry-entry",
-      "locations": [
-        {
-          "country": "CA",
-          "region": "ON",
-          "city": "Toronto"
-        }
-      ],
-      "file": "ca/on/toronto/vizai.json"
-    }
-  ],
-  "visibility-monitoring": [
-    {
-      "registryId": "vizai",
-      "domain": "vizai.io",
-      "name": "VizAI",
-      "shape": "registry-entry",
-      "locations": [
-        {
-          "country": "CA",
-          "region": "ON",
-          "city": "Toronto"
-        }
-      ],
-      "file": "ca/on/toronto/vizai.json"
-    }
-  ],
-  "business-intelligence": [
-    {
-      "registryId": "vizai",
-      "domain": "vizai.io",
-      "name": "VizAI",
-      "shape": "registry-entry",
-      "locations": [
-        {
-          "country": "CA",
-          "region": "ON",
-          "city": "Toronto"
-        }
-      ],
-      "file": "ca/on/toronto/vizai.json"
     }
   ]
 }
