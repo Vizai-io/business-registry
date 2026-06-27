@@ -1,20 +1,12 @@
 {
-  "lastUpdated": "2026-04-27",
-  "lastIndexed": "2026-04-27",
+  "lastUpdated": "2026-06-27",
+  "lastIndexed": "2026-06-27",
   "tiers": {
-    "verified": 1,
+    "verified": 0,
     "community": 0,
     "enterprise": 0
   },
-  "totalProfiles": 1,
-  "categories": [
-    "technology"
-  ],
-  "byCategory": {
-    "technology": {
-      "verified": 1,
-      "community": 0,
-      "enterprise": 0
-    }
-  }
+  "totalProfiles": 0,
+  "categories": [],
+  "byCategory": {}
 }

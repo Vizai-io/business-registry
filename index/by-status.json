@@ -1,6 +1,13 @@
 {
   "claimed_verified": [
     {
+      "registryId": "vizai",
+      "domain": "vizai.io",
+      "name": "VizAI",
+      "shape": "entity-profile-v1.0",
+      "file": "vizai/profile.json"
+    },
+    {
       "registryId": "wills-transfer",
       "domain": "willstransfer.com",
       "name": "Wills Transfer",
@@ -24,13 +31,6 @@
       "name": "Example Company",
       "shape": "registry-entry",
       "file": "ca/on/perth/example-co.json"
-    },
-    {
-      "registryId": "vizai",
-      "domain": "vizai.io",
-      "name": "VizAI",
-      "shape": "registry-entry",
-      "file": "ca/on/toronto/vizai.json"
     }
   ]
 }
