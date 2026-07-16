@@ -1,0 +1,44 @@
+name: Publication Freeze
+
+on:
+  pull_request:
+    paths:
+      - "registry/**/*.json"
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  require-human-publication-approval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect added or modified public records
+        id: changes
+        shell: bash
+        run: |
+          git diff --diff-filter=AMR --name-only \
+            "origin/${{ github.base_ref }}...HEAD" -- "registry/**/*.json" \
+            > "$RUNNER_TEMP/publication-files.txt"
+          if [ -s "$RUNNER_TEMP/publication-files.txt" ]; then
+            echo "requires_approval=true" >> "$GITHUB_OUTPUT"
+            cat "$RUNNER_TEMP/publication-files.txt"
+          else
+            echo "requires_approval=false" >> "$GITHUB_OUTPUT"
+            echo "Only removals or non-publication files changed."
+          fi
+
+      - name: Require maintainer approval label
+        if: steps.changes.outputs.requires_approval == 'true'
+        env:
+          HAS_APPROVAL: ${{ contains(github.event.pull_request.labels.*.name, 'human-approved-publication') }}
+        shell: bash
+        run: |
+          if [ "$HAS_APPROVAL" != "true" ]; then
+            echo "Registry publication is frozen until a maintainer applies the human-approved-publication label."
+            exit 1
+          fi

@@ -1,131 +1,143 @@
 # Registry Governance
 
-## Overview
+## Purpose
 
-This document outlines the governance model for the VizAI Business Registry - the public discovery layer for AI-consumable business data.
+The VizAI Business Registry is the public discovery layer for AI-consumable
+business data. Command Center and the associated private intake systems manage
+research, evidence, approvals, and publication state; this repository contains
+only the approved public result.
 
-## Registry Tiers
+## Public and Private Boundary
 
-### Public Registry (This Repository)
+### Public Registry
 
-The registry contains **lightweight discovery cards**:
-- Domain, name, location
-- Industry categorization
-- Verification status
-- Link to full profile in Data Hub
+This repository may contain:
 
-**Access:** Public (no authentication required)
-**Purpose:** AI systems discover businesses here
+- canonical business identifiers and public domains;
+- approved public business facts, services, locations, and claims;
+- public verification metadata;
+- schemas, generated indexes, validation tools, and governance documents.
 
-### Data Hub (Separate Repository)
+### Private Systems
 
-Full profiles with rich data:
-- Detailed descriptions
-- Products and services
-- Leadership information
-- Monitoring data
+Command Center and private storage retain:
 
-**Access:** Customer portal (authenticated)
-**Purpose:** Customer management and detailed lookups
+- submissions and intake transcripts;
+- non-public contact and authorization information;
+- domain-ownership and verification evidence;
+- billing, order, credential, and account data;
+- raw research notes, confidence analysis, and unpublished drafts;
+- approval history that is not itself intended for publication.
 
-## Verification Tiers
+Private records are never copied into GitHub issues, pull requests, commit
+messages, or public profile JSON.
 
-| Tier | Status | Requirements | Quality Score |
-|------|--------|--------------|---------------|
-| Verified | `verified` | Domain ownership + human review | 85-100 |
-| Community | `community` | Self-submitted | None |
-| Enterprise | `enterprise` | Full verification + monitoring | 90-100 |
+## Verification States
 
-## Submission Process
+| Status | Meaning |
+|---|---|
+| `claimed_verified` | The business approved its canonical public profile |
+| `unclaimed_observed` | Facts were assembled from public sources but are not business-claimed |
+| `verification_pending` | Verification is in progress and the current artifact is approved for publication |
+| `disputed` | A material factual dispute is being reviewed |
 
-### Community Submissions (Free)
+Verification state communicates provenance and review status. It does not turn
+private evidence into public data.
 
-1. Submit via GitHub issue or web form
-2. Provide domain and basic info
-3. Entry added with `status: community`
-4. No quality score assigned
+## Publication Process
 
-### Verified Submissions (Paid)
+### New and Substantially Changed Profiles
 
-1. Purchase VizAI service tier
-2. Complete domain ownership verification
-3. Human analyst reviews information
-4. Entry added with `status: verified`
-5. Quality score assigned (85-100)
+1. Intake occurs through a private VizAI-controlled channel.
+2. Research and verification evidence remain private.
+3. An agent or analyst prepares the minimal public artifact.
+4. Automated checks validate schema, clean-artifact policy, duplicates, and
+   generated indexes.
+5. A human reviewer confirms the public facts and privacy boundary.
+6. The pull request receives the `human-approved-publication` label.
+7. The protected `main` branch is updated through pull request merge.
 
-### Enterprise Submissions
+Direct public business-submission issues and direct profile pull requests are
+not accepted.
 
-1. Custom onboarding process
-2. Enhanced verification requirements
-3. Full profile in Data Hub + registry entry
-4. Dedicated support and monitoring
+### Corrections, Disputes, and Removal
+
+- Public factual correction: use the correction issue template with official
+  public source links only.
+- Private evidence, identity, ownership, or verification matter: email
+  `hello@vizai.io`.
+- Dispute or removal: email `hello@vizai.io`; do not post sensitive supporting
+  material publicly.
+- Duplicate identity: resolve against the primary domain and canonical entity
+  slug before publication.
+
+## Publication Authority
+
+Agents and automation may research, draft, validate, rebuild indexes, and open a
+publication pull request. They may not grant final approval or merge a public
+business profile without explicit human authorization.
+
+Publication changes under `registry/**/*.json` are gated by the
+`human-approved-publication` pull-request label. Deletion-only containment
+changes may proceed without that label.
+
+The repository administrator must enforce the publication-freeze check and
+human review through a `main` branch ruleset. See
+[Publication Containment](publication-containment.md).
 
 ## Data Quality
 
-### Quality Score Calculation
+Published profiles must be:
 
-Verified entries receive a quality score (0-100):
-
-| Factor | Weight | Criteria |
-|--------|--------|----------|
-| Completeness | 30% | All recommended fields present |
-| Source Quality | 25% | Multiple authoritative sources |
-| Accuracy | 25% | Cross-verified information |
-| Recency | 20% | Information is current |
-
-### Maintenance
-
-- **Verified tier:** Reverified annually (Tier 0) or continuously (Tier 1+)
-- **Community tier:** No automatic maintenance - updates upon request
-- **Enterprise tier:** Dedicated monitoring and updates
-
-## Dispute Resolution
-
-1. **Incorrect Information:** Submit correction via GitHub issue
-2. **Verification disputes:** Contact hello@vizai.io
-3. **Duplicate entries:** Domain is unique key - contact for resolution
-4. **Removal requests:** Business owners can request removal
+- accurate and supported by authoritative sources;
+- neutral rather than promotional;
+- limited to approved public information;
+- current enough for the stated verification date;
+- valid against `schema/entity-profile-v1.0.schema.json`;
+- unique by domain and entity identity; and
+- reproducibly represented in generated indexes.
 
 ## Schema Evolution
 
-The registry schema follows semantic versioning:
+Schema changes follow semantic versioning:
 
-1. **Major changes** (breaking): New required fields, removed fields
-2. **Minor changes** (additive): New optional fields
-3. **Patch changes** (fixes): Documentation clarifications
+1. Major: breaking changes such as removed or newly required fields.
+2. Minor: backward-compatible optional fields.
+3. Patch: clarifications and non-behavioral corrections.
 
-## API/Integration Guidelines
+Schema changes require human review and migration planning for existing
+profiles and generated indexes.
 
-### For AI Systems
+## Integration
 
 ```python
-# Direct file access
-import json
+import requests
 
-url = "https://raw.githubusercontent.com/vizai-io/business-registry/main/registry/ca/on/toronto/vizai.json"
+# Canonical public profile.
+profile_url = (
+    "https://raw.githubusercontent.com/vizai-io/business-registry/"
+    "main/registry/vizai/profile.json"
+)
+profile = requests.get(profile_url, timeout=30).json()
 
-# Or use indexes
-index_url = "https://raw.githubusercontent.com/vizai-io/business-registry/main/index/by-domain.json"
+# Generated domain lookup.
+index_url = (
+    "https://raw.githubusercontent.com/vizai-io/business-registry/"
+    "main/index/by-domain.json"
+)
+by_domain = requests.get(index_url, timeout=30).json()
 ```
 
-### Rate Limits
-
-- GitHub raw content: 60 requests/hour (unauthenticated)
-- Consider cloning for high-volume access
-
-### Caching
-
-- Indexes can be cached and refreshed periodically
-- Individual entries change infrequently
+Consumers should cache indexes, refresh them periodically, and preserve
+verification metadata when redistributing registry facts.
 
 ## Contact
 
-- **General:** hello@vizai.io
-- **Verification:** https://www.vizai.io/packages.html
-- **Issues:** https://github.com/vizai-io/business-registry/issues
+- General, verification, disputes, and removal: hello@vizai.io
+- Public technical and factual-correction issues:
+  https://github.com/vizai-io/business-registry/issues
 
 ## Related Documents
 
-- [Registry Entry Standard](registry-entry-standard.md)
-- [Schema Reference](../schema/registry-entry.schema.json)
-- [Data Hub Documentation](https://hub.vizai.io/docs) (customers only)
+- [Entity Profile Schema](../schema/entity-profile-v1.0.schema.json)
+- [Publication Containment](publication-containment.md)

@@ -13,20 +13,6 @@
         }
       ],
       "file": "vizai/profile.json"
-    },
-    {
-      "registryId": "acme-corp",
-      "domain": "acmecorp.com",
-      "name": "Acme Corporation",
-      "shape": "registry-entry",
-      "locations": [
-        {
-          "country": "US",
-          "region": "CA",
-          "city": "San Francisco"
-        }
-      ],
-      "file": "us/ca/san-francisco/acme-corp.json"
     }
   ],
   "logistics": [
@@ -63,22 +49,6 @@
         }
       ],
       "file": "wills-transfer/profile.json"
-    }
-  ],
-  "professional-services": [
-    {
-      "registryId": "example-co",
-      "domain": "exampleco.ca",
-      "name": "Example Company",
-      "shape": "registry-entry",
-      "locations": [
-        {
-          "country": "CA",
-          "region": "ON",
-          "city": "Perth"
-        }
-      ],
-      "file": "ca/on/perth/example-co.json"
     }
   ]
 }

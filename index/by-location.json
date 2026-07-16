@@ -57,26 +57,6 @@
           "name": "Wills Transfer",
           "shape": "entity-profile-v1.0",
           "file": "wills-transfer/profile.json"
-        },
-        {
-          "registryId": "example-co",
-          "domain": "exampleco.ca",
-          "name": "Example Company",
-          "shape": "registry-entry",
-          "file": "ca/on/perth/example-co.json"
-        }
-      ]
-    }
-  },
-  "US": {
-    "CA": {
-      "San Francisco": [
-        {
-          "registryId": "acme-corp",
-          "domain": "acmecorp.com",
-          "name": "Acme Corporation",
-          "shape": "registry-entry",
-          "file": "us/ca/san-francisco/acme-corp.json"
         }
       ]
     }

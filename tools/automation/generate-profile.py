@@ -1,112 +1,38 @@
 #!/usr/bin/env python3
-"""
-Generate a business profile JSON from parsed submission data.
+"""Retired legacy intake-to-public-profile generator.
 
-Usage:
-    python generate-profile.py --input submission.json --output profile.json
+This command intentionally fails closed. The previous implementation copied raw
+submission fields, including contact details, into a legacy public profile
+shape. That bypassed the canonical entity-profile contract and the private
+intake/publication approval boundary.
 """
 
-import json
 import argparse
-from datetime import date
-from pathlib import Path
 
 
-def generate_profile(submission_data):
-    """Generate a complete business profile from submission data."""
+RETIREMENT_MESSAGE = """
+This legacy generator is disabled by publication containment.
 
-    profile = {
-        "schemaVersion": "1.0",
-        "businessIdentifier": {
-            "legalName": submission_data.get("legalName"),
-            "commonName": submission_data.get("commonName", submission_data.get("legalName")),
-            "primaryDomain": submission_data.get("primaryDomain"),
-        },
-        "description": {
-            "elevator": submission_data.get("elevator"),
-            "detailed": submission_data.get("detailed"),
-        },
-        "verification": {
-            "status": "community",
-            "tier": "community",
-            "method": "self-reported",
-            "lastVerified": str(date.today()),
-        },
-        "metadata": {
-            "dateAdded": str(date.today()),
-            "lastUpdated": str(date.today()),
-            "submittedBy": submission_data.get("submittedBy", "Community"),
-        }
-    }
+Do not transform raw intake records directly into public registry JSON.
+Use the private Command Center intake and controlled publication workflow:
+prepare registry/<entity-slug>/profile.json, validate it, rebuild indexes, and
+obtain explicit human publication approval.
+""".strip()
 
-    # Add optional fields if present
-    if submission_data.get("aliases"):
-        profile["businessIdentifier"]["aliases"] = submission_data["aliases"]
 
-    if submission_data.get("identifiers"):
-        profile["businessIdentifier"]["identifiers"] = submission_data["identifiers"]
-
-    if submission_data.get("yearFounded"):
-        profile["description"]["yearFounded"] = int(submission_data["yearFounded"])
-
-    if submission_data.get("founding"):
-        profile["description"]["founding"] = submission_data["founding"]
-
-    # Add location if provided
-    if submission_data.get("headquarters"):
-        profile["location"] = {
-            "headquarters": submission_data["headquarters"]
-        }
-
-    # Add contact if provided
-    if submission_data.get("email") or submission_data.get("phone"):
-        profile["contact"] = {}
-        if submission_data.get("email"):
-            profile["contact"]["email"] = submission_data["email"]
-        if submission_data.get("phone"):
-            profile["contact"]["phone"] = submission_data["phone"]
-
-    # Add offerings if provided
-    if submission_data.get("offerings"):
-        profile["offerings"] = submission_data["offerings"]
-
-    # Add sources if provided
-    if submission_data.get("sources"):
-        profile["sources"] = submission_data["sources"]
-    else:
-        # Default to website source
-        profile["sources"] = [{
-            "type": "official-website",
-            "url": f"https://{submission_data.get('primaryDomain')}",
-            "accessed": str(date.today()),
-            "description": "Company website"
-        }]
-
-    return profile
+def generate_profile(_submission_data):
+    """Fail closed for callers that imported the legacy helper."""
+    raise RuntimeError(RETIREMENT_MESSAGE)
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Generate business profile JSON")
-    parser.add_argument("--input", required=True, help="Input submission JSON file")
-    parser.add_argument("--output", required=True, help="Output profile JSON file")
-
-    args = parser.parse_args()
-
-    # Load submission data
-    with open(args.input, 'r') as f:
-        submission = json.load(f)
-
-    # Generate profile
-    profile = generate_profile(submission)
-
-    # Write output
-    output_path = Path(args.output)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    with open(output_path, 'w') as f:
-        json.dump(profile, f, indent=2)
-
-    print(f"Profile generated: {output_path}")
+    parser = argparse.ArgumentParser(
+        description="Retired: raw intake may not be converted directly to a public profile"
+    )
+    parser.add_argument("--input", help="Ignored legacy argument")
+    parser.add_argument("--output", help="Ignored legacy argument")
+    parser.parse_args()
+    parser.error(RETIREMENT_MESSAGE)
 
 
 if __name__ == "__main__":

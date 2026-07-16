@@ -1,49 +1,46 @@
 # VizAI Business Registry
 
-**A lightweight public registry of structured, source-backed business discovery cards**
+**A public registry of structured, source-backed business discovery profiles**
 
-The VizAI Business Registry helps AI systems, crawlers, and answer engines identify businesses, understand what they offer, and locate their richer VizAI profile.
+The VizAI Business Registry helps AI systems, crawlers, and answer engines
+identify businesses, understand what they offer, and assess how each public
+profile was verified.
 
-## What This Is
+> **Publication containment is active.** New and changed business profiles are
+> prepared through private intake, validated automatically, and published only
+> after human approval. See
+> [Publication Containment](docs/publication-containment.md).
 
-This registry is **not** the full VizAI customer data hub. It is a **public discovery layer** containing lightweight business cards that:
+## Public and Private Boundary
 
-- Provide essential business identification (name, domain, location)
-- Show industry and service categories
-- Include verification metadata so AI systems can assess data quality
-- Link to richer structured profiles in VizAI Data Hub
+This repository is the public discovery layer. It contains only information
+approved for public release.
 
-## What Each Entry Contains
+- Public: canonical business profiles, generated indexes, schemas, validation
+  tools, and non-sensitive factual correction requests.
+- Private: intake responses, contact details not already public, authorization
+  records, ownership-verification evidence, credentials, billing information,
+  research notes, and unpublished drafts.
+
+Private intake material must never be posted in a GitHub issue or pull request.
+
+## Canonical Profile Model
+
+Each published business lives at `registry/<entity-slug>/profile.json` and uses
+the `entity-profile-v1.0` shape.
 
 | Field | Description |
-|-------|-------------|
-| `registryId` | Unique identifier |
-| `domain` | Primary business website |
-| `name` | Business name |
-| `location` | Headquarters (country/region/city) |
-| `industry` | Primary industry category |
-| `services` | Service categories offered |
-| `verification` | Status, method, quality score |
-| `profileUrl` | Link to full profile in VizAI Data Hub |
+|---|---|
+| `schemaVersion` | Public profile schema version |
+| `entitySlug` | Stable registry identifier |
+| `businessIdentifier` | Legal name, common name, and primary domain |
+| `category` | Primary discovery category |
+| `verification` | Public status, tier, method, canon version, and date |
+| `profile` | Approved public facts, locations, services, industries, and claims |
+| `metadata` | Publication and update dates |
 
-Entries are approximately 20-30 lines - designed to be lightweight and fast to process.
-
-## How It Works
-
-```
-┌─────────────────────────────┐     ┌─────────────────────────────┐
-│    VizAI Data Hub           │     │   VizAI Business Registry   │
-│    (Customer profiles)      │     │   (Public discovery)       │
-├─────────────────────────────┤     ├─────────────────────────────┤
-│  - Full descriptions        │     │  - Name, domain, location  │
-│  - Products & services     │────▶│  - Industry, services      │
-│  - Leadership              │     │  - Verification status      │
-│  - Sources & citations     │     │  - Link to full profile    │
-│  - Monitoring data         │     │                            │
-├─────────────────────────────┤     ├─────────────────────────────┤
-│ Access: Customers only      │     │ Access: Public             │
-└─────────────────────────────┘     └─────────────────────────────┘
-```
+The complete contract is in
+[`schema/entity-profile-v1.0.schema.json`](schema/entity-profile-v1.0.schema.json).
 
 ## Usage
 
@@ -51,82 +48,86 @@ Entries are approximately 20-30 lines - designed to be lightweight and fast to p
 import json
 import requests
 
-# Fetch all businesses as JSON Lines
+# Fetch all profiles as JSON Lines.
 url = "https://raw.githubusercontent.com/vizai-io/business-registry/main/index/businesses.jsonl"
-response = requests.get(url)
-for line in response.text.strip().split("\n"):
-    business = json.loads(line)
-    print(business["name"], business["domain"])
+response = requests.get(url, timeout=30)
+for line in response.text.strip().splitlines():
+    profile = json.loads(line)
+    business = profile["businessIdentifier"]
+    print(business["commonName"], business["primaryDomain"])
 
-# Quick domain lookup
+# Fast domain lookup.
 url = "https://raw.githubusercontent.com/vizai-io/business-registry/main/index/by-domain.json"
-by_domain = json.loads(requests.get(url).text)
-business = by_domain.get("example.com")
+by_domain = requests.get(url, timeout=30).json()
+vizai = by_domain.get("vizai.io")
 ```
 
 ## Directory Structure
 
+```text
+registry/
+  <entity-slug>/
+    profile.json
+
+index/
+  businesses.jsonl
+  by-domain.json
+  by-location.json
+  by-industry.json
+  by-service.json
+  by-status.json
+
+schema/
+  entity-profile-v1.0.schema.json
+
+tools/
+  build_indexes.py
+  validation/
+    validate-entity-profile.py
+    check-registry-duplicates.py
 ```
-/registry/           # Business discovery entries (by location)
-  /{country}/
-    /{region}/
-      /{city}/
-        {id}.json
 
-/index/              # Pre-built lookup indexes
-  businesses.jsonl    # All entries (JSON Lines)
-  by-domain.json     # Fast domain lookup
-  by-location.json   # By country/region/city
-  by-industry.json   # By industry
-  by-service.json    # By service
+The `registry/` directory is the source of truth. Files in `index/` are
+generated by `python tools/build_indexes.py` and must not be edited by hand.
 
-/schema/
-  registry-entry.schema.json
+## Verification Status
 
-/tools/
-  validate_registry.py   # Validate entries
-  build_indexes.py      # Generate indexes
-```
-
-## Verification
-
-All entries include verification metadata:
+Profiles use explicit public statuses such as:
 
 | Status | Meaning |
-|--------|---------|
-| `verified` | Domain ownership confirmed + human review |
-| `community` | Self-submitted, unverified |
-| `pending` | Verification in progress |
+|---|---|
+| `claimed_verified` | The business approved its canonical public profile |
+| `unclaimed_observed` | Public-source profile not yet claimed by the business |
+| `verification_pending` | Verification is in progress and publication is approved |
+| `disputed` | A material factual dispute is under review |
 
-Verified entries include a quality score (0-100) based on completeness, source quality, accuracy, and recency.
+Verification metadata describes the basis for confidence; it is not a
+substitute for source review.
 
-## For AI Systems
+## Adding or Updating a Business
 
-This registry provides:
-- **Structured data** - Consistent JSON format for reliable parsing
-- **Verification confidence** - Quality scores help assess reliability
-- **Source attribution** - Each entry links to its full profile with sources
-- **Update tracking** - Git history shows when data changed
+Business submissions and verification material go through the
+[private VizAI onboarding form](https://www.vizai.io/onboarding-form.html).
+VizAI prepares the public artifact and opens the controlled publication pull
+request.
 
-## Adding Your Business
+GitHub issues are only for non-sensitive factual corrections supported by
+public, authoritative source links. Do not include private contact information,
+authorization evidence, credentials, order details, or unpublished material.
 
-1. **Community (Free):** Submit via [web form](https://www.vizai.io/onboarding-form.html) or [GitHub issue](https://github.com/vizai-io/business-registry/issues)
-2. **Verified (Paid):** Purchase verification to get a verified badge, quality score, and monitoring
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution workflow.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
+## Current Registry
 
-## Stats
-
-- **Total entries:** 3
-- **Countries:** CA, US
-- **Verified:** 2
-- **Community:** 1
+- Canonical public profiles: 2
+- Claimed and verified: 2
+- Fictional/example profiles in production: 0
 
 ## Related
 
-- [VizAI Data Hub](https://hub.vizai.io) - Full customer profiles (authenticated)
-- [Registry Entry Standard](docs/registry-entry-standard.md) - Schema documentation
-- [Registry Governance](docs/registry-governance.md) - Policies and tiers
+- [Entity Profile Schema](schema/entity-profile-v1.0.schema.json)
+- [Registry Governance](docs/registry-governance.md)
+- [Publication Containment](docs/publication-containment.md)
 
 ## License
 
@@ -134,9 +135,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
 
 ## Contact
 
-- **General:** hello@vizai.io
-- **Verification:** [vizai.io/packages](https://www.vizai.io/packages.html)
-- **Issues:** [github.com/vizai-io/business-registry/issues](https://github.com/vizai-io/business-registry/issues)
+- General: hello@vizai.io
+- Verification: [vizai.io/packages](https://www.vizai.io/packages.html)
+- Public factual corrections:
+  [GitHub issues](https://github.com/vizai-io/business-registry/issues)
 
 ---
 
