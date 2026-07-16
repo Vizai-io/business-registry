@@ -14,23 +14,5 @@
       "shape": "entity-profile-v1.0",
       "file": "wills-transfer/profile.json"
     }
-  ],
-  "community": [
-    {
-      "registryId": "acme-corp",
-      "domain": "acmecorp.com",
-      "name": "Acme Corporation",
-      "shape": "registry-entry",
-      "file": "us/ca/san-francisco/acme-corp.json"
-    }
-  ],
-  "verified": [
-    {
-      "registryId": "example-co",
-      "domain": "exampleco.ca",
-      "name": "Example Company",
-      "shape": "registry-entry",
-      "file": "ca/on/perth/example-co.json"
-    }
   ]
 }
