@@ -54,7 +54,8 @@ private evidence into public data.
 1. Intake occurs through a private VizAI-controlled channel.
 2. Research and verification evidence remain private.
 3. An agent or analyst prepares the minimal public artifact.
-4. Automated checks validate schema, clean-artifact policy, duplicates, and
+4. `python -m registry_verify` validates schema formats, semantics,
+   clean-artifact policy, credentials, consent, privacy, unique identities, and
    generated indexes.
 5. A human reviewer confirms the public facts and privacy boundary.
 6. The pull request receives the `human-approved-publication` label.

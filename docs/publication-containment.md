@@ -2,9 +2,9 @@
 
 Effective: 2026-07-16
 
-The public registry is under controlled-publication containment while its
-schemas, validators, provenance receipts, and repository rules are being
-converged.
+The public registry remains under controlled-publication containment. Its
+profile contract and authoritative verifier are converged; provenance
+manifests, repository administration settings, and rollback exercises remain.
 
 ## Current rules
 
@@ -50,8 +50,8 @@ to `main`.
 Containment can be replaced by controlled autonomy only after:
 
 - one public entity-profile contract is authoritative;
-- the verifier checks schema, semantics, privacy, consent receipt, duplicates,
-  and index parity;
+- `python -m registry_verify` checks schema, semantics, privacy, consent
+  receipt, duplicates, and index parity;
 - publication receipts and deterministic hashes are included;
 - repository rules are enforced;
 - rollback and emergency-unpublish procedures are tested.

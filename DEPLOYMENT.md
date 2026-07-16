@@ -50,11 +50,9 @@ Create and reserve the `human-approved-publication` label for registry owners.
 ## Build and Verify
 
 ```bash
-python -m pip install -r tools/validation/requirements.txt
-python tools/validation/validate-entity-profile.py registry/*/profile.json
-python tools/validation/check-registry-duplicates.py
+python -m pip install -r requirements.txt
 python tools/build_indexes.py
-git diff --exit-code -- index
+python -m registry_verify --report registry-verification-report.json
 ```
 
 ## Consumer Distribution

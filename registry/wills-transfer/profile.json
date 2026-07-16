@@ -74,5 +74,12 @@
   "metadata": {
     "dateAdded": "2026-06-13",
     "lastUpdated": "2026-07-16"
+  },
+  "publication": {
+    "policyVersion": "1.0",
+    "consentReceipt": {
+      "status": "recorded",
+      "reference": "canon:wills-transfer:1.0"
+    }
   }
 }

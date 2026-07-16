@@ -25,6 +25,7 @@ The `entitySlug` value must match its directory name.
 | `businessIdentifier` | Legal name, common name, and primary domain |
 | `category` | Primary discovery category |
 | `verification` | Public verification state and method |
+| `publication` | Policy version and public-safe consent receipt assertion |
 | `metadata` | Publication and update dates |
 
 Optional public sections are `profile`, `credentials`, and `profileVersion`.
@@ -54,6 +55,34 @@ Supported verification methods are:
 A `claimed_verified` profile must include a non-sensitive `canonVersion`.
 Private proof, contact identities, authorization records, and evidence files
 must not be embedded in the public profile.
+
+## Publication Consent Assertion
+
+Every profile includes:
+
+```json
+{
+  "publication": {
+    "policyVersion": "1.0",
+    "consentReceipt": {
+      "status": "recorded",
+      "reference": "canon:entity-slug:1.0"
+    }
+  }
+}
+```
+
+The reference is a non-sensitive pointer or assertion only. Raw consent
+records, approver identities, signatures, and evidence remain private.
+
+`unclaimed_observed` profiles instead use:
+
+```json
+{
+  "status": "not-required-public-observation",
+  "reference": "public-observation"
+}
+```
 
 ## Public Profile Body
 
@@ -88,15 +117,13 @@ The evidence itself remains private.
 ## Validation
 
 ```bash
-python tools/validation/validate-entity-profile.py registry/*/profile.json
-python tools/validation/check-registry-duplicates.py
-python tools/build_indexes.py
-git diff --exit-code -- index
+python -m pip install -r requirements.txt
+python -m registry_verify
 ```
 
-The canonical validator enforces the JSON schema, clean-artifact policy, and
-credential publication gate. BR-03 will add the authoritative semantic and
-machine-readable verification command.
+The authoritative verifier applies Draft 7 format checking, semantic rules,
+clean-artifact policy, credential and consent gates, privacy checks, unique
+identity checks, and deterministic index parity.
 
 ## Retired Contracts
 

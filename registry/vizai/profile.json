@@ -34,6 +34,13 @@
   },
   "schemaVersion": "1.0",
   "profileVersion": 2,
+  "publication": {
+    "policyVersion": "1.0",
+    "consentReceipt": {
+      "status": "recorded",
+      "reference": "canon:vizai:3.0"
+    }
+  },
   "businessIdentifier": {
     "legalName": "VizAI",
     "commonName": "VizAI",

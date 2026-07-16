@@ -75,10 +75,8 @@ the verification state, source review, or publication approval.
 ## Commands
 
 ```bash
-python tools/validation/validate-entity-profile.py registry/*/profile.json
-python tools/validation/check-registry-duplicates.py
 python tools/build_indexes.py
-git diff --exit-code -- index
+python -m registry_verify
 ```
 
 See [Publication Containment](publication-containment.md) for the release

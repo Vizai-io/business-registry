@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0",
+  "entitySlug": "fixture-co",
+  "businessIdentifier": {
+    "legalName": "Fixture Company Inc.",
+    "commonName": "Fixture Company",
+    "primaryDomain": "fixture.example"
+  },
+  "category": "technology",
+  "verification": {
+    "status": "claimed_verified",
+    "method": "customer-canon-approval",
+    "canonVersion": "1.0",
+    "lastVerified": "2026-01-15"
+  },
+  "publication": {
+    "policyVersion": "1.0",
+    "consentReceipt": {
+      "status": "recorded",
+      "reference": "canon:fixture-co:1.0"
+    }
+  },
+  "profile": {
+    "claims": [
+      "Leaked value github_pat_1234567890abcdefghijklmnop must be rejected.",
+      "Order number: 12345 must also be rejected."
+    ]
+  },
+  "metadata": {
+    "dateAdded": "2026-01-15",
+    "lastUpdated": "2026-01-15"
+  }
+}

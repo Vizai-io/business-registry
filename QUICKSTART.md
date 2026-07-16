@@ -18,36 +18,29 @@ registry/<entity-slug>/profile.json
 
 Generated lookup files live under `index/`.
 
-## 2. Install Validation Dependency
+## 2. Install Verifier Dependencies
 
 ```bash
-python -m pip install jsonschema
+python -m pip install -r requirements.txt
 ```
 
-## 3. Validate Canonical Profiles
+## 3. Run the Authoritative Verifier
 
 ```bash
-python tools/validation/validate-entity-profile.py \
-  registry/vizai/profile.json \
-  registry/wills-transfer/profile.json
-
-python tools/validation/check-registry-duplicates.py
+python -m registry_verify
 ```
 
-On PowerShell:
+For a machine-readable report:
 
-```powershell
-$profiles = Get-ChildItem registry -Recurse -Filter profile.json |
-  ForEach-Object { $_.FullName }
-python tools/validation/validate-entity-profile.py $profiles
-python tools/validation/check-registry-duplicates.py
+```bash
+python -m registry_verify --report registry-verification-report.json
 ```
 
 ## 4. Rebuild Generated Indexes
 
 ```bash
 python tools/build_indexes.py
-git diff -- index
+python -m registry_verify
 ```
 
 The generator must find only real, approved public profiles. Examples, tests,
@@ -73,9 +66,7 @@ The `main` ruleset should require:
 
 - pull requests and at least one approval;
 - CODEOWNERS review;
-- entity-profile validation;
-- duplicate detection;
-- generated-index consistency;
+- the authoritative registry verification command;
 - the Publication Freeze check;
 - conversation resolution; and
 - blocked force pushes and branch deletion.

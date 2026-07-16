@@ -11,6 +11,7 @@
     "businessIdentifier",
     "category",
     "verification",
+    "publication",
     "metadata"
   ],
   "properties": {
@@ -137,6 +138,43 @@
       "type": "integer",
       "minimum": 1,
       "description": "Monotonically increasing public profile version."
+    },
+    "publication": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Public-safe publication policy and consent assertion. Private approval evidence remains outside the registry.",
+      "required": [
+        "policyVersion",
+        "consentReceipt"
+      ],
+      "properties": {
+        "policyVersion": {
+          "type": "string",
+          "const": "1.0"
+        },
+        "consentReceipt": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "reference"
+          ],
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "recorded",
+                "not-required-public-observation"
+              ]
+            },
+            "reference": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$",
+              "description": "Non-sensitive opaque or canon reference. It must not identify a person or expose private evidence."
+            }
+          }
+        }
+      }
     },
     "profile": {
       "type": "object",

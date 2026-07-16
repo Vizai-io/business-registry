@@ -33,6 +33,13 @@
       ]
     },
     "profileVersion": 2,
+    "publication": {
+      "consentReceipt": {
+        "reference": "canon:vizai:3.0",
+        "status": "recorded"
+      },
+      "policyVersion": "1.0"
+    },
     "schemaVersion": "1.0",
     "verification": {
       "canonVersion": "3.0",
@@ -138,6 +145,13 @@
         "Integration solutions"
       ],
       "yearFounded": 1945
+    },
+    "publication": {
+      "consentReceipt": {
+        "reference": "canon:wills-transfer:1.0",
+        "status": "recorded"
+      },
+      "policyVersion": "1.0"
     },
     "schemaVersion": "1.0",
     "verification": {
