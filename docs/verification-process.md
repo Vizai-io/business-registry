@@ -60,6 +60,16 @@ The public artifact also contains a non-sensitive consent assertion:
 The reference is not the underlying consent record and must not identify the
 approver.
 
+The companion publication receipt records public-safe lineage and integrity:
+
+- source repository and full commit SHA;
+- opaque digest-bearing source references;
+- exact and canonical profile SHA-256 values;
+- profile and publication-policy parity; and
+- workflow preparation and approval timestamps.
+
+The receipt is provenance metadata, not the underlying evidence record.
+
 ## Workflow
 
 1. The business submits information through a private intake channel.
@@ -67,10 +77,15 @@ approver.
 3. Evidence and domain or identity checks are reviewed.
 4. A minimal public profile is prepared.
 5. The business or authorized reviewer approves the public canon when required.
-6. `python -m registry_verify` validates the full public artifact and indexes.
-7. A human registry owner reviews the publication pull request.
-8. The `human-approved-publication` label releases the Publication Freeze gate.
-9. The protected `main` branch is updated through pull request merge.
+6. A public-safe receipt is generated with digest-bearing lineage and current
+   profile hashes.
+7. Indexes and the deterministic registry manifest are regenerated.
+8. `python -m registry_verify` validates profiles, receipts, indexes, and the
+   manifest.
+9. A human registry owner reviews the publication pull request.
+10. The `human-approved-publication` label releases Publication Freeze.
+11. The protected `main` branch is updated through pull request merge.
+12. CI builds a reproducible snapshot and signs its SLSA build provenance.
 
 Agents may assist with steps 2 through 7, but cannot supply the final human
 publication approval or merge the profile autonomously.

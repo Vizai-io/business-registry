@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "registry/**/*.json"
+      - "provenance/**/*.json"
 
 permissions:
   contents: read
@@ -22,7 +23,8 @@ jobs:
         shell: bash
         run: |
           git diff --diff-filter=AMR --name-only \
-            "origin/${{ github.base_ref }}...HEAD" -- "registry/**/*.json" \
+            "origin/${{ github.base_ref }}...HEAD" -- \
+            "registry/**/*.json" "provenance/**/*.json" \
             > "$RUNNER_TEMP/publication-files.txt"
           if [ -s "$RUNNER_TEMP/publication-files.txt" ]; then
             echo "requires_approval=true" >> "$GITHUB_OUTPUT"

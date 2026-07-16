@@ -1,6 +1,7 @@
 {
   "schemaVersion": "1.0",
   "entitySlug": "wills-transfer",
+  "profileVersion": 1,
   "businessIdentifier": {
     "primaryDomain": "willstransfer.com",
     "commonName": "Wills Transfer",

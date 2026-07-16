@@ -211,11 +211,13 @@ def write_outputs(outputs, index_path):
             output_path.write_text(
                 "".join(f"{line}\n" for line in data),
                 encoding="utf-8",
+                newline="\n",
             )
         else:
             output_path.write_text(
                 json.dumps(data, indent=2, sort_keys=True) + "\n",
                 encoding="utf-8",
+                newline="\n",
             )
 
 

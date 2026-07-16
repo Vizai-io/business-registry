@@ -16,6 +16,11 @@ safe for public distribution.
 6. **Privacy** — only explicitly approved public information is published.
 7. **Reproducibility** — committed indexes exactly match canonical profiles.
 
+BR-04 strengthens provenance and reproducibility: every profile has a
+public-safe, digest-bearing receipt; exact-byte and canonical profile hashes
+must match; generated indexes and the deterministic manifest must be current;
+and release snapshots carry signed build provenance.
+
 ## Required Checks
 
 Every profile must:
@@ -23,10 +28,13 @@ Every profile must:
 - live at `registry/<entity-slug>/profile.json`;
 - validate against `schema/entity-profile-v1.0.schema.json`;
 - contain only fields defined by that schema;
+- use a monotonically increasing integer `profileVersion`;
 - use a unique entity slug and primary domain;
 - pass the clean-artifact and credential gates;
 - contain no private intake, verification, authorization, or account data; and
-- be represented exactly in all generated indexes.
+- be represented exactly in all generated indexes;
+- have one matching public-safe publication receipt; and
+- appear exactly in the deterministic registry manifest.
 
 ## Claim Quality
 
@@ -70,15 +78,20 @@ the verification state, source review, or publication approval.
 - [ ] No private or internal material appears in the artifact.
 - [ ] Duplicate detection passes.
 - [ ] Generated indexes are current.
+- [ ] Receipt identity, policy, byte count, and both profile hashes match.
+- [ ] Source lineage references contain no private evidence or secrets.
+- [ ] The deterministic registry manifest is current.
 - [ ] Human publication approval is recorded.
 
 ## Commands
 
 ```bash
 python tools/build_indexes.py
+python -m registry_supply_chain write-manifest
 python -m registry_verify
 ```
 
 See [Publication Containment](publication-containment.md) for the release
 boundary and [Entity Profile Standard](entity-profile-standard.md) for the
-canonical layout.
+canonical layout. See [Supply-Chain Integrity](supply-chain-integrity.md) for
+receipt and release requirements.

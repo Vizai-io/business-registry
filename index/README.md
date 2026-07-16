@@ -10,6 +10,7 @@ Run:
 
 ```bash
 python tools/build_indexes.py
+python -m registry_supply_chain write-manifest
 ```
 
 Do not edit index files manually.
@@ -29,4 +30,6 @@ Grouped summaries expose `entitySlug`, `domain`, `name`, canonical profile
 `file`, and location data where relevant. A record-shape discriminator is no
 longer emitted because entity-profile v1 is the sole production contract.
 
-CI rebuilds every index and fails when committed output has drifted.
+CI rebuilds every index and fails when committed output has drifted. The
+deterministic registry manifest hashes every index so downstream consumers can
+verify the complete distribution.

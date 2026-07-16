@@ -2,7 +2,10 @@
 /registry/ @NOS-Neuro
 /index/ @NOS-Neuro
 /schema/ @NOS-Neuro
+/provenance/ @NOS-Neuro
+/manifest/ @NOS-Neuro
 /registry_verify/ @NOS-Neuro
+/registry_supply_chain/ @NOS-Neuro
 /tests/ @NOS-Neuro
 /requirements.txt @NOS-Neuro
 /.github/ @NOS-Neuro

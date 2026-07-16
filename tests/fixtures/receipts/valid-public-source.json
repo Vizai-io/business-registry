@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0",
+  "receiptId": "publication:observed-co:1",
+  "entitySlug": "observed-co",
+  "profileVersion": 1,
+  "artifact": {
+    "path": "registry/observed-co/profile.json",
+    "mediaType": "application/json",
+    "bytes": 803,
+    "sha256": "sha256:23b19771649506b0c036b54376e79f5b335fc17c3ecdd6e7819c4168c13b1550",
+    "canonicalJsonSha256": "sha256:b437da2e6690da1d53921a0ff4c690b618a956b6846689f4efe89b2a62a66ec7"
+  },
+  "source": {
+    "type": "public-source-review",
+    "system": "vizai-discovery",
+    "repository": "Vizai-io/vizai-discovery",
+    "commitSha": "df5e82bda00efb65f224e3da3a540da3266d3e23",
+    "lineage": [
+      {
+        "kind": "public-document",
+        "sourceClass": "first-party",
+        "reference": "snapshot:observed-co:about:1",
+        "observedAt": "2026-02-01T10:00:00Z",
+        "contentDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "publicUrl": "https://observed.example/about"
+      }
+    ]
+  },
+  "publication": {
+    "policyVersion": "1.0",
+    "consentReceipt": {
+      "status": "not-required-public-observation",
+      "reference": "public-observation"
+    }
+  },
+  "approval": {
+    "status": "approved",
+    "preparedAt": "2026-02-01T10:10:00Z",
+    "approvedAt": "2026-02-01T10:15:00Z",
+    "workflow": "human-approved-publication"
+  }
+}

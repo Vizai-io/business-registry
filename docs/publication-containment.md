@@ -3,8 +3,9 @@
 Effective: 2026-07-16
 
 The public registry remains under controlled-publication containment. Its
-profile contract and authoritative verifier are converged; provenance
-manifests, repository administration settings, and rollback exercises remain.
+profile contract, authoritative verifier, provenance receipts, deterministic
+manifest, and attested snapshot build are active; repository administration
+settings and rollback exercises remain.
 
 ## Current rules
 
@@ -26,6 +27,10 @@ manifests, repository administration settings, and rollback exercises remain.
    repository ruleset.
 7. Removal-only pull requests are allowed without the publication label so
    false, unsafe, or consent-withdrawn records can be contained quickly.
+8. Every profile requires a matching public-safe publication receipt, and both
+   profile and receipt changes activate the Publication Freeze check.
+9. Every public distribution snapshot must be reproducible and carry
+   GitHub-verifiable signed build provenance.
 
 ## Required repository setting
 
@@ -52,6 +57,7 @@ Containment can be replaced by controlled autonomy only after:
 - one public entity-profile contract is authoritative;
 - `python -m registry_verify` checks schema, semantics, privacy, consent
   receipt, duplicates, and index parity;
-- publication receipts and deterministic hashes are included;
+- publication receipts and deterministic hashes are included (implemented in
+  BR-04);
 - repository rules are enforced;
 - rollback and emergency-unpublish procedures are tested.

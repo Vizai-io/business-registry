@@ -1,0 +1,93 @@
+{
+  "artifactCount": 14,
+  "artifacts": [
+    {
+      "bytes": 877,
+      "mediaType": "text/plain",
+      "path": "LICENSE",
+      "sha256": "sha256:8843ebd09095a0fb760f0cf71fa2e194bdad5ce90f3c8d3d5279c8e072dee114"
+    },
+    {
+      "bytes": 3116,
+      "mediaType": "application/x-ndjson",
+      "path": "index/businesses.jsonl",
+      "sha256": "sha256:c19794905f124552a4fc3c747ebc3d1e9e0a89a13ff2e2a7b128ab5216c80590"
+    },
+    {
+      "bytes": 4498,
+      "mediaType": "application/json",
+      "path": "index/by-domain.json",
+      "sha256": "sha256:7d6e2e31ad0bc1d4683c75a5b67afe8c9c3e4825464dba6d987eb49f65ae8f5f"
+    },
+    {
+      "bytes": 1027,
+      "mediaType": "application/json",
+      "path": "index/by-industry.json",
+      "sha256": "sha256:c02fb6f10a42c49f2d0ee652758fc8a897caa1bc334f7612f0a47cb746bc0576"
+    },
+    {
+      "bytes": 1326,
+      "mediaType": "application/json",
+      "path": "index/by-location.json",
+      "sha256": "sha256:53ab28e2925826a3623977949a930e7639bb00ac4fdb586d3c284599b7ed3228"
+    },
+    {
+      "bytes": 15063,
+      "mediaType": "application/json",
+      "path": "index/by-service.json",
+      "sha256": "sha256:568b07a9aec941f83dc5c81dc9e7dae457194d8185d2b911496e0d305b79a612"
+    },
+    {
+      "bytes": 323,
+      "mediaType": "application/json",
+      "path": "index/by-status.json",
+      "sha256": "sha256:cf48d37aa9793eae5bda4febb651cfadb9fcb9918e2240313a5fbeb743624f3a"
+    },
+    {
+      "bytes": 1319,
+      "mediaType": "application/json",
+      "path": "provenance/vizai/publication-receipt.json",
+      "sha256": "sha256:6983d41f1962145ccd701a797f7d7def81fbe832438bc80bfe56707d31b01856"
+    },
+    {
+      "bytes": 1364,
+      "mediaType": "application/json",
+      "path": "provenance/wills-transfer/publication-receipt.json",
+      "sha256": "sha256:7620fb4966df38d7949008eb59e8844825c80ad2fac9074032e2df3b97a86693"
+    },
+    {
+      "bytes": 1242,
+      "mediaType": "application/json",
+      "path": "registry/vizai/profile.json",
+      "sha256": "sha256:d5c0746ccac30660761ff84bb54461537069b1fc37a8c4f111bff8eb3fdcb0f8"
+    },
+    {
+      "bytes": 2694,
+      "mediaType": "application/json",
+      "path": "registry/wills-transfer/profile.json",
+      "sha256": "sha256:9dadd31832d1f25d61ec4c4deb571daf9049e47aca43c6b797cd8d91fa463da6"
+    },
+    {
+      "bytes": 9367,
+      "mediaType": "application/json",
+      "path": "schema/entity-profile-v1.0.schema.json",
+      "sha256": "sha256:882fd85e61a8d07c5e0e34b5ae966ca687a79e29ce90e26bedb6f4b642a96a81"
+    },
+    {
+      "bytes": 5367,
+      "mediaType": "application/json",
+      "path": "schema/publication-receipt-v1.0.schema.json",
+      "sha256": "sha256:d1f1081311947067e0cfd201dac29a345a4b5ca614e03153d0d02dbd64e00df8"
+    },
+    {
+      "bytes": 1866,
+      "mediaType": "application/json",
+      "path": "schema/registry-manifest-v1.0.schema.json",
+      "sha256": "sha256:46d424d92dc8e1fd3f1d6d7118bfe70711edc8adf8393a2b6c3fa17c868d5a86"
+    }
+  ],
+  "canonicalization": "vizai-canonical-json-v1",
+  "hashAlgorithm": "sha256",
+  "manifestType": "vizai-public-registry",
+  "schemaVersion": "1.0"
+}

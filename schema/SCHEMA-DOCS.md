@@ -1,9 +1,14 @@
-# VizAI Entity Profile Schema
+# VizAI Public Registry Schemas
 
 Version: `1.0`
 
 Authoritative schema:
 [`entity-profile-v1.0.schema.json`](entity-profile-v1.0.schema.json)
+
+Companion schemas:
+
+- [`publication-receipt-v1.0.schema.json`](publication-receipt-v1.0.schema.json)
+- [`registry-manifest-v1.0.schema.json`](registry-manifest-v1.0.schema.json)
 
 ## Production Contract
 
@@ -22,13 +27,14 @@ The `entitySlug` value must match its directory name.
 |---|---|
 | `schemaVersion` | Contract version; currently `1.0` |
 | `entitySlug` | Stable canonical entity identifier |
+| `profileVersion` | Monotonically increasing public artifact version |
 | `businessIdentifier` | Legal name, common name, and primary domain |
 | `category` | Primary discovery category |
 | `verification` | Public verification state and method |
 | `publication` | Policy version and public-safe consent receipt assertion |
 | `metadata` | Publication and update dates |
 
-Optional public sections are `profile`, `credentials`, and `profileVersion`.
+Optional public sections are `profile` and `credentials`.
 
 ## Verification Status
 
@@ -84,6 +90,29 @@ records, approver identities, signatures, and evidence remain private.
 }
 ```
 
+## Publication Receipt
+
+Each profile has exactly one companion:
+
+```text
+provenance/<entity-slug>/publication-receipt.json
+```
+
+The receipt records public-safe source lineage, source repository and commit,
+workflow timestamps, exact-byte SHA-256, and canonical JSON SHA-256. It repeats
+the profile's policy and consent assertion so the authoritative verifier can
+enforce exact parity.
+
+Receipts never include raw evidence, private snapshot content, consent
+documents, personal approver identity, or internal workflow notes.
+
+## Deterministic Manifest
+
+`manifest/registry-manifest.json` conforms to
+`registry-manifest-v1.0.schema.json` and inventories every public distribution
+artifact by path, media type, byte count, and SHA-256. Build-specific
+timestamps are excluded so identical inputs produce identical manifest bytes.
+
 ## Public Profile Body
 
 The optional `profile` object may contain approved public facts:
@@ -123,7 +152,8 @@ python -m registry_verify
 
 The authoritative verifier applies Draft 7 format checking, semantic rules,
 clean-artifact policy, credential and consent gates, privacy checks, unique
-identity checks, and deterministic index parity.
+identity checks, publication receipt integrity, source-lineage semantics,
+deterministic index parity, and deterministic manifest parity.
 
 ## Retired Contracts
 
