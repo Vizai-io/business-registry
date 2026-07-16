@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0",
+  "entitySlug": "observed-co",
+  "businessIdentifier": {
+    "legalName": "Observed Company Ltd.",
+    "commonName": "Observed Company",
+    "primaryDomain": "observed.example"
+  },
+  "category": "professional-services",
+  "verification": {
+    "status": "unclaimed_observed",
+    "method": "public-source-review",
+    "lastVerified": "2026-02-01"
+  },
+  "publication": {
+    "policyVersion": "1.0",
+    "consentReceipt": {
+      "status": "not-required-public-observation",
+      "reference": "public-observation"
+    }
+  },
+  "profile": {
+    "businessType": "Professional services company",
+    "country": "Canada",
+    "services": [
+      "Consulting"
+    ]
+  },
+  "metadata": {
+    "dateAdded": "2026-02-01",
+    "lastUpdated": "2026-02-01"
+  }
+}

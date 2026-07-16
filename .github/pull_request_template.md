@@ -3,9 +3,9 @@
 - [ ] No example, test, placeholder, or fictional company is being added below `registry/`.
 - [ ] No private evidence, personal contact data, order information, credentials, or verification tokens are included.
 - [ ] Every changed public claim has passed the private Truth Canon and evidence review.
-- [ ] Registry publication consent is recorded outside this public repository.
+- [ ] Registry publication consent is recorded privately and represented only by the public-safe `publication.consentReceipt` assertion.
 - [ ] Generated indexes were rebuilt with `python tools/build_indexes.py`.
-- [ ] Entity-profile validation, duplicate detection, and index-parity checks pass.
+- [ ] `python -m registry_verify` passes.
 - [ ] A human registry owner has reviewed the public artifact.
 
 ## Change summary

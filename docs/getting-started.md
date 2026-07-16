@@ -86,14 +86,12 @@ controlled private-intake workflow.
 Validate the registry:
 
 ```bash
-python tools/validation/validate-entity-profile.py registry/*/profile.json
-python tools/validation/check-registry-duplicates.py
 python tools/build_indexes.py
-git diff -- index
+python -m registry_verify
 ```
 
-On shells that do not expand `registry/*/profile.json`, pass each profile path
-or use the PowerShell example in the repository `QUICKSTART.md`.
+The verifier covers every canonical profile and the generated distribution;
+profile glob expansion is not required.
 
 ## Trust and Verification
 

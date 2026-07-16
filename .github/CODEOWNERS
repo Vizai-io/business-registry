@@ -2,5 +2,7 @@
 /registry/ @NOS-Neuro
 /index/ @NOS-Neuro
 /schema/ @NOS-Neuro
-/tools/validation/ @NOS-Neuro
+/registry_verify/ @NOS-Neuro
+/tests/ @NOS-Neuro
+/requirements.txt @NOS-Neuro
 /.github/ @NOS-Neuro

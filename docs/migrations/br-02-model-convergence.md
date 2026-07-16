@@ -11,8 +11,7 @@ Business Registry.
 |---|---|
 | Profile path | `registry/<entity-slug>/profile.json` |
 | Schema | `schema/entity-profile-v1.0.schema.json` |
-| Validator | `tools/validation/validate-entity-profile.py` |
-| Duplicate check | `tools/validation/check-registry-duplicates.py` |
+| Authoritative verifier | `python -m registry_verify` |
 | Index generator | `tools/build_indexes.py` |
 | Generated distribution | `index/` |
 | CI | `.github/workflows/validate-registry.yml` |
@@ -30,6 +29,8 @@ The following production models were deleted:
 - `schema/registry-entry.schema.json`
 - `tools/validate_registry.py`
 - `tools/validation/validate-profile.py`
+- `tools/validation/validate-entity-profile.py`
+- `tools/validation/check-registry-duplicates.py`
 - `tools/automation/generate-indexes.py`
 - `tools/automation/generate-profile.py`
 

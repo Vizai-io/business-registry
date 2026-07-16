@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "entitySlug": "fixture-co",
+  "businessIdentifier": {
+    "legalName": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "commonName": " ",
+    "primaryDomain": "fixture.example",
+    "aliases": [
+      "Fixture",
+      "fixture"
+    ]
+  },
+  "category": "technology",
+  "verification": {
+    "status": "verification_pending",
+    "method": "customer-canon-approval",
+    "lastVerified": "2026-01-15"
+  },
+  "publication": {
+    "policyVersion": "1.0",
+    "consentReceipt": {
+      "status": "recorded",
+      "reference": "review:fixture-co:1"
+    }
+  },
+  "profile": {
+    "services": [
+      "Software development",
+      "software development"
+    ],
+    "industriesServed": []
+  },
+  "metadata": {
+    "dateAdded": "2026-01-15",
+    "lastUpdated": "2026-01-15"
+  }
+}

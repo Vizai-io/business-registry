@@ -38,6 +38,7 @@ ENV/
 .pytest_cache/
 .coverage
 htmlcov/
+registry-verification-report.json
 
 # Local development
 .env

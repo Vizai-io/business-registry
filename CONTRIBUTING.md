@@ -47,7 +47,8 @@ All pull requests must:
 
 - be narrowly scoped;
 - contain no secrets, private evidence, or unapproved personal data;
-- pass schema, clean-artifact, duplicate, and index-consistency checks;
+- pass `python -m registry_verify`;
+- include a verification-state-compatible public-safe consent assertion;
 - identify any business-profile paths changed; and
 - receive human approval before publication.
 
@@ -72,7 +73,7 @@ generation cannot discover them.
 
 1. Collect source material through private intake.
 2. Prepare a minimal public profile artifact.
-3. Run schema, privacy, duplicate, and index checks.
+3. Rebuild indexes and run `python -m registry_verify`.
 4. Open a pull request with the publication checklist completed.
 5. Obtain explicit human approval and the `human-approved-publication` label.
 6. Merge through the protected `main` branch.

@@ -43,6 +43,23 @@ For example:
 This metadata states the public verification outcome without revealing the
 private proof.
 
+The public artifact also contains a non-sensitive consent assertion:
+
+```json
+{
+  "publication": {
+    "policyVersion": "1.0",
+    "consentReceipt": {
+      "status": "recorded",
+      "reference": "canon:wills-transfer:1.0"
+    }
+  }
+}
+```
+
+The reference is not the underlying consent record and must not identify the
+approver.
+
 ## Workflow
 
 1. The business submits information through a private intake channel.
@@ -50,7 +67,7 @@ private proof.
 3. Evidence and domain or identity checks are reviewed.
 4. A minimal public profile is prepared.
 5. The business or authorized reviewer approves the public canon when required.
-6. Automated checks validate schema, privacy boundary, duplicates, and indexes.
+6. `python -m registry_verify` validates the full public artifact and indexes.
 7. A human registry owner reviews the publication pull request.
 8. The `human-approved-publication` label releases the Publication Freeze gate.
 9. The protected `main` branch is updated through pull request merge.

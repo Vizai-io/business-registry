@@ -36,6 +36,13 @@ identity. Alternate geo-based records and tier-based copies are prohibited.
     "method": "public-source-review",
     "lastVerified": "2026-07-16"
   },
+  "publication": {
+    "policyVersion": "1.0",
+    "consentReceipt": {
+      "status": "not-required-public-observation",
+      "reference": "public-observation"
+    }
+  },
   "metadata": {
     "dateAdded": "2026-07-16",
     "lastUpdated": "2026-07-16"
@@ -86,3 +93,9 @@ Generated indexes are not source-of-truth and must never be edited manually.
 All additions and changes follow private intake, artifact preparation,
 validation, pull-request review, explicit human approval, and protected merge.
 See [Publication Containment](publication-containment.md).
+
+Run the complete profile and repository gate with:
+
+```bash
+python -m registry_verify
+```
