@@ -1,90 +1,84 @@
 #!/usr/bin/env python3
-"""
-Whole-repo duplicate detection for the VizAI Business Registry (DEC-029 / WP-13).
-
-Scans BOTH data/** and registry/** (not just data/**, which the legacy CI did).
-Reads the primary domain from either nested (businessIdentifier.primaryDomain) or
-flat (domain) layouts, so it works across the lightweight, registry-entry, and
-entity-profile schemas during the migration window.
-
-Known-pending duplicates (e.g. the VizAI record that exists in both data/verified/
-and registry/ca/on/toronto/) are reported as KNOWN and do not fail the build — they
-are slated for resolution in the registry migration (WP-13 follow-on). NEW duplicates
-fail the build.
-"""
+"""Check canonical registry profiles for duplicate domains and entity slugs."""
 
 import json
 import sys
-from pathlib import Path
 from collections import defaultdict
-
-REPO = Path(__file__).parent.parent.parent
-
-# Domains with a known, documented duplicate pending migration. Not a build failure.
-# (vizai.io retired: canonicalized to a single registry/vizai/profile.json; the two legacy
-#  records [data/verified/vizai.json + registry/ca/on/toronto/vizai.json] were removed.)
-KNOWN_PENDING_DUPLICATES = {}
+from pathlib import Path
 
 
-def primary_domain(entry):
-    return (
-        entry.get("domain")
-        or entry.get("businessIdentifier", {}).get("primaryDomain")
-    )
+REPOSITORY = Path(__file__).resolve().parent.parent.parent
+REGISTRY = REPOSITORY / "registry"
 
 
-def scan(dir_name):
-    found = defaultdict(list)
-    base = REPO / dir_name
-    if not base.exists():
-        return found
-    for path in base.rglob("*.json"):
-        if path.name == "index.json":
-            continue
-        try:
-            entry = json.loads(path.read_text(encoding="utf-8"))
-        except Exception as e:
-            print(f"  warn: could not read {path}: {e}")
-            continue
-        dom = primary_domain(entry)
-        if dom:
-            found[dom.lower()].append(str(path.relative_to(REPO)))
-    return found
+def canonical_profile_paths():
+    json_paths = sorted(REGISTRY.rglob("*.json"))
+    unexpected = []
+    canonical = []
+    for path in json_paths:
+        relative = path.relative_to(REGISTRY)
+        if len(relative.parts) == 2 and relative.name == "profile.json":
+            canonical.append(path)
+        else:
+            unexpected.append(relative.as_posix())
+    return canonical, unexpected
+
+
+def duplicates(values):
+    return {
+        value: paths
+        for value, paths in values.items()
+        if len(paths) > 1
+    }
 
 
 def main():
+    paths, unexpected = canonical_profile_paths()
+    if unexpected:
+        print("FAIL: non-canonical JSON exists below registry/:")
+        for path in unexpected:
+            print(f"  - {path}")
+        return 1
+
     domains = defaultdict(list)
-    for d in ("data", "registry"):
-        for dom, files in scan(d).items():
-            domains[dom].extend(files)
+    slugs = defaultdict(list)
+    for path in paths:
+        profile = json.loads(path.read_text(encoding="utf-8"))
+        relative = path.relative_to(REPOSITORY).as_posix()
+        domain = profile.get("businessIdentifier", {}).get("primaryDomain")
+        slug = profile.get("entitySlug")
+        if domain:
+            domains[domain.lower()].append(relative)
+        if slug:
+            slugs[slug].append(relative)
 
-    duplicates = {dom: files for dom, files in domains.items() if len(files) > 1}
+    duplicate_domains = duplicates(domains)
+    duplicate_slugs = duplicates(slugs)
 
-    print(f"Scanned {sum(len(v) for v in domains.values())} entries across data/ and registry/")
-    print(f"Unique domains: {len(domains)} | Duplicated domains: {len(duplicates)}\n")
+    print(f"Scanned {len(paths)} canonical entity profiles")
+    print(
+        f"Unique domains: {len(domains)} | "
+        f"Duplicate domains: {len(duplicate_domains)}"
+    )
+    print(
+        f"Unique entity slugs: {len(slugs)} | "
+        f"Duplicate entity slugs: {len(duplicate_slugs)}"
+    )
 
-    if not duplicates:
-        print("No duplicate domains found.")
-        sys.exit(0)
+    if duplicate_domains or duplicate_slugs:
+        for label, found in (
+            ("domain", duplicate_domains),
+            ("entity slug", duplicate_slugs),
+        ):
+            for value, files in sorted(found.items()):
+                print(f"\nDuplicate {label}: {value}")
+                for file in files:
+                    print(f"  - {file}")
+        return 1
 
-    new_dups = False
-    for dom, files in sorted(duplicates.items()):
-        if dom in KNOWN_PENDING_DUPLICATES:
-            print(f"[KNOWN] {dom}")
-            print(f"        {KNOWN_PENDING_DUPLICATES[dom]}")
-        else:
-            print(f"[NEW DUPLICATE] {dom}")
-            new_dups = True
-        for f in files:
-            print(f"          - {f}")
-        print()
-
-    if new_dups:
-        print("FAIL: new duplicate domain(s) detected.")
-        sys.exit(1)
-    print("PASS: only known-pending duplicates present (tracked for migration).")
-    sys.exit(0)
+    print("No duplicate canonical identities found.")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

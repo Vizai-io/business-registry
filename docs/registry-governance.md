@@ -34,6 +34,9 @@ messages, or public profile JSON.
 
 ## Verification States
 
+Verification status is record state, not a service or storage tier. Profiles
+are never separated into public tier directories.
+
 | Status | Meaning |
 |---|---|
 | `claimed_verified` | The business approved its canonical public profile |
@@ -140,4 +143,6 @@ verification metadata when redistributing registry facts.
 ## Related Documents
 
 - [Entity Profile Schema](../schema/entity-profile-v1.0.schema.json)
+- [Entity Profile Standard](entity-profile-standard.md)
+- [BR-02 Model Convergence](migrations/br-02-model-convergence.md)
 - [Publication Containment](publication-containment.md)

@@ -1,31 +1,28 @@
-name: Validate Entity Profiles (registry/**)
-
-# Closes the WP-13 gap: the legacy workflows only validate data/**, leaving
-# registry/<slug>/profile.json (the Model C public profiles, incl. the live
-# Wills Transfer pilot) unchecked. This workflow validates registry/** on PRs
-# and pushes to main: schema + clean-artifact (DEC-028) + evidence-gate (DEC-027)
-# + whole-repo duplicate detection.
+name: Verify Canonical Registry
 
 on:
   pull_request:
     paths:
-      - 'registry/**/*.json'
-      - 'index/**'
-      - 'schema/entity-profile-v1.0.schema.json'
-      - 'tools/build_indexes.py'
-      - 'tools/validation/**'
+      - "registry/**/*.json"
+      - "index/**"
+      - "schema/entity-profile-v1.0.schema.json"
+      - "tools/build_indexes.py"
+      - "tools/validation/**"
   push:
     branches:
       - main
     paths:
-      - 'registry/**/*.json'
-      - 'index/**'
-      - 'schema/entity-profile-v1.0.schema.json'
-      - 'tools/build_indexes.py'
-      - 'tools/validation/**'
+      - "registry/**/*.json"
+      - "index/**"
+      - "schema/entity-profile-v1.0.schema.json"
+      - "tools/build_indexes.py"
+      - "tools/validation/**"
+
+permissions:
+  contents: read
 
 jobs:
-  validate-entity-profiles:
+  verify-canonical-registry:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -34,26 +31,19 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install jsonschema
+          pip install -r tools/validation/requirements.txt
 
-      - name: Validate all entity profiles
+      - name: Validate canonical entity profiles
         run: |
-          echo "Validating registry/<slug>/profile.json files..."
-          PROFILES=$(find registry -name "profile.json" -type f)
-          if [ -z "$PROFILES" ]; then
-            echo "No entity profiles found under registry/ — nothing to validate."
-            exit 0
-          fi
-          python tools/validation/validate-entity-profile.py $PROFILES
+          python tools/validation/validate-entity-profile.py registry/*/profile.json
 
-      - name: Whole-repo duplicate detection
+      - name: Check canonical identities
         run: |
-          echo "Checking data/ + registry/ for duplicate domains..."
           python tools/validation/check-registry-duplicates.py
 
       - name: Verify generated indexes are current

@@ -1,239 +1,236 @@
 #!/usr/bin/env python3
-"""
-Build index files for the VizAI Business Registry.
+"""Build public indexes from canonical VizAI entity profiles.
 
-Generates multiple index formats for different access patterns:
-- businesses.jsonl: All entries as JSON Lines
-- by-domain.json: Fast lookup by domain
-- by-location.json: Hierarchical by country/region/city
-- by-service.json: Grouped by services offered
-- by-industry.json: Grouped by industry category
-- by-status.json: Grouped by verification status
+Production source of truth:
+    registry/<entity-slug>/profile.json
 
-Source of truth: registry/<...>/*.json. This generator understands TWO entry
-shapes and normalizes them (WP-13B / DEC-029):
-  - entity-profile-v1.0  (entity-primary: registry/<slug>/profile.json) — the
-    canonical Model C public profile. Fields nest under businessIdentifier /
-    profile / verification / category.
-  - registry-entry       (legacy geo records: registry/<cc>/<region>/<city>/*.json)
-    with top-level domain / registryId / location / industry / services.
-Legacy records remain indexed for compatibility; every index record carries a
-`shape` field so the two are clearly distinguishable.
+No legacy record shape or alternate source directory is accepted.
 """
 
 import json
-from pathlib import Path
 from collections import defaultdict
-
-COUNTRY_CODES = {
-    "canada": "CA", "united states": "US", "usa": "US", "u.s.": "US", "us": "US",
-    "united kingdom": "GB", "uk": "GB",
-}
+from pathlib import Path
 
 
-def country_code(val):
-    if not val:
-        return "unknown"
-    v = str(val).strip()
-    if len(v) == 2:
-        return v.upper()
-    return COUNTRY_CODES.get(v.lower(), v)
-
-
-def is_entity_profile(entry):
-    """entity-profile-v1.0 vs legacy registry-entry."""
-    return (
-        entry.get("schemaVersion") == "1.0"
-        and "entitySlug" in entry
-        and "businessIdentifier" in entry
-    )
-
-
-def normalize_entry(entry):
-    """Return a shape-agnostic view used by all index builders."""
-    file = entry.get("_file")
-    if is_entity_profile(entry):
-        bid = entry.get("businessIdentifier", {}) or {}
-        prof = entry.get("profile", {}) or {}
-        ver = entry.get("verification", {}) or {}
-        country = country_code(prof.get("country"))
-        locations = []
-        for loc in prof.get("locations", []) or []:
-            locations.append({
-                "country": country,
-                "region": loc.get("region", "unknown"),
-                "city": loc.get("name", "unknown"),
-            })
-        if not locations:
-            scale = prof.get("scale", {}) or {}
-            locations.append({"country": country, "region": scale.get("region", "unknown"), "city": "unknown"})
-        return {
-            "shape": "entity-profile-v1.0",
-            "registryId": entry.get("entitySlug"),
-            "domain": bid.get("primaryDomain"),
-            "name": bid.get("commonName") or bid.get("legalName"),
-            "industry": entry.get("category", "other"),
-            "services": prof.get("services", []) or [],
-            "status": ver.get("status"),
-            "locations": locations,
-            "file": file,
-        }
-    # legacy registry-entry
-    loc = entry.get("location", {}) or {}
-    return {
-        "shape": "registry-entry",
-        "registryId": entry.get("registryId"),
-        "domain": entry.get("domain"),
-        "name": entry.get("name"),
-        "industry": entry.get("industry", "other"),
-        "services": entry.get("services", []) or [],
-        "status": (entry.get("verification", {}) or {}).get("status"),
-        "locations": [{
-            "country": loc.get("country", "unknown"),
-            "region": loc.get("region", "unknown"),
-            "city": loc.get("city", "unknown"),
-        }],
-        "file": file,
-    }
-
-
-def summary(norm):
-    """Compact record used in the grouped indexes."""
-    return {
-        "registryId": norm["registryId"],
-        "domain": norm["domain"],
-        "name": norm["name"],
-        "shape": norm["shape"],
-        "locations": norm["locations"],
-        "file": norm["file"],
-    }
+def _profile_path_is_canonical(path, registry_path):
+    relative = path.relative_to(registry_path)
+    return len(relative.parts) == 2 and relative.name == "profile.json"
 
 
 def find_all_entries(registry_path):
-    """Find all registry entry JSON files (forward-slash relative paths)."""
+    """Load every canonical profile and reject alternate registry layouts."""
+    registry_path = Path(registry_path)
+    json_paths = sorted(registry_path.rglob("*.json"))
+    unexpected = [
+        path.relative_to(registry_path).as_posix()
+        for path in json_paths
+        if not _profile_path_is_canonical(path, registry_path)
+    ]
+    if unexpected:
+        formatted = "\n  - ".join(unexpected)
+        raise ValueError(
+            "Non-canonical JSON found below registry/. "
+            "Only registry/<entity-slug>/profile.json is supported:\n"
+            f"  - {formatted}"
+        )
+
     entries = []
-    for json_path in registry_path.rglob("*.json"):
-        if json_path.name == "index.json":
-            continue
-        try:
-            with open(json_path, 'r', encoding='utf-8') as f:
-                entry = json.load(f)
-            entry["_file"] = json_path.relative_to(registry_path).as_posix()
-            entries.append(entry)
-        except Exception as e:
-            print(f"Error reading {json_path}: {e}")
-    return entries
+    for json_path in json_paths:
+        with json_path.open("r", encoding="utf-8") as handle:
+            entry = json.load(handle)
+        if not (
+            entry.get("schemaVersion") == "1.0"
+            and entry.get("entitySlug")
+            and entry.get("businessIdentifier")
+        ):
+            raise ValueError(
+                f"{json_path.relative_to(registry_path).as_posix()} "
+                "is not an entity-profile-v1.0 record"
+            )
+        entry["_file"] = json_path.relative_to(registry_path).as_posix()
+        entries.append(entry)
+
+    return sorted(entries, key=lambda entry: entry["entitySlug"])
+
+
+def country_code(value):
+    if not value:
+        return "unknown"
+    normalized = str(value).strip()
+    if len(normalized) == 2:
+        return normalized.upper()
+    known = {
+        "canada": "CA",
+        "united states": "US",
+        "usa": "US",
+        "u.s.": "US",
+        "us": "US",
+        "united kingdom": "GB",
+        "uk": "GB",
+    }
+    return known.get(normalized.lower(), normalized)
+
+
+def normalize_entry(entry):
+    """Return canonical fields used by grouped indexes."""
+    identifier = entry["businessIdentifier"]
+    profile = entry.get("profile", {}) or {}
+    verification = entry["verification"]
+    country = country_code(profile.get("country"))
+
+    locations = [
+        {
+            "country": country,
+            "region": location.get("region", "unknown"),
+            "city": location.get("name", "unknown"),
+        }
+        for location in profile.get("locations", []) or []
+    ]
+    if not locations:
+        scale = profile.get("scale", {}) or {}
+        locations = [
+            {
+                "country": country,
+                "region": scale.get("region", "unknown"),
+                "city": "unknown",
+            }
+        ]
+
+    return {
+        "entitySlug": entry["entitySlug"],
+        "domain": identifier["primaryDomain"],
+        "name": identifier.get("commonName") or identifier["legalName"],
+        "category": entry["category"],
+        "services": profile.get("services", []) or [],
+        "status": verification["status"],
+        "locations": locations,
+        "file": entry["_file"],
+    }
+
+
+def summary(normalized):
+    return {
+        "entitySlug": normalized["entitySlug"],
+        "domain": normalized["domain"],
+        "name": normalized["name"],
+        "locations": normalized["locations"],
+        "file": normalized["file"],
+    }
+
+
+def clean_entry(entry):
+    return {key: value for key, value in entry.items() if key != "_file"}
 
 
 def build_by_domain(entries):
-    """Domain -> full clean entry (native shape preserved)."""
-    result = {}
-    for entry in entries:
-        norm = normalize_entry(entry)
-        if norm["domain"]:
-            result[norm["domain"]] = {k: v for k, v in entry.items() if k != "_file"}
-    return result
+    return {
+        normalize_entry(entry)["domain"]: clean_entry(entry)
+        for entry in entries
+    }
 
 
 def build_by_location(entries):
-    """Hierarchical country/region/city index (multi-location aware)."""
-    location_index = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+    grouped = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
     for entry in entries:
-        norm = normalize_entry(entry)
-        for loc in norm["locations"]:
-            location_index[loc["country"]][loc["region"]][loc["city"]].append({
-                "registryId": norm["registryId"],
-                "domain": norm["domain"],
-                "name": norm["name"],
-                "shape": norm["shape"],
-                "file": norm["file"],
-            })
-    return {c: {r: dict(cities) for r, cities in regions.items()} for c, regions in location_index.items()}
+        normalized = normalize_entry(entry)
+        for location in normalized["locations"]:
+            grouped[location["country"]][location["region"]][location["city"]].append(
+                {
+                    "entitySlug": normalized["entitySlug"],
+                    "domain": normalized["domain"],
+                    "name": normalized["name"],
+                    "file": normalized["file"],
+                }
+            )
+    return {
+        country: {
+            region: dict(cities)
+            for region, cities in regions.items()
+        }
+        for country, regions in grouped.items()
+    }
 
 
 def build_by_service(entries):
-    """Service -> businesses."""
-    service_index = defaultdict(list)
+    grouped = defaultdict(list)
     for entry in entries:
-        norm = normalize_entry(entry)
-        for service in norm["services"]:
-            service_index[service].append(summary(norm))
-    return dict(service_index)
+        normalized = normalize_entry(entry)
+        for service in normalized["services"]:
+            grouped[service].append(summary(normalized))
+    return dict(grouped)
 
 
 def build_by_industry(entries):
-    """Industry/category -> businesses."""
-    industry_index = defaultdict(list)
+    grouped = defaultdict(list)
     for entry in entries:
-        norm = normalize_entry(entry)
-        industry_index[norm["industry"] or "other"].append(summary(norm))
-    return dict(industry_index)
+        normalized = normalize_entry(entry)
+        grouped[normalized["category"]].append(summary(normalized))
+    return dict(grouped)
 
 
 def build_by_status(entries):
-    """Verification status -> businesses (WP-13B)."""
-    status_index = defaultdict(list)
+    grouped = defaultdict(list)
     for entry in entries:
-        norm = normalize_entry(entry)
-        status_index[norm["status"] or "unknown"].append({
-            "registryId": norm["registryId"],
-            "domain": norm["domain"],
-            "name": norm["name"],
-            "shape": norm["shape"],
-            "file": norm["file"],
-        })
-    return dict(status_index)
+        normalized = normalize_entry(entry)
+        grouped[normalized["status"]].append(
+            {
+                "entitySlug": normalized["entitySlug"],
+                "domain": normalized["domain"],
+                "name": normalized["name"],
+                "file": normalized["file"],
+            }
+        )
+    return dict(grouped)
 
 
 def build_jsonl(entries):
-    """All entries as JSON Lines (native clean shape)."""
-    for entry in entries:
-        output_entry = {k: v for k, v in entry.items() if k != "_file"}
-        yield json.dumps(output_entry)
+    return [
+        json.dumps(clean_entry(entry), separators=(",", ":"), sort_keys=True)
+        for entry in entries
+    ]
+
+
+def build_outputs(entries):
+    """Build every committed index in memory."""
+    return {
+        "by-domain.json": build_by_domain(entries),
+        "by-location.json": build_by_location(entries),
+        "by-service.json": build_by_service(entries),
+        "by-industry.json": build_by_industry(entries),
+        "by-status.json": build_by_status(entries),
+        "businesses.jsonl": build_jsonl(entries),
+    }
+
+
+def write_outputs(outputs, index_path):
+    index_path = Path(index_path)
+    index_path.mkdir(exist_ok=True)
+    for filename, data in outputs.items():
+        output_path = index_path / filename
+        if filename.endswith(".jsonl"):
+            output_path.write_text(
+                "".join(f"{line}\n" for line in data),
+                encoding="utf-8",
+            )
+        else:
+            output_path.write_text(
+                json.dumps(data, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
 
 
 def main():
-    script_dir = Path(__file__).parent
-    registry_path = script_dir.parent / "registry"
-    index_path = script_dir.parent / "index"
-    index_path.mkdir(exist_ok=True)
+    repository = Path(__file__).resolve().parent.parent
+    entries = find_all_entries(repository / "registry")
+    outputs = build_outputs(entries)
+    write_outputs(outputs, repository / "index")
 
-    print("Finding all registry entries...")
-    entries = find_all_entries(registry_path)
-    print(f"Found {len(entries)} entries")
-    shapes = defaultdict(int)
-    for e in entries:
-        shapes["entity-profile-v1.0" if is_entity_profile(e) else "registry-entry"] += 1
-    print(f"  shapes: {dict(shapes)}")
-
-    print("\nBuilding indexes...")
-    builders = {
-        "by-domain.json": build_by_domain,
-        "by-location.json": build_by_location,
-        "by-service.json": build_by_service,
-        "by-industry.json": build_by_industry,
-        "by-status.json": build_by_status,
-    }
-    outputs = {}
-    for filename, builder in builders.items():
-        print(f"  Building {filename}...")
-        data = builder(entries)
-        with open(index_path / filename, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2)
-        outputs[filename] = data
-
-    print("  Building businesses.jsonl...")
-    with open(index_path / "businesses.jsonl", 'w', encoding='utf-8') as f:
-        for line in build_jsonl(entries):
-            f.write(line + "\n")
-
-    print("\nIndexes built successfully!")
-    print(f"  by-domain.json: {len(outputs['by-domain.json'])} entries")
-    print(f"  by-location.json: {len(outputs['by-location.json'])} countries")
-    print(f"  by-service.json: {len(outputs['by-service.json'])} services")
-    print(f"  by-industry.json: {len(outputs['by-industry.json'])} industries")
-    print(f"  by-status.json: {len(outputs['by-status.json'])} statuses")
-    print(f"  businesses.jsonl: {len(entries)} entries")
+    print(f"Built canonical indexes from {len(entries)} entity profiles")
+    print(f"  domains: {len(outputs['by-domain.json'])}")
+    print(f"  countries: {len(outputs['by-location.json'])}")
+    print(f"  services: {len(outputs['by-service.json'])}")
+    print(f"  categories: {len(outputs['by-industry.json'])}")
+    print(f"  statuses: {len(outputs['by-status.json'])}")
 
 
 if __name__ == "__main__":

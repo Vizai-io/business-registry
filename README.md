@@ -35,7 +35,7 @@ the `entity-profile-v1.0` shape.
 | `entitySlug` | Stable registry identifier |
 | `businessIdentifier` | Legal name, common name, and primary domain |
 | `category` | Primary discovery category |
-| `verification` | Public status, tier, method, canon version, and date |
+| `verification` | Public status, method, canon version, and date |
 | `profile` | Approved public facts, locations, services, industries, and claims |
 | `metadata` | Publication and update dates |
 
@@ -126,6 +126,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution workflow.
 ## Related
 
 - [Entity Profile Schema](schema/entity-profile-v1.0.schema.json)
+- [Entity Profile Standard](docs/entity-profile-standard.md)
+- [BR-02 Model Convergence](docs/migrations/br-02-model-convergence.md)
 - [Registry Governance](docs/registry-governance.md)
 - [Publication Containment](docs/publication-containment.md)
 

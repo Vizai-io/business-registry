@@ -1,62 +1,56 @@
 {
-  "unknown": {
-    "unknown": {
-      "Ontario, Canada": [
-        {
-          "registryId": "vizai",
-          "domain": "vizai.io",
-          "name": "VizAI",
-          "shape": "entity-profile-v1.0",
-          "file": "vizai/profile.json"
-        }
-      ]
-    }
-  },
   "CA": {
     "ON": {
-      "Smiths Falls": [
-        {
-          "registryId": "wills-transfer",
-          "domain": "willstransfer.com",
-          "name": "Wills Transfer",
-          "shape": "entity-profile-v1.0",
-          "file": "wills-transfer/profile.json"
-        }
-      ],
       "Brockville": [
         {
-          "registryId": "wills-transfer",
           "domain": "willstransfer.com",
-          "name": "Wills Transfer",
-          "shape": "entity-profile-v1.0",
-          "file": "wills-transfer/profile.json"
+          "entitySlug": "wills-transfer",
+          "file": "wills-transfer/profile.json",
+          "name": "Wills Transfer"
         }
       ],
       "Cornwall": [
         {
-          "registryId": "wills-transfer",
           "domain": "willstransfer.com",
-          "name": "Wills Transfer",
-          "shape": "entity-profile-v1.0",
-          "file": "wills-transfer/profile.json"
+          "entitySlug": "wills-transfer",
+          "file": "wills-transfer/profile.json",
+          "name": "Wills Transfer"
         }
       ],
       "Ottawa": [
         {
-          "registryId": "wills-transfer",
           "domain": "willstransfer.com",
-          "name": "Wills Transfer",
-          "shape": "entity-profile-v1.0",
-          "file": "wills-transfer/profile.json"
+          "entitySlug": "wills-transfer",
+          "file": "wills-transfer/profile.json",
+          "name": "Wills Transfer"
         }
       ],
       "Perth": [
         {
-          "registryId": "wills-transfer",
           "domain": "willstransfer.com",
-          "name": "Wills Transfer",
-          "shape": "entity-profile-v1.0",
-          "file": "wills-transfer/profile.json"
+          "entitySlug": "wills-transfer",
+          "file": "wills-transfer/profile.json",
+          "name": "Wills Transfer"
+        }
+      ],
+      "Smiths Falls": [
+        {
+          "domain": "willstransfer.com",
+          "entitySlug": "wills-transfer",
+          "file": "wills-transfer/profile.json",
+          "name": "Wills Transfer"
+        }
+      ]
+    }
+  },
+  "unknown": {
+    "unknown": {
+      "Ontario, Canada": [
+        {
+          "domain": "vizai.io",
+          "entitySlug": "vizai",
+          "file": "vizai/profile.json",
+          "name": "VizAI"
         }
       ]
     }

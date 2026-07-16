@@ -26,7 +26,6 @@
   },
   "entitySlug": "vizai",
   "verification": {
-    "tier": "claimed_verified",
     "method": "customer-canon-approval",
     "status": "claimed_verified",
     "canonVersion": "3.0",
