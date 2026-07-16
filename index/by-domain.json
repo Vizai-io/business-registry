@@ -9,13 +9,14 @@
     "entitySlug": "vizai",
     "metadata": {
       "dateAdded": "2026-06-27",
-      "lastUpdated": "2026-06-27"
+      "lastUpdated": "2026-07-16"
     },
     "profile": {
       "businessType": "AI software / business intelligence platform",
       "claims": [
         "VizAI is an AI software platform for collecting, verifying, and organizing business facts into registry-ready profiles and export packages."
       ],
+      "country": "Canada",
       "industriesServed": [
         "Business operations",
         "Business intelligence"
@@ -31,7 +32,7 @@
         "Business intelligence and visibility reporting"
       ]
     },
-    "profileVersion": 1,
+    "profileVersion": 2,
     "schemaVersion": "1.0",
     "verification": {
       "canonVersion": "3.0",
@@ -50,7 +51,7 @@
     "entitySlug": "wills-transfer",
     "metadata": {
       "dateAdded": "2026-06-13",
-      "lastUpdated": "2026-06-13"
+      "lastUpdated": "2026-07-16"
     },
     "profile": {
       "businessType": "Third-party logistics (3PL), warehousing, fulfillment, distribution",
