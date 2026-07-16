@@ -9,7 +9,6 @@
   "category": "logistics",
   "verification": {
     "status": "claimed_verified",
-    "tier": "claimed_verified",
     "method": "customer-canon-approval",
     "canonVersion": "1.0",
     "lastVerified": "2026-06-13"
@@ -74,6 +73,6 @@
   },
   "metadata": {
     "dateAdded": "2026-06-13",
-    "lastUpdated": "2026-06-13"
+    "lastUpdated": "2026-07-16"
   }
 }

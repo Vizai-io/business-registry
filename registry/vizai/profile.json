@@ -14,6 +14,7 @@
       }
     ],
     "businessType": "AI software / business intelligence platform",
+    "country": "Canada",
     "industriesServed": [
       "Business operations",
       "Business intelligence"
@@ -22,18 +23,17 @@
   "category": "technology",
   "metadata": {
     "dateAdded": "2026-06-27",
-    "lastUpdated": "2026-06-27"
+    "lastUpdated": "2026-07-16"
   },
   "entitySlug": "vizai",
   "verification": {
-    "tier": "claimed_verified",
     "method": "customer-canon-approval",
     "status": "claimed_verified",
     "canonVersion": "3.0",
     "lastVerified": "2026-06-27"
   },
   "schemaVersion": "1.0",
-  "profileVersion": 1,
+  "profileVersion": 2,
   "businessIdentifier": {
     "legalName": "VizAI",
     "commonName": "VizAI",

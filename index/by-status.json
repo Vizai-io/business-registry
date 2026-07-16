@@ -1,18 +1,16 @@
 {
   "claimed_verified": [
     {
-      "registryId": "vizai",
       "domain": "vizai.io",
-      "name": "VizAI",
-      "shape": "entity-profile-v1.0",
-      "file": "vizai/profile.json"
+      "entitySlug": "vizai",
+      "file": "vizai/profile.json",
+      "name": "VizAI"
     },
     {
-      "registryId": "wills-transfer",
       "domain": "willstransfer.com",
-      "name": "Wills Transfer",
-      "shape": "entity-profile-v1.0",
-      "file": "wills-transfer/profile.json"
+      "entitySlug": "wills-transfer",
+      "file": "wills-transfer/profile.json",
+      "name": "Wills Transfer"
     }
   ]
 }

@@ -1,54 +1,52 @@
 {
-  "technology": [
-    {
-      "registryId": "vizai",
-      "domain": "vizai.io",
-      "name": "VizAI",
-      "shape": "entity-profile-v1.0",
-      "locations": [
-        {
-          "country": "unknown",
-          "region": "unknown",
-          "city": "Ontario, Canada"
-        }
-      ],
-      "file": "vizai/profile.json"
-    }
-  ],
   "logistics": [
     {
-      "registryId": "wills-transfer",
       "domain": "willstransfer.com",
-      "name": "Wills Transfer",
-      "shape": "entity-profile-v1.0",
+      "entitySlug": "wills-transfer",
+      "file": "wills-transfer/profile.json",
       "locations": [
         {
+          "city": "Smiths Falls",
           "country": "CA",
-          "region": "ON",
-          "city": "Smiths Falls"
+          "region": "ON"
         },
         {
+          "city": "Brockville",
           "country": "CA",
-          "region": "ON",
-          "city": "Brockville"
+          "region": "ON"
         },
         {
+          "city": "Cornwall",
           "country": "CA",
-          "region": "ON",
-          "city": "Cornwall"
+          "region": "ON"
         },
         {
+          "city": "Ottawa",
           "country": "CA",
-          "region": "ON",
-          "city": "Ottawa"
+          "region": "ON"
         },
         {
+          "city": "Perth",
           "country": "CA",
-          "region": "ON",
-          "city": "Perth"
+          "region": "ON"
         }
       ],
-      "file": "wills-transfer/profile.json"
+      "name": "Wills Transfer"
+    }
+  ],
+  "technology": [
+    {
+      "domain": "vizai.io",
+      "entitySlug": "vizai",
+      "file": "vizai/profile.json",
+      "locations": [
+        {
+          "city": "Ontario, Canada",
+          "country": "CA",
+          "region": "unknown"
+        }
+      ],
+      "name": "VizAI"
     }
   ]
 }

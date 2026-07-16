@@ -23,7 +23,6 @@ They must never be posted in GitHub.
 A published profile may expose:
 
 - `status`;
-- `tier`;
 - `method`;
 - `canonVersion`; and
 - `lastVerified`.
@@ -34,7 +33,6 @@ For example:
 {
   "verification": {
     "status": "claimed_verified",
-    "tier": "claimed_verified",
     "method": "customer-canon-approval",
     "canonVersion": "1.0",
     "lastVerified": "2026-06-13"
