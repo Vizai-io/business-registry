@@ -1,118 +1,90 @@
-# Contributing to VizAI Business Registry
+# Contributing to the VizAI Business Registry
 
-Thank you for your interest in contributing to the VizAI Business Registry! This guide will help you understand how to submit businesses, request corrections, and improve the registry.
+This repository is a public publishing surface. Contributions must preserve the
+boundary between private intake evidence and approved public business facts.
 
-## Ways to Contribute
+## Submit or Update a Business
 
-### 1. Submit a Business Profile (Free)
+Use the [private VizAI onboarding form](https://www.vizai.io/onboarding-form.html)
+for a new business, a substantial profile update, or verification.
 
-Anyone can submit a business to the community tier:
+Do not open a public issue or direct pull request containing:
 
-**Option A: Web Form (Recommended)**
-- Fill out our [onboarding form](https://www.vizai.io/onboarding-form.html)
-- We'll create the profile and submit a PR on your behalf
+- personal or non-public contact information;
+- authorization or domain-ownership evidence;
+- credentials, tokens, DNS values, order numbers, or billing details;
+- private research notes or unpublished drafts;
+- any information the business has not approved for public release.
 
-**Option B: GitHub Issue**
-- Use the [business submission template](.github/ISSUE_TEMPLATE/business-submission.md)
-- Provide all required information
-- We'll review and create the profile
+VizAI will turn the private intake record into a minimal public artifact,
+validate it, and route it through human publication review.
 
-**Option C: Direct PR (Advanced)**
-- Fork this repository
-- Create a new JSON file following our schema
-- Submit a pull request
-- See [Schema Documentation](schema/SCHEMA-DOCS.md)
+## Request a Public Factual Correction
 
-### 2. Request a Correction
+Use the
+[correction request template](.github/ISSUE_TEMPLATE/correction-request.md)
+only when the request can be supported entirely by public, authoritative
+sources.
 
-Found outdated or incorrect information?
-- Open an issue using the [correction request template](.github/ISSUE_TEMPLATE/correction-request.md)
-- Provide evidence for the correction (link to official source)
-- We'll review and update if verified
+Include:
 
-### 3. Upgrade to Verified
+- the canonical profile path;
+- the specific public statement that is incorrect;
+- the proposed factual replacement; and
+- links to official public evidence.
 
-Community entries can be upgraded to verified status:
-- Visit [VizAI pricing](https://www.vizai.io/packages.html)
-- Start with Tier 0 ($495 CAD) for snapshot + verified entry
-- Or Tier 1 ($650/mo) for verified entry + monitoring
+If the evidence is private or the request concerns authorization, verification,
+ownership, contact data, a dispute, or removal, contact `hello@vizai.io`
+instead of posting it publicly.
 
-### 4. Improve Documentation
+## Documentation and Tooling Contributions
 
-Help make the registry better:
-- Fix typos or unclear documentation
-- Improve examples
-- Enhance validation tools
-- Submit PRs for review
+Pull requests for documentation, schemas, validators, tests, and index tooling
+are welcome. Business-profile pull requests are created only from the controlled
+publication workflow.
 
-## Submission Guidelines
+All pull requests must:
 
-### Required Information
+- be narrowly scoped;
+- contain no secrets, private evidence, or unapproved personal data;
+- pass schema, clean-artifact, duplicate, and index-consistency checks;
+- identify any business-profile paths changed; and
+- receive human approval before publication.
 
-All business profiles must include:
-- ✅ Legal business name
-- ✅ Primary domain (must be verifiable)
-- ✅ Elevator pitch (1-2 sentences)
-- ✅ Detailed description (2-3 paragraphs)
-- ✅ Headquarters location
-- ✅ Contact email
+## Public Artifact Requirements
 
-### Optional But Recommended
-- Business founding year
-- Key products/services
-- Target customer description
-- Leadership information
-- Social media profiles
+A publishable profile must:
 
-### Data Quality Standards
+- conform to `schema/entity-profile-v1.0.schema.json`;
+- live at `registry/<entity-slug>/profile.json`;
+- use a stable entity slug and primary domain;
+- contain only facts approved for public release;
+- use neutral, source-supported language;
+- include accurate verification and update metadata;
+- contain no credentials, private notes, or unpublished evidence; and
+- have no duplicate domain or entity identity.
 
-- **Accuracy:** All information must be factual and current
-- **Sources:** Provide links to official sources
-- **Objectivity:** Descriptions should be neutral, not marketing copy
-- **Completeness:** Fill out all applicable fields
-- **Verification:** Provide proof of domain ownership or authorization
+Fictional examples and test fixtures must never be placed under `registry/`.
+Keep them in clearly named test-fixture locations and ensure production index
+generation cannot discover them.
 
-### What We Don't Accept
+## Publication Workflow
 
-❌ Incomplete profiles
-❌ Marketing fluff or exaggerated claims
-❌ Unverifiable information
-❌ Duplicate entries
-❌ Profiles for individuals (unless sole proprietors)
-❌ Defunct or inactive businesses
+1. Collect source material through private intake.
+2. Prepare a minimal public profile artifact.
+3. Run schema, privacy, duplicate, and index checks.
+4. Open a pull request with the publication checklist completed.
+5. Obtain explicit human approval and the `human-approved-publication` label.
+6. Merge through the protected `main` branch.
 
-## Verification Process
+Agents and automation may prepare, validate, and propose public artifacts. They
+must not independently approve or merge a business-profile publication.
 
-### Community Tier (Free)
-1. Submit business information
-2. We validate basic information
-3. Entry added to `/data/community/`
-4. Marked as "community-verified"
+See [Publication Containment](docs/publication-containment.md) and
+[Registry Governance](docs/registry-governance.md) for the controlling policy.
 
-### Verified Tier (Paid)
-1. Purchase Tier 0 or Tier 1 service
-2. Complete full onboarding form
-3. Verify domain ownership
-4. Human review by VizAI analyst
-5. Entry added to `/data/verified/`
-6. Ongoing monitoring (Tier 1+)
+## Questions
 
-## Review Timeline
-
-- **Community submissions:** 5-7 business days
-- **Corrections:** 3-5 business days
-- **Verified entries:** 1-2 business days (after purchase)
-
-## Code of Conduct
-
-Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before participating.
-
-## Questions?
-
-- **Email:** hello@vizai.io
-- **Website:** [www.vizai.io](https://www.vizai.io)
-- **GitHub Issues:** For technical questions
-
----
-
-Thank you for helping build the business database AI can trust!
+- Private or sensitive matters: hello@vizai.io
+- Technical repository questions:
+  [GitHub issues](https://github.com/vizai-io/business-registry/issues)

@@ -10,14 +10,18 @@ on:
   pull_request:
     paths:
       - 'registry/**/*.json'
+      - 'index/**'
       - 'schema/entity-profile-v1.0.schema.json'
+      - 'tools/build_indexes.py'
       - 'tools/validation/**'
   push:
     branches:
       - main
     paths:
       - 'registry/**/*.json'
+      - 'index/**'
       - 'schema/entity-profile-v1.0.schema.json'
+      - 'tools/build_indexes.py'
       - 'tools/validation/**'
 
 jobs:
@@ -51,3 +55,8 @@ jobs:
         run: |
           echo "Checking data/ + registry/ for duplicate domains..."
           python tools/validation/check-registry-duplicates.py
+
+      - name: Verify generated indexes are current
+        run: |
+          python tools/build_indexes.py
+          git diff --exit-code -- index

@@ -1,20 +1,24 @@
 ---
 name: Correction Request
-about: Request a correction to an existing business profile
+about: Report a public factual correction without sharing private information
 title: '[CORRECTION] Business Name - Issue Description'
 labels: 'correction'
 assignees: ''
 ---
 
+> This issue is public. Do not include personal contact information, order
+> numbers, login credentials, verification tokens, DNS values, private
+> evidence, or any information that is not already public.
+
 ## Profile to Correct
 
 **Business Name:**
-**Profile Location:** (e.g., `data/verified/technology/company-name.json`)
+**Profile Location:** (e.g., `registry/company-name/profile.json`)
 
 ## Correction Needed
 
 **Field(s) to Update:**
-(e.g., description.detailed, contact.email, location.headquarters)
+(e.g., `profile.services`, `profile.locations`, `businessIdentifier.commonName`)
 
 **Current Information:**
 ```
@@ -29,7 +33,7 @@ assignees: ''
 ## Evidence
 
 **Source URL(s):**
-(Please provide links to official sources showing the correct information)
+(Only provide links to public, authoritative sources.)
 
 -
 -
@@ -37,18 +41,8 @@ assignees: ''
 **Why is this correction needed?**
 
 
-## Authorization
-
-**Are you authorized to request this change?**
-- [ ] I represent this business
-- [ ] I am reporting publicly available outdated information
-- [ ] Other (please explain):
-
-**Contact Email (if representing the business):**
-
----
-
 **By submitting this, I confirm:**
 - [ ] The correction is factual and verifiable
-- [ ] I have provided evidence from official sources
+- [ ] I have provided only public evidence
+- [ ] I have not included personal, commercial, authentication, or verification information
 - [ ] I understand corrections are reviewed before being accepted
