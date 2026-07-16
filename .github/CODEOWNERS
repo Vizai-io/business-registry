@@ -6,6 +6,16 @@
 /manifest/ @NOS-Neuro
 /registry_verify/ @NOS-Neuro
 /registry_supply_chain/ @NOS-Neuro
+/registry_governance/ @NOS-Neuro
+/governance/ @NOS-Neuro
 /tests/ @NOS-Neuro
 /requirements.txt @NOS-Neuro
+/.gitattributes @NOS-Neuro
+/.github/CODEOWNERS @NOS-Neuro
 /.github/ @NOS-Neuro
+/LICENSE @NOS-Neuro
+/LICENSE-CODE @NOS-Neuro
+/LICENSE-DATA @NOS-Neuro
+/NOTICE @NOS-Neuro
+/SECURITY.md @NOS-Neuro
+/PRIVACY.md @NOS-Neuro

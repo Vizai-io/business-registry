@@ -39,6 +39,7 @@ ENV/
 .coverage
 htmlcov/
 registry-verification-report.json
+governance-drill-report.json
 dist/
 
 # Local development

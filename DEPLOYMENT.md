@@ -37,7 +37,8 @@ store.
 
 ## Repository Controls
 
-Configure a `main` ruleset requiring:
+Validate and import `governance/main-ruleset.json` after the required workflows
+are merged to `main`. It requires:
 
 - pull requests;
 - at least one human approval;
@@ -46,6 +47,9 @@ Configure a `main` ruleset requiring:
 - the Publication Freeze workflow;
 - resolved conversations; and
 - blocked force pushes and branch deletion.
+
+Follow [Main Ruleset Activation](docs/ruleset-activation.md); activating it
+before the required check workflows exist on `main` can block all merges.
 
 Create and reserve the `human-approved-publication` label for registry owners.
 
@@ -56,6 +60,8 @@ python -m pip install -r requirements.txt
 python tools/build_indexes.py
 python -m registry_supply_chain write-manifest
 python -m registry_verify --report registry-verification-report.json
+python -m registry_governance validate
+python -m registry_governance rollback-drill --slug vizai
 python -m registry_supply_chain snapshot --output dist
 ```
 
@@ -109,3 +115,5 @@ See:
 - [Registry Governance](docs/registry-governance.md)
 - [BR-02 Model Convergence](docs/migrations/br-02-model-convergence.md)
 - [Supply-Chain Integrity](docs/supply-chain-integrity.md)
+- [Emergency Unpublish and Rollback](docs/emergency-unpublish.md)
+- [Main Ruleset Activation](docs/ruleset-activation.md)

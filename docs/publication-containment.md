@@ -4,8 +4,9 @@ Effective: 2026-07-16
 
 The public registry remains under controlled-publication containment. Its
 profile contract, authoritative verifier, provenance receipts, deterministic
-manifest, and attested snapshot build are active; repository administration
-settings and rollback exercises remain.
+manifest, attested snapshot build, version-controlled ruleset, and automated
+rollback exercise are active. GitHub-side ruleset activation remains after the
+stacked controls land on `main`.
 
 ## Current rules
 
@@ -44,11 +45,15 @@ Repository administrators must configure a `main` ruleset that:
 - requires all registry validation and Publication Freeze checks;
 - requires conversation resolution;
 - blocks force pushes and branch deletion;
-- prevents bypass except for emergency removal by designated owners.
+- has no standing bypass actors. Emergency removal uses a deletion-only pull
+  request, so review and validation remain in force without the publication
+  approval label.
 
-Until that ruleset is active, this document and the workflow provide visible
-controls but cannot technically prevent an administrator from pushing directly
-to `main`.
+The validated definition is committed at `governance/main-ruleset.json`.
+Administrators must follow [Main Ruleset Activation](ruleset-activation.md)
+after all required workflows exist on `main`. Until it is active on GitHub,
+the repository cannot technically prevent an administrator from pushing
+directly to `main`.
 
 ## Exit criteria
 
@@ -60,4 +65,5 @@ Containment can be replaced by controlled autonomy only after:
 - publication receipts and deterministic hashes are included (implemented in
   BR-04);
 - repository rules are enforced;
-- rollback and emergency-unpublish procedures are tested.
+- rollback and emergency-unpublish procedures are tested (implemented in
+  BR-05 and continuously exercised by Governance Audit).

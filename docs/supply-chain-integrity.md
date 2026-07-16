@@ -95,7 +95,7 @@ cross-language number-normalization ambiguity.
 [`manifest/registry-manifest.json`](../manifest/registry-manifest.json)
 inventories the public distribution surface:
 
-- `LICENSE`;
+- `LICENSE`, `LICENSE-DATA`, `LICENSE-CODE`, and `NOTICE`;
 - canonical schemas;
 - profiles;
 - publication receipts; and
@@ -107,6 +107,9 @@ Build or check it with:
 python -m registry_supply_chain write-manifest
 python -m registry_supply_chain check-manifest
 ```
+
+`.gitattributes` forces LF line endings for text files so raw-byte hashes remain
+stable across Windows, macOS, and Linux checkouts.
 
 The manifest intentionally contains no generation timestamp, branch name, or
 workflow run ID. The same public artifacts therefore produce identical
