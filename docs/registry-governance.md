@@ -81,6 +81,11 @@ not accepted.
 - Duplicate identity: resolve against the primary domain and canonical entity
   slug before publication.
 
+The authoritative routing, case lifecycle, containment rules, and restoration
+requirements are in
+[Correction, dispute, and removal](correction-dispute-removal.md) and
+[Emergency unpublish and rollback](emergency-unpublish.md).
+
 ## Publication Authority
 
 Agents and automation may research, draft, validate, rebuild indexes, and open a
@@ -93,7 +98,10 @@ changes may proceed without that label.
 
 The repository administrator must enforce the publication-freeze check and
 human review through a `main` branch ruleset. See
-[Publication Containment](publication-containment.md).
+[Publication Containment](publication-containment.md). The importable policy is
+`governance/main-ruleset.json`; follow
+[Main ruleset activation](ruleset-activation.md) only after the required checks
+exist on the default branch.
 
 ## Data Quality
 
@@ -156,3 +164,8 @@ verification metadata when redistributing registry facts.
 - [BR-02 Model Convergence](migrations/br-02-model-convergence.md)
 - [Publication Containment](publication-containment.md)
 - [Supply-Chain Integrity](supply-chain-integrity.md)
+- [Correction, Dispute, and Removal](correction-dispute-removal.md)
+- [Emergency Unpublish and Rollback](emergency-unpublish.md)
+- [Main Ruleset Activation](ruleset-activation.md)
+- [Registry Privacy Policy](../PRIVACY.md)
+- [Security Policy](../SECURITY.md)

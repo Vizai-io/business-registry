@@ -99,6 +99,13 @@ registry_supply_chain/
   __main__.py
   core.py
 
+registry_governance/
+  __main__.py
+  core.py
+
+governance/
+  main-ruleset.json
+
 tests/
   fixtures/
   test_registry_verify.py
@@ -145,6 +152,14 @@ Build a reproducible bulk snapshot with:
 python -m registry_supply_chain snapshot --output dist
 ```
 
+Validate the version-controlled repository rules and exercise emergency
+unpublish/rollback in an isolated copy with:
+
+```bash
+python -m registry_governance validate
+python -m registry_governance rollback-drill --slug vizai
+```
+
 ## Verification Status
 
 Profiles use explicit public statuses such as:
@@ -176,7 +191,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution workflow.
 
 - Canonical public profiles: 2
 - Public-safe publication receipts: 2
-- Deterministically hashed public artifacts: 14
+- Deterministically hashed public artifacts: 17
 - Claimed and verified: 2
 - Fictional/example profiles in production: 0
 
@@ -189,10 +204,18 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution workflow.
 - [BR-02 Model Convergence](docs/migrations/br-02-model-convergence.md)
 - [Registry Governance](docs/registry-governance.md)
 - [Publication Containment](docs/publication-containment.md)
+- [Privacy Policy](PRIVACY.md)
+- [Security Policy](SECURITY.md)
+- [Correction, Dispute, and Removal](docs/correction-dispute-removal.md)
+- [Emergency Unpublish and Rollback](docs/emergency-unpublish.md)
+- [Main Ruleset Activation](docs/ruleset-activation.md)
 
 ## License
 
-[CC BY 4.0](LICENSE) - Creative Commons Attribution 4.0
+Registry data and documentation use
+[CC BY 4.0](LICENSE-DATA). Software, tests, and automation use the
+[MIT License](LICENSE-CODE). See [NOTICE](NOTICE) for the path-level boundary
+and requested attribution.
 
 ## Contact
 

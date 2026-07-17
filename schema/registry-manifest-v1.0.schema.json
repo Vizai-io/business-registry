@@ -46,7 +46,7 @@
         "properties": {
           "path": {
             "type": "string",
-            "pattern": "^(LICENSE|schema/[A-Za-z0-9._-]+\\.schema\\.json|registry/[a-z0-9]+(?:-[a-z0-9]+)*/profile\\.json|provenance/[a-z0-9]+(?:-[a-z0-9]+)*/publication-receipt\\.json|index/[A-Za-z0-9._-]+\\.(?:json|jsonl))$"
+            "pattern": "^(LICENSE(?:-(?:CODE|DATA))?|NOTICE|schema/[A-Za-z0-9._-]+\\.schema\\.json|registry/[a-z0-9]+(?:-[a-z0-9]+)*/profile\\.json|provenance/[a-z0-9]+(?:-[a-z0-9]+)*/publication-receipt\\.json|index/[A-Za-z0-9._-]+\\.(?:json|jsonl))$"
           },
           "mediaType": {
             "enum": [

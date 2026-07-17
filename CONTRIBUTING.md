@@ -37,6 +37,10 @@ If the evidence is private or the request concerns authorization, verification,
 ownership, contact data, a dispute, or removal, contact `hello@vizai.io`
 instead of posting it publicly.
 
+Follow the complete
+[correction, dispute, and removal procedure](docs/correction-dispute-removal.md).
+For accidental disclosure or a control bypass, use [SECURITY.md](SECURITY.md).
+
 ## Documentation and Tooling Contributions
 
 Pull requests for documentation, schemas, validators, tests, and index tooling
@@ -92,6 +96,18 @@ must not independently approve or merge a business-profile publication.
 See [Publication Containment](docs/publication-containment.md) and
 [Supply-Chain Integrity](docs/supply-chain-integrity.md) for the controlling
 publication and provenance policy.
+
+Emergency unpublication follows
+[the removal and rollback runbook](docs/emergency-unpublish.md). A removal-only
+change deletes both the profile and receipt and rebuilds every generated
+artifact. Restoring a profile is a new publication and requires normal human
+approval.
+
+## Contribution licensing
+
+By contributing, you agree that registry data, schemas, and documentation are
+provided under CC BY 4.0 and that code, tests, workflows, and automation are
+provided under the MIT License. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
 
 ## Questions
 

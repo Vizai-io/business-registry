@@ -17,6 +17,12 @@ CHECKSUMS_NAME = "SHA256SUMS"
 DIST_MANIFEST_NAME = "registry-manifest.json"
 HASH_ALGORITHM = "sha256"
 CANONICALIZATION = "vizai-canonical-json-v1"
+PUBLIC_ROOT_ARTIFACTS = (
+    "LICENSE",
+    "LICENSE-CODE",
+    "LICENSE-DATA",
+    "NOTICE",
+)
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -54,9 +60,10 @@ def discover_public_artifacts(root: Path | str) -> list[Path]:
     """Return the deterministic public artifact set, excluding the manifest."""
     root = Path(root).resolve()
     candidates: list[Path] = []
-    license_path = root / "LICENSE"
-    if license_path.is_file():
-        candidates.append(license_path)
+    for filename in PUBLIC_ROOT_ARTIFACTS:
+        path = root / filename
+        if path.is_file():
+            candidates.append(path)
 
     patterns = (
         "schema/*.schema.json",

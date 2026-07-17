@@ -1,11 +1,29 @@
 {
-  "artifactCount": 14,
+  "artifactCount": 17,
   "artifacts": [
     {
-      "bytes": 877,
+      "bytes": 858,
       "mediaType": "text/plain",
       "path": "LICENSE",
-      "sha256": "sha256:8843ebd09095a0fb760f0cf71fa2e194bdad5ce90f3c8d3d5279c8e072dee114"
+      "sha256": "sha256:0894732dd69e22e725d1a04b12cd8b35f6f4d33fc8abeaa6f6edef1f36f0704b"
+    },
+    {
+      "bytes": 1067,
+      "mediaType": "text/plain",
+      "path": "LICENSE-CODE",
+      "sha256": "sha256:0be2402f9d63fc9f003f894860a4b81106656027ee076354024c5a4bfa5c029d"
+    },
+    {
+      "bytes": 18656,
+      "mediaType": "text/plain",
+      "path": "LICENSE-DATA",
+      "sha256": "sha256:9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94"
+    },
+    {
+      "bytes": 1294,
+      "mediaType": "text/plain",
+      "path": "NOTICE",
+      "sha256": "sha256:c92348eedcea600a014f27952449184b4de82d90ed6c9d1067332977f43add22"
     },
     {
       "bytes": 3116,
@@ -80,10 +98,10 @@
       "sha256": "sha256:d1f1081311947067e0cfd201dac29a345a4b5ca614e03153d0d02dbd64e00df8"
     },
     {
-      "bytes": 1866,
+      "bytes": 1892,
       "mediaType": "application/json",
       "path": "schema/registry-manifest-v1.0.schema.json",
-      "sha256": "sha256:46d424d92dc8e1fd3f1d6d7118bfe70711edc8adf8393a2b6c3fa17c868d5a86"
+      "sha256": "sha256:d63147ad0c95b179faea2986c3455a7a5d621d556637de82b793fc5443d4013d"
     }
   ],
   "canonicalization": "vizai-canonical-json-v1",

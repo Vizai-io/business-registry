@@ -80,7 +80,10 @@ or merge public business-profile changes.
 
 ## Repository Configuration
 
-The `main` ruleset should require:
+Run `python -m registry_governance validate`, then follow
+[Main Ruleset Activation](docs/ruleset-activation.md) to import the committed
+ruleset after its three required workflows are present on `main`. The ruleset
+requires:
 
 - pull requests and at least one approval;
 - CODEOWNERS review;
@@ -92,6 +95,13 @@ The `main` ruleset should require:
 Create the `human-approved-publication` repository label before enabling the
 Publication Freeze check as required.
 
+Exercise the emergency path without changing the repository:
+
+```bash
+python -m registry_governance rollback-drill --slug vizai \
+  --report governance-drill-report.json
+```
+
 ## Intake and Corrections
 
 - New profiles, substantial updates, and verification:
@@ -100,6 +110,7 @@ Publication Freeze check as required.
   [GitHub issues](https://github.com/vizai-io/business-registry/issues)
 - Private evidence, disputes, removal, ownership, and verification:
   `hello@vizai.io`
+- Security or accidental disclosure: follow [SECURITY.md](SECURITY.md)
 
 Never place personal information, credentials, DNS verification values, order
 details, authorization evidence, or unpublished material in a public issue,

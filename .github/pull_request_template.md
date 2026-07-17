@@ -10,8 +10,13 @@
 - [ ] The deterministic manifest was rebuilt with `python -m registry_supply_chain write-manifest`.
 - [ ] `python -m registry_verify` passes.
 - [ ] A human registry owner has reviewed the public artifact.
+- [ ] Security, privacy, correction/removal, licensing, and ruleset controls are not weakened.
+- [ ] For an emergency removal, the profile and receipt are both deleted and every generated artifact was rebuilt.
 
 ## Change summary
 
 Describe the public change and its source workflow. Do not paste private evidence
 or customer information into this pull request.
+
+For a removal or dispute, include only a non-sensitive case reference and safe
+action summary. Never paste private evidence into the pull request.

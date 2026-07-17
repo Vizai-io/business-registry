@@ -1,0 +1,41 @@
+VizAI Business Registry license notice
+
+Data license: Creative Commons Attribution 4.0 International (CC BY 4.0)
+Legal code: LICENSE-DATA
+Canonical license URL: https://creativecommons.org/licenses/by/4.0/
+
+Requested attribution:
+
+  VizAI Business Registry, VizAI, https://github.com/Vizai-io/business-registry
+
+When sharing adapted registry material, identify that changes were made and
+retain a link to the license. Do not imply that VizAI endorses the adaptation
+or its publisher.
+
+CC BY 4.0 applies to:
+
+- registry/**
+- provenance/**
+- index/**
+- manifest/**
+- schema/**
+- documentation and other prose content, including *.md files
+
+The MIT License in LICENSE-CODE applies to:
+
+- registry_verify/**
+- registry_supply_chain/**
+- registry_governance/**
+- tools/**
+- tests/**
+- .github/workflows/**
+- requirements.txt and executable configuration used to build or test the
+  registry
+
+Repository-administration policy and template files are documentation under
+CC BY 4.0 unless they contain executable code, in which case that code is
+available under the MIT License.
+
+Trademarks, logos, personal data, privacy rights, publicity rights, patent
+rights, and third-party content are not licensed except where expressly
+stated. A registry entry is not an endorsement, certification, or warranty.

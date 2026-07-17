@@ -9,3 +9,6 @@ contact_links:
   - name: VizAI Support
     url: https://www.vizai.io
     about: Use VizAI's private contact options for removals, disputes, or sensitive corrections.
+  - name: Report a Security Vulnerability
+    url: https://github.com/Vizai-io/business-registry/security/advisories/new
+    about: Privately report exposed data, secrets, control bypasses, and other security vulnerabilities.
