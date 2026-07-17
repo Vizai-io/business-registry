@@ -146,6 +146,7 @@
       ],
       "yearFounded": 1945
     },
+    "profileVersion": 1,
     "publication": {
       "consentReceipt": {
         "reference": "canon:wills-transfer:1.0",

@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vizai.io/schema/registry-manifest/v1.0",
+  "title": "VizAI Deterministic Registry Manifest",
+  "description": "Deterministic inventory of the public registry distribution surface. Timestamps and build-specific identifiers are intentionally excluded.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "manifestType",
+    "hashAlgorithm",
+    "canonicalization",
+    "artifactCount",
+    "artifacts"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "manifestType": {
+      "const": "vizai-public-registry"
+    },
+    "hashAlgorithm": {
+      "const": "sha256"
+    },
+    "canonicalization": {
+      "const": "vizai-canonical-json-v1"
+    },
+    "artifactCount": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "mediaType",
+          "bytes",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "pattern": "^(LICENSE|schema/[A-Za-z0-9._-]+\\.schema\\.json|registry/[a-z0-9]+(?:-[a-z0-9]+)*/profile\\.json|provenance/[a-z0-9]+(?:-[a-z0-9]+)*/publication-receipt\\.json|index/[A-Za-z0-9._-]+\\.(?:json|jsonl))$"
+          },
+          "mediaType": {
+            "enum": [
+              "application/json",
+              "application/x-ndjson",
+              "text/plain"
+            ]
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        }
+      }
+    }
+  }
+}

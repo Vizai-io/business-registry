@@ -16,6 +16,8 @@ This repository may contain:
 - canonical business identifiers and public domains;
 - approved public business facts, services, locations, and claims;
 - public verification metadata;
+- public-safe publication receipts, source digests, and workflow identities;
+- deterministic manifests and attested release snapshots;
 - schemas, generated indexes, validation tools, and governance documents.
 
 ### Private Systems
@@ -54,12 +56,16 @@ private evidence into public data.
 1. Intake occurs through a private VizAI-controlled channel.
 2. Research and verification evidence remain private.
 3. An agent or analyst prepares the minimal public artifact.
-4. `python -m registry_verify` validates schema formats, semantics,
+4. The publisher prepares a public-safe receipt with source lineage, commit
+   identity, approval timestamps, and current profile hashes.
+5. Indexes and the deterministic registry manifest are regenerated.
+6. `python -m registry_verify` validates schema formats, semantics,
    clean-artifact policy, credentials, consent, privacy, unique identities, and
-   generated indexes.
-5. A human reviewer confirms the public facts and privacy boundary.
-6. The pull request receives the `human-approved-publication` label.
-7. The protected `main` branch is updated through pull request merge.
+   generated indexes, receipts, hashes, and manifest.
+7. A human reviewer confirms the public facts and privacy boundary.
+8. The pull request receives the `human-approved-publication` label.
+9. The protected `main` branch is updated through pull request merge.
+10. CI builds and signs provenance for the reproducible release snapshot.
 
 Direct public business-submission issues and direct profile pull requests are
 not accepted.
@@ -81,7 +87,7 @@ Agents and automation may research, draft, validate, rebuild indexes, and open a
 publication pull request. They may not grant final approval or merge a public
 business profile without explicit human authorization.
 
-Publication changes under `registry/**/*.json` are gated by the
+Publication changes under `registry/**/*.json` and `provenance/**/*.json` are gated by the
 `human-approved-publication` pull-request label. Deletion-only containment
 changes may proceed without that label.
 
@@ -99,7 +105,9 @@ Published profiles must be:
 - current enough for the stated verification date;
 - valid against `schema/entity-profile-v1.0.schema.json`;
 - unique by domain and entity identity; and
-- reproducibly represented in generated indexes.
+- reproducibly represented in generated indexes;
+- linked to one matching public-safe receipt; and
+- included in the deterministic, attested distribution manifest.
 
 ## Schema Evolution
 
@@ -147,3 +155,4 @@ verification metadata when redistributing registry facts.
 - [Entity Profile Standard](entity-profile-standard.md)
 - [BR-02 Model Convergence](migrations/br-02-model-convergence.md)
 - [Publication Containment](publication-containment.md)
+- [Supply-Chain Integrity](supply-chain-integrity.md)

@@ -25,6 +25,7 @@ identity. Alternate geo-based records and tier-based copies are prohibited.
 {
   "schemaVersion": "1.0",
   "entitySlug": "example-business",
+  "profileVersion": 1,
   "businessIdentifier": {
     "legalName": "Example Business Inc.",
     "commonName": "Example Business",
@@ -52,6 +53,10 @@ identity. Alternate geo-based records and tier-based copies are prohibited.
 
 This example is documentation only and must never be copied below `registry/`
 as a production entity.
+
+`profileVersion` is required and increases whenever the public profile artifact
+changes. The matching publication receipt uses the same value and receipt ID
+`publication:<entity-slug>:<profileVersion>`.
 
 ## Identity Rules
 
@@ -87,12 +92,20 @@ profiles:
 - `index/by-status.json`
 
 Generated indexes are not source-of-truth and must never be edited manually.
+The deterministic distribution manifest is regenerated after profiles,
+receipts, schemas, or indexes change:
+
+```bash
+python -m registry_supply_chain write-manifest
+```
 
 ## Publication
 
 All additions and changes follow private intake, artifact preparation,
 validation, pull-request review, explicit human approval, and protected merge.
 See [Publication Containment](publication-containment.md).
+See [Supply-Chain Integrity](supply-chain-integrity.md) for the companion
+receipt, hashes, source lineage, and release attestation contract.
 
 Run the complete profile and repository gate with:
 

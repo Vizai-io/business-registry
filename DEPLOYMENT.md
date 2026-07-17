@@ -23,8 +23,10 @@ Publication flow:
 ```text
 private intake
   -> approved public profile
+  -> public-safe receipt and lineage hashes
   -> canonical validation
   -> generated indexes
+  -> deterministic manifest
   -> pull request
   -> human approval
   -> protected main
@@ -52,7 +54,9 @@ Create and reserve the `human-approved-publication` label for registry owners.
 ```bash
 python -m pip install -r requirements.txt
 python tools/build_indexes.py
+python -m registry_supply_chain write-manifest
 python -m registry_verify --report registry-verification-report.json
+python -m registry_supply_chain snapshot --output dist
 ```
 
 ## Consumer Distribution
@@ -65,8 +69,12 @@ can use:
 - grouped discovery indexes;
 - `index/businesses.jsonl` for bulk processing; and
 - repository history for change tracking.
+- `manifest/registry-manifest.json` for artifact integrity; and
+- attested release snapshots for versioned bulk replication.
 
 Cache indexes and avoid repeatedly enumerating the GitHub Contents API.
+Verify downloaded release assets with `SHA256SUMS` and `gh attestation verify`
+before replication.
 
 ## Scaling Direction
 
@@ -78,6 +86,10 @@ For a substantially larger catalog:
 4. serve search and exact lookup through an edge API;
 5. maintain canonical entity URLs independent of storage implementation; and
 6. preserve Git commit and artifact hashes in every replicated record.
+
+The release workflow produces signed SLSA build provenance on `main` and
+`registry-v*` tags. Only the tag-only job receives `contents: write`; the
+snapshot builder cannot modify repository contents.
 
 Do not reintroduce storage tiers as source directories. Verification is record
 state, not file placement.
@@ -96,3 +108,4 @@ See:
 - [Publication Containment](docs/publication-containment.md)
 - [Registry Governance](docs/registry-governance.md)
 - [BR-02 Model Convergence](docs/migrations/br-02-model-convergence.md)
+- [Supply-Chain Integrity](docs/supply-chain-integrity.md)

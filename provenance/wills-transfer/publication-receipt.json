@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0",
+  "receiptId": "publication:wills-transfer:1",
+  "entitySlug": "wills-transfer",
+  "profileVersion": 1,
+  "artifact": {
+    "path": "registry/wills-transfer/profile.json",
+    "mediaType": "application/json",
+    "bytes": 2694,
+    "sha256": "sha256:9dadd31832d1f25d61ec4c4deb571daf9049e47aca43c6b797cd8d91fa463da6",
+    "canonicalJsonSha256": "sha256:52989b7b417543fdb66464a86e04a64a43ff5f085cc716355cfab7583a993296"
+  },
+  "source": {
+    "type": "historical-registry-migration",
+    "system": "business-registry",
+    "repository": "Vizai-io/business-registry",
+    "commitSha": "764c995a1152fe49d53386ca7fc140be5de2163b",
+    "canonVersion": "1.0",
+    "lineage": [
+      {
+        "kind": "registry-history",
+        "sourceClass": "approved-publication",
+        "reference": "registry:wills-transfer:profile:1",
+        "observedAt": "2026-07-16T20:51:14Z",
+        "contentDigest": "sha256:b8f98eda8c12ee13d53a2c1959405c425e5252e06a3af6f25d982c56e8af61cb"
+      }
+    ]
+  },
+  "publication": {
+    "policyVersion": "1.0",
+    "consentReceipt": {
+      "status": "recorded",
+      "reference": "canon:wills-transfer:1.0"
+    }
+  },
+  "approval": {
+    "status": "historical-migration",
+    "preparedAt": "2026-07-16T20:51:14Z",
+    "approvedAt": "2026-07-16T20:51:14Z",
+    "workflow": "git-maintainer-publication-history"
+  }
+}

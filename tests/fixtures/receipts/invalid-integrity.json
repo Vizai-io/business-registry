@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0",
+  "receiptId": "publication:fixture-co:2",
+  "entitySlug": "fixture-co",
+  "profileVersion": 2,
+  "artifact": {
+    "path": "registry/fixture-co/profile.json",
+    "mediaType": "application/json",
+    "bytes": 1,
+    "sha256": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "canonicalJsonSha256": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+  },
+  "source": {
+    "type": "vizai-discovery-canon",
+    "system": "vizai-discovery",
+    "repository": "Vizai-io/vizai-discovery",
+    "commitSha": "df5e82bda00efb65f224e3da3a540da3266d3e23",
+    "canonVersion": "2.0",
+    "lineage": [
+      {
+        "kind": "canon",
+        "sourceClass": "business-supplied",
+        "reference": "canon:fixture-co:2.0",
+        "observedAt": "2026-01-15T12:00:00Z",
+        "contentDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    ]
+  },
+  "publication": {
+    "policyVersion": "1.0",
+    "consentReceipt": {
+      "status": "not-required-public-observation",
+      "reference": "public-observation"
+    }
+  },
+  "approval": {
+    "status": "approved",
+    "preparedAt": "2026-01-15T12:10:00Z",
+    "approvedAt": "2026-01-15T12:15:00Z",
+    "workflow": "human-approved-publication"
+  }
+}

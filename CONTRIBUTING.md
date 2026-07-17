@@ -49,6 +49,8 @@ All pull requests must:
 - contain no secrets, private evidence, or unapproved personal data;
 - pass `python -m registry_verify`;
 - include a verification-state-compatible public-safe consent assertion;
+- include a matching public-safe publication receipt for every profile;
+- regenerate the deterministic public-artifact manifest;
 - identify any business-profile paths changed; and
 - receive human approval before publication.
 
@@ -58,12 +60,16 @@ A publishable profile must:
 
 - conform to `schema/entity-profile-v1.0.schema.json`;
 - live at `registry/<entity-slug>/profile.json`;
+- use a monotonically increasing integer `profileVersion`;
 - use a stable entity slug and primary domain;
 - contain only facts approved for public release;
 - use neutral, source-supported language;
 - include accurate verification and update metadata;
 - contain no credentials, private notes, or unpublished evidence; and
-- have no duplicate domain or entity identity.
+- have no duplicate domain or entity identity;
+- have a receipt at
+  `provenance/<entity-slug>/publication-receipt.json`; and
+- match the exact-byte and canonical JSON hashes in that receipt.
 
 Fictional examples and test fixtures must never be placed under `registry/`.
 Keep them in clearly named test-fixture locations and ensure production index
@@ -73,16 +79,19 @@ generation cannot discover them.
 
 1. Collect source material through private intake.
 2. Prepare a minimal public profile artifact.
-3. Rebuild indexes and run `python -m registry_verify`.
-4. Open a pull request with the publication checklist completed.
-5. Obtain explicit human approval and the `human-approved-publication` label.
-6. Merge through the protected `main` branch.
+3. Create or update the public-safe, digest-bearing publication receipt.
+4. Rebuild indexes and the deterministic registry manifest.
+5. Run `python -m registry_verify`.
+6. Open a pull request with the publication checklist completed.
+7. Obtain explicit human approval and the `human-approved-publication` label.
+8. Merge through the protected `main` branch.
 
 Agents and automation may prepare, validate, and propose public artifacts. They
 must not independently approve or merge a business-profile publication.
 
 See [Publication Containment](docs/publication-containment.md) and
-[Registry Governance](docs/registry-governance.md) for the controlling policy.
+[Supply-Chain Integrity](docs/supply-chain-integrity.md) for the controlling
+publication and provenance policy.
 
 ## Questions
 

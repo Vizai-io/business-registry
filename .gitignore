@@ -39,6 +39,7 @@ ENV/
 .coverage
 htmlcov/
 registry-verification-report.json
+dist/
 
 # Local development
 .env

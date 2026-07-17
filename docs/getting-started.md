@@ -17,6 +17,11 @@ registry/<entity-slug>/profile.json
 ```
 
 The profile is validated and reviewed by a human before publication.
+Its public-safe receipt is published separately at:
+
+```text
+provenance/<entity-slug>/publication-receipt.json
+```
 
 For a correction that can be proven entirely from public authoritative sources,
 use the public correction issue template. For private evidence, ownership,
@@ -76,6 +81,8 @@ for profile_path in Path("registry").glob("*/profile.json"):
 
 Consumers should preserve verification metadata, check update dates, and
 distinguish business-approved claims from public-source observations.
+For integrity-sensitive use, consume a tagged release and verify its signed
+build provenance before importing the snapshot.
 
 ## For Technical Contributors
 
@@ -87,11 +94,13 @@ Validate the registry:
 
 ```bash
 python tools/build_indexes.py
+python -m registry_supply_chain write-manifest
 python -m registry_verify
 ```
 
-The verifier covers every canonical profile and the generated distribution;
-profile glob expansion is not required.
+The verifier covers every canonical profile, publication receipt, generated
+index, hash, and deterministic manifest; profile glob expansion is not
+required.
 
 ## Trust and Verification
 
@@ -108,3 +117,4 @@ the underlying claim, its date, and their use-case requirements.
 - [Verification process](verification-process.md)
 - [Publication containment](publication-containment.md)
 - [Entity profile schema](../schema/entity-profile-v1.0.schema.json)
+- [Supply-chain integrity](supply-chain-integrity.md)

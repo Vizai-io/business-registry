@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0",
+  "receiptId": "publication:vizai:2",
+  "entitySlug": "vizai",
+  "profileVersion": 2,
+  "artifact": {
+    "path": "registry/vizai/profile.json",
+    "mediaType": "application/json",
+    "bytes": 1242,
+    "sha256": "sha256:d5c0746ccac30660761ff84bb54461537069b1fc37a8c4f111bff8eb3fdcb0f8",
+    "canonicalJsonSha256": "sha256:77c0333bac8aadbc81e329a60556265569b1a4ede7c8eed5d809c408f2af7a4b"
+  },
+  "source": {
+    "type": "historical-registry-migration",
+    "system": "business-registry",
+    "repository": "Vizai-io/business-registry",
+    "commitSha": "764c995a1152fe49d53386ca7fc140be5de2163b",
+    "canonVersion": "3.0",
+    "lineage": [
+      {
+        "kind": "registry-history",
+        "sourceClass": "approved-publication",
+        "reference": "registry:vizai:profile:2",
+        "observedAt": "2026-07-16T20:51:14Z",
+        "contentDigest": "sha256:77c0333bac8aadbc81e329a60556265569b1a4ede7c8eed5d809c408f2af7a4b"
+      }
+    ]
+  },
+  "publication": {
+    "policyVersion": "1.0",
+    "consentReceipt": {
+      "status": "recorded",
+      "reference": "canon:vizai:3.0"
+    }
+  },
+  "approval": {
+    "status": "historical-migration",
+    "preparedAt": "2026-07-16T20:51:14Z",
+    "approvedAt": "2026-07-16T20:51:14Z",
+    "workflow": "git-maintainer-publication-history"
+  }
+}

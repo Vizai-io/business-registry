@@ -24,7 +24,22 @@ Repository gates additionally enforce:
 
 - canonical file layout;
 - unique entity slugs and primary domains; and
-- byte-for-byte parity for all six generated indexes.
+- byte-for-byte parity for all six generated indexes;
+- exactly one publication receipt per profile;
+- receipt/profile identity, policy, byte-count, and hash parity;
+- source, lineage, approval, chronology, and receipt privacy rules; and
+- byte-for-byte deterministic manifest parity.
+
+BR-04 report schema `1.1` adds `receipts`, receipt counts, and manifest artifact
+counts. Verifier version `1.1.0` applies five gates to each receipt:
+
+| Gate | Checks |
+|---|---|
+| `receipt-json` | Parseability and top-level object shape |
+| `receipt-schema` | Draft 7 receipt schema plus active format checking |
+| `provenance` | Source type, lineage, commit, URL, workflow, and timestamp semantics |
+| `integrity` | Profile identity, policy, byte count, raw SHA-256, and canonical SHA-256 parity |
+| `receipt-privacy` | Private field, secret, token, and commercial-data exclusion |
 
 ## Human Output
 
@@ -49,8 +64,8 @@ Or emit JSON to standard output:
 python -m registry_verify --format json
 ```
 
-Report schema version `1.0` includes verifier version, timestamp, summary,
-per-profile checks, and repository checks.
+Report schema version `1.1` includes verifier version, timestamp, summary,
+per-profile checks, per-receipt checks, and repository checks.
 
 ## Test Suite
 
@@ -60,7 +75,9 @@ python -m unittest discover -s tests -v
 
 Fixtures cover valid claimed and unclaimed profiles plus negative cases for
 format validation, consent, privacy, internal markers, credentials,
-chronology, slug parity, duplicate identity, and index drift.
+chronology, slug parity, duplicate identity, receipt lineage, hash tampering,
+receipt coverage, deterministic manifest drift, index drift, and reproducible
+release snapshots.
 
 ## CI
 

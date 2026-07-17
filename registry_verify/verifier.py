@@ -14,11 +14,18 @@ from urllib.parse import urlparse
 
 from jsonschema import Draft7Validator, FormatChecker
 
+from registry_supply_chain.core import (
+    MANIFEST_PATH,
+    build_manifest,
+    canonical_json_sha256,
+    manifest_bytes,
+    raw_sha256,
+)
 from tools import build_indexes
 
 
-VERIFIER_VERSION = "1.0.0"
-REPORT_SCHEMA_VERSION = "1.0"
+VERIFIER_VERSION = "1.1.0"
+REPORT_SCHEMA_VERSION = "1.1"
 
 FORBIDDEN_MARKERS = (
     "do_not_publish",
@@ -195,10 +202,30 @@ class ProfileResult:
 
 
 @dataclass
+class ReceiptResult:
+    file: str
+    entity_slug: str | None = None
+    checks: list[CheckResult] = field(default_factory=list)
+
+    @property
+    def passed(self):
+        return bool(self.checks) and all(check.passed for check in self.checks)
+
+    def to_dict(self):
+        return {
+            "file": self.file,
+            "entitySlug": self.entity_slug,
+            "passed": self.passed,
+            "checks": [check.to_dict() for check in self.checks],
+        }
+
+
+@dataclass
 class VerificationReport:
     repository: str
     generated_at: str
     profiles: list[ProfileResult]
+    receipts: list[ReceiptResult]
     repository_checks: list[CheckResult]
 
     @property
@@ -206,7 +233,10 @@ class VerificationReport:
         profile_checks = [
             check for profile in self.profiles for check in profile.checks
         ]
-        return profile_checks + self.repository_checks
+        receipt_checks = [
+            check for receipt in self.receipts for check in receipt.checks
+        ]
+        return profile_checks + receipt_checks + self.repository_checks
 
     @property
     def passed(self):
@@ -226,8 +256,11 @@ class VerificationReport:
                 "passedChecks": len(self.checks) - len(failed),
                 "failedChecks": len(failed),
                 "indexArtifacts": len(EXPECTED_INDEX_FILES),
+                "provenanceReceipts": len(self.receipts),
+                "manifestArtifacts": len(build_manifest(self.repository)["artifacts"]),
             },
             "profiles": [profile.to_dict() for profile in self.profiles],
+            "receipts": [receipt.to_dict() for receipt in self.receipts],
             "repositoryChecks": [
                 check.to_dict() for check in self.repository_checks
             ],
@@ -292,8 +325,8 @@ def _mapping(value: Any):
     return value if isinstance(value, dict) else {}
 
 
-def _load_schema(root: Path):
-    path = root / "schema" / "entity-profile-v1.0.schema.json"
+def _load_schema(root: Path, filename: str):
+    path = root / "schema" / filename
     schema = json.loads(path.read_text(encoding="utf-8"))
     Draft7Validator.check_schema(schema)
     return path, schema
@@ -804,6 +837,400 @@ def verify_profile(
     return result
 
 
+def _timestamp(value: Any) -> datetime | None:
+    if not isinstance(value, str):
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        return parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def _provenance_errors(
+    receipt: dict[str, Any],
+    file: str,
+    now: datetime,
+):
+    errors: list[tuple[str, str, str | None]] = []
+    parts = Path(file).parts
+    slug = receipt.get("entitySlug")
+    if (
+        len(parts) != 3
+        or parts[0] != "provenance"
+        or parts[2] != "publication-receipt.json"
+    ):
+        errors.append(
+            (
+                "provenance.path_layout",
+                "Receipt must live at "
+                "provenance/<entity-slug>/publication-receipt.json.",
+                None,
+            )
+        )
+    elif parts[1] != slug:
+        errors.append(
+            (
+                "provenance.slug_parity",
+                f"Directory slug '{parts[1]}' does not match entitySlug '{slug}'.",
+                "$.entitySlug",
+            )
+        )
+
+    profile_version = receipt.get("profileVersion")
+    if isinstance(slug, str) and isinstance(profile_version, int):
+        expected_receipt_id = f"publication:{slug}:{profile_version}"
+        if receipt.get("receiptId") != expected_receipt_id:
+            errors.append(
+                (
+                    "provenance.receipt_id",
+                    f"receiptId must be '{expected_receipt_id}'.",
+                    "$.receiptId",
+                )
+            )
+
+    source = _mapping(receipt.get("source"))
+    source_type = source.get("type")
+    repository = source.get("repository")
+    canon_version = source.get("canonVersion")
+    approval = _mapping(receipt.get("approval"))
+    approval_status = approval.get("status")
+    lineage = source.get("lineage")
+    lineage = lineage if isinstance(lineage, list) else []
+
+    if source_type == "historical-registry-migration":
+        if repository != "Vizai-io/business-registry":
+            errors.append(
+                (
+                    "provenance.historical_repository",
+                    "Historical migrations must identify "
+                    "Vizai-io/business-registry as their source repository.",
+                    "$.source.repository",
+                )
+            )
+        if approval_status != "historical-migration":
+            errors.append(
+                (
+                    "provenance.historical_approval",
+                    "Historical source receipts must use historical-migration approval.",
+                    "$.approval.status",
+                )
+            )
+        invalid_kinds = [
+            index
+            for index, item in enumerate(lineage)
+            if _mapping(item).get("kind") != "registry-history"
+        ]
+        for index in invalid_kinds:
+            errors.append(
+                (
+                    "provenance.historical_lineage",
+                    "Historical migrations may contain only registry-history lineage.",
+                    f"$.source.lineage[{index}].kind",
+                )
+            )
+    elif source_type == "vizai-discovery-canon":
+        if repository != "Vizai-io/vizai-discovery":
+            errors.append(
+                (
+                    "provenance.canon_repository",
+                    "Canon publications must identify Vizai-io/vizai-discovery.",
+                    "$.source.repository",
+                )
+            )
+        if not canon_version:
+            errors.append(
+                (
+                    "provenance.canon_version",
+                    "Canon publications require a non-sensitive canonVersion.",
+                    "$.source.canonVersion",
+                )
+            )
+        if approval_status != "approved":
+            errors.append(
+                (
+                    "provenance.approval_required",
+                    "New Canon publications require approved status.",
+                    "$.approval.status",
+                )
+            )
+        for index, item in enumerate(lineage):
+            if _mapping(item).get("kind") not in {
+                "canon",
+                "crawl-snapshot",
+                "public-document",
+                "manual-review",
+            }:
+                errors.append(
+                    (
+                        "provenance.canon_lineage",
+                        "Canon lineage contains an unsupported input kind.",
+                        f"$.source.lineage[{index}].kind",
+                    )
+                )
+    elif source_type == "public-source-review":
+        if canon_version is not None:
+            errors.append(
+                (
+                    "provenance.public_source_canon",
+                    "Public-source receipts must not assert a private Canon version.",
+                    "$.source.canonVersion",
+                )
+            )
+        if approval_status != "approved":
+            errors.append(
+                (
+                    "provenance.approval_required",
+                    "New public-source publications require approved status.",
+                    "$.approval.status",
+                )
+            )
+        for index, item in enumerate(lineage):
+            if _mapping(item).get("kind") not in {
+                "crawl-snapshot",
+                "public-document",
+                "manual-review",
+            }:
+                errors.append(
+                    (
+                        "provenance.public_source_lineage",
+                        "Public-source lineage contains an unsupported input kind.",
+                        f"$.source.lineage[{index}].kind",
+                    )
+                )
+
+    references = []
+    for index, item in enumerate(lineage):
+        item = _mapping(item)
+        reference = item.get("reference")
+        if isinstance(reference, str):
+            references.append(reference.casefold())
+        observed = _timestamp(item.get("observedAt"))
+        if observed and observed > now:
+            errors.append(
+                (
+                    "provenance.future_timestamp",
+                    "Lineage observedAt must not be in the future.",
+                    f"$.source.lineage[{index}].observedAt",
+                )
+            )
+        public_url = item.get("publicUrl")
+        if isinstance(public_url, str):
+            parsed = urlparse(public_url)
+            if (
+                parsed.scheme != "https"
+                or not parsed.netloc
+                or parsed.username
+                or parsed.password
+                or parsed.query
+                or parsed.fragment
+            ):
+                errors.append(
+                    (
+                        "provenance.public_url",
+                        "Lineage publicUrl must be a credential-free HTTPS URL "
+                        "without a query string or fragment.",
+                        f"$.source.lineage[{index}].publicUrl",
+                    )
+                )
+        if item.get("kind") == "crawl-snapshot" and not item.get("contentDigest"):
+            errors.append(
+                (
+                    "provenance.snapshot_digest",
+                    "Crawl snapshots require a contentDigest.",
+                    f"$.source.lineage[{index}].contentDigest",
+                )
+            )
+    if len(references) != len(set(references)):
+        errors.append(
+            (
+                "provenance.duplicate_lineage",
+                "Lineage references must be unique within a receipt.",
+                "$.source.lineage",
+            )
+        )
+
+    prepared = _timestamp(approval.get("preparedAt"))
+    approved = _timestamp(approval.get("approvedAt"))
+    for field_name, parsed in (("preparedAt", prepared), ("approvedAt", approved)):
+        if parsed and parsed > now:
+            errors.append(
+                (
+                    "provenance.future_timestamp",
+                    f"approval.{field_name} must not be in the future.",
+                    f"$.approval.{field_name}",
+                )
+            )
+    if prepared and approved and prepared > approved:
+        errors.append(
+            (
+                "provenance.approval_chronology",
+                "approval.preparedAt must be on or before approval.approvedAt.",
+                "$.approval",
+            )
+        )
+    return errors
+
+
+def _receipt_integrity_errors(
+    receipt: dict[str, Any],
+    profile: dict[str, Any] | None,
+    profile_path: Path | None,
+):
+    errors: list[tuple[str, str, str | None]] = []
+    if profile is None or profile_path is None:
+        return [
+            (
+                "integrity.profile_missing",
+                "Receipt does not have a matching canonical profile.",
+                "$.entitySlug",
+            )
+        ]
+
+    slug = profile.get("entitySlug")
+    version = profile.get("profileVersion")
+    artifact = _mapping(receipt.get("artifact"))
+    expected_path = f"registry/{slug}/profile.json"
+    parity = (
+        ("entitySlug", receipt.get("entitySlug"), slug, "$.entitySlug"),
+        (
+            "profileVersion",
+            receipt.get("profileVersion"),
+            version,
+            "$.profileVersion",
+        ),
+    )
+    for label, actual, expected, json_path in parity:
+        if actual != expected:
+            errors.append(
+                (
+                    f"integrity.{label.lower()}_parity",
+                    f"Receipt {label} '{actual}' does not match profile '{expected}'.",
+                    json_path,
+                )
+            )
+    if artifact.get("path") != expected_path:
+        errors.append(
+            (
+                "integrity.artifact_path",
+                f"artifact.path must be '{expected_path}'.",
+                "$.artifact.path",
+            )
+        )
+    if artifact.get("bytes") != profile_path.stat().st_size:
+        errors.append(
+            (
+                "integrity.byte_count",
+                "artifact.bytes does not match the committed profile size.",
+                "$.artifact.bytes",
+            )
+        )
+    actual_raw = raw_sha256(profile_path)
+    if artifact.get("sha256") != actual_raw:
+        errors.append(
+            (
+                "integrity.raw_hash",
+                f"artifact.sha256 does not match the profile bytes ({actual_raw}).",
+                "$.artifact.sha256",
+            )
+        )
+    actual_canonical = canonical_json_sha256(profile)
+    if artifact.get("canonicalJsonSha256") != actual_canonical:
+        errors.append(
+            (
+                "integrity.canonical_hash",
+                "artifact.canonicalJsonSha256 does not match canonical profile JSON "
+                f"({actual_canonical}).",
+                "$.artifact.canonicalJsonSha256",
+            )
+        )
+
+    profile_publication = _mapping(profile.get("publication"))
+    receipt_publication = _mapping(receipt.get("publication"))
+    if receipt_publication != profile_publication:
+        errors.append(
+            (
+                "integrity.publication_parity",
+                "Receipt publication policy and consent assertion must exactly "
+                "match the profile.",
+                "$.publication",
+            )
+        )
+    profile_canon = _mapping(profile.get("verification")).get("canonVersion")
+    source_canon = _mapping(receipt.get("source")).get("canonVersion")
+    if profile_canon is not None and source_canon != profile_canon:
+        errors.append(
+            (
+                "integrity.canon_version_parity",
+                "Receipt source.canonVersion must match profile verification.",
+                "$.source.canonVersion",
+            )
+        )
+    return errors
+
+
+def verify_receipt(
+    receipt: dict[str, Any],
+    raw_text: str,
+    file: str,
+    validator: Draft7Validator,
+    profile: dict[str, Any] | None,
+    profile_path: Path | None,
+    now: datetime | None = None,
+):
+    """Verify one public-safe publication receipt."""
+    now = now or datetime.now(timezone.utc)
+    result = ReceiptResult(file=file, entity_slug=receipt.get("entitySlug"))
+    result.checks.append(
+        _check(
+            "receipt-json",
+            "receipt_json.valid",
+            True,
+            "Valid publication receipt JSON object.",
+            file=file,
+        )
+    )
+    result.checks.extend(
+        _gate_checks(
+            "receipt-schema",
+            "receipt_schema.valid",
+            "Conforms to publication-receipt v1 with format checking.",
+            _schema_errors(receipt, validator),
+            file,
+        )
+    )
+    result.checks.extend(
+        _gate_checks(
+            "provenance",
+            "provenance.valid",
+            "Source lineage and approval metadata are internally consistent.",
+            _provenance_errors(receipt, file, now),
+            file,
+        )
+    )
+    result.checks.extend(
+        _gate_checks(
+            "integrity",
+            "integrity.valid",
+            "Receipt identity, policy, byte count, and hashes match the profile.",
+            _receipt_integrity_errors(receipt, profile, profile_path),
+            file,
+        )
+    )
+    result.checks.extend(
+        _gate_checks(
+            "receipt-privacy",
+            "receipt_privacy.valid",
+            "Receipt contains no private fields, tokens, or secret patterns.",
+            _privacy_errors(receipt, raw_text),
+            file,
+        )
+    )
+    return result
+
+
 def _identity_checks(parsed_profiles: list[tuple[str, dict[str, Any]]]):
     domains = defaultdict(list)
     slugs = defaultdict(list)
@@ -913,14 +1340,134 @@ def _index_checks(root: Path):
     return checks
 
 
+def _manifest_checks(root: Path, validator: Draft7Validator):
+    checks = []
+    path = root / MANIFEST_PATH
+    file = MANIFEST_PATH.as_posix()
+    if not path.is_file():
+        return [
+            _check(
+                "manifest",
+                "manifest.missing",
+                False,
+                "Deterministic public registry manifest is missing.",
+                file=file,
+            )
+        ]
+    try:
+        manifest = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as error:
+        return [
+            _check(
+                "manifest",
+                "manifest.invalid_json",
+                False,
+                f"Registry manifest is invalid JSON: {error}",
+                file=file,
+            )
+        ]
+    schema_errors = _schema_errors(manifest, validator)
+    if schema_errors:
+        checks.extend(
+            _check(
+                "manifest",
+                "manifest.schema_invalid",
+                False,
+                message,
+                file=file,
+                json_path=json_path,
+            )
+            for _, message, json_path in schema_errors
+        )
+    else:
+        checks.append(
+            _check(
+                "manifest",
+                "manifest.schema_valid",
+                True,
+                "Deterministic registry manifest conforms to its schema.",
+                file=file,
+            )
+        )
+
+    artifacts = manifest.get("artifacts")
+    if isinstance(artifacts, list):
+        paths = [
+            item.get("path")
+            for item in artifacts
+            if isinstance(item, dict) and isinstance(item.get("path"), str)
+        ]
+        if paths != sorted(paths):
+            checks.append(
+                _check(
+                    "manifest",
+                    "manifest.unsorted",
+                    False,
+                    "Manifest artifacts must be sorted by path.",
+                    file=file,
+                    json_path="$.artifacts",
+                )
+            )
+        if len(paths) != len(set(paths)):
+            checks.append(
+                _check(
+                    "manifest",
+                    "manifest.duplicate_path",
+                    False,
+                    "Manifest artifact paths must be unique.",
+                    file=file,
+                    json_path="$.artifacts",
+                )
+            )
+        if manifest.get("artifactCount") != len(artifacts):
+            checks.append(
+                _check(
+                    "manifest",
+                    "manifest.artifact_count",
+                    False,
+                    "artifactCount must equal the artifacts array length.",
+                    file=file,
+                    json_path="$.artifactCount",
+                )
+            )
+
+    expected = manifest_bytes(build_manifest(root))
+    actual = path.read_bytes()
+    if actual != expected:
+        checks.append(
+            _check(
+                "manifest",
+                "manifest.drift",
+                False,
+                "Committed registry manifest differs from the deterministic "
+                "public-artifact build.",
+                file=file,
+            )
+        )
+    else:
+        checks.append(
+            _check(
+                "manifest",
+                "manifest.current",
+                True,
+                f"Manifest exactly covers {len(build_manifest(root)['artifacts'])} "
+                "public artifacts.",
+                file=file,
+            )
+        )
+    return checks
+
+
 def verify_repository(root: Path | str = "."):
     """Run every authoritative verification gate for a repository."""
     root = Path(root).resolve()
-    generated_at = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+    now = datetime.now(timezone.utc)
+    generated_at = now.isoformat().replace("+00:00", "Z")
     repository_checks: list[CheckResult] = []
     profile_results: list[ProfileResult] = []
+    receipt_results: list[ReceiptResult] = []
 
-    required_directories = ("registry", "schema", "index")
+    required_directories = ("registry", "schema", "index", "provenance", "manifest")
     missing_directories = [
         name for name in required_directories if not (root / name).is_dir()
     ]
@@ -937,35 +1484,49 @@ def verify_repository(root: Path | str = "."):
             repository=str(root),
             generated_at=generated_at,
             profiles=profile_results,
+            receipts=receipt_results,
             repository_checks=repository_checks,
         )
 
-    try:
-        _, schema = _load_schema(root)
-        validator = Draft7Validator(schema, format_checker=FormatChecker())
-        repository_checks.append(
-            _check(
-                "schema",
-                "schema.contract_valid",
-                True,
-                "Authoritative Draft 7 schema is valid.",
-                file="schema/entity-profile-v1.0.schema.json",
+    validators = {}
+    schema_contracts = (
+        ("profile", "entity-profile-v1.0.schema.json"),
+        ("receipt", "publication-receipt-v1.0.schema.json"),
+        ("manifest", "registry-manifest-v1.0.schema.json"),
+    )
+    for label, filename in schema_contracts:
+        file = f"schema/{filename}"
+        try:
+            _, schema = _load_schema(root, filename)
+            validators[label] = Draft7Validator(
+                schema,
+                format_checker=FormatChecker(),
             )
-        )
-    except Exception as error:
-        repository_checks.append(
-            _check(
-                "schema",
-                "schema.contract_invalid",
-                False,
-                f"Could not load the authoritative schema: {error}",
-                file="schema/entity-profile-v1.0.schema.json",
+            repository_checks.append(
+                _check(
+                    "schema",
+                    f"schema.{label}_contract_valid",
+                    True,
+                    f"Authoritative {label} Draft 7 schema is valid.",
+                    file=file,
+                )
             )
-        )
+        except Exception as error:
+            repository_checks.append(
+                _check(
+                    "schema",
+                    f"schema.{label}_contract_invalid",
+                    False,
+                    f"Could not load the authoritative {label} schema: {error}",
+                    file=file,
+                )
+            )
+    if len(validators) != len(schema_contracts):
         return VerificationReport(
             repository=str(root),
             generated_at=generated_at,
             profiles=profile_results,
+            receipts=receipt_results,
             repository_checks=repository_checks,
         )
 
@@ -1051,16 +1612,145 @@ def verify_repository(root: Path | str = "."):
             continue
         parsed_profiles.append((file, profile))
         profile_results.append(
-            verify_profile(profile, raw_text, file, validator)
+            verify_profile(profile, raw_text, file, validators["profile"])
+        )
+
+    profile_by_slug = {
+        profile.get("entitySlug"): (
+            file,
+            root / file,
+            profile,
+        )
+        for file, profile in parsed_profiles
+        if isinstance(profile.get("entitySlug"), str)
+    }
+
+    receipt_json_paths = sorted((root / "provenance").rglob("*.json"))
+    canonical_receipt_paths = []
+    unexpected_receipt_paths = []
+    for path in receipt_json_paths:
+        relative = path.relative_to(root)
+        parts = relative.parts
+        if (
+            len(parts) == 3
+            and parts[0] == "provenance"
+            and parts[2] == "publication-receipt.json"
+        ):
+            canonical_receipt_paths.append(path)
+        else:
+            unexpected_receipt_paths.append(relative.as_posix())
+    if unexpected_receipt_paths:
+        for file in unexpected_receipt_paths:
+            repository_checks.append(
+                _check(
+                    "provenance",
+                    "provenance.noncanonical_json",
+                    False,
+                    "Only provenance/<entity-slug>/publication-receipt.json "
+                    "is supported.",
+                    file=file,
+                )
+            )
+
+    receipt_folder_slugs = {
+        path.parent.name for path in canonical_receipt_paths
+    }
+    profile_slugs = set(profile_by_slug)
+    for slug in sorted(profile_slugs - receipt_folder_slugs):
+        repository_checks.append(
+            _check(
+                "provenance",
+                "provenance.receipt_missing",
+                False,
+                f"Profile '{slug}' is missing its publication receipt.",
+                file=f"provenance/{slug}/publication-receipt.json",
+            )
+        )
+    for slug in sorted(receipt_folder_slugs - profile_slugs):
+        repository_checks.append(
+            _check(
+                "provenance",
+                "provenance.receipt_orphaned",
+                False,
+                f"Publication receipt '{slug}' has no canonical profile.",
+                file=f"provenance/{slug}/publication-receipt.json",
+            )
+        )
+    if (
+        not unexpected_receipt_paths
+        and profile_slugs == receipt_folder_slugs
+    ):
+        repository_checks.append(
+            _check(
+                "provenance",
+                "provenance.coverage",
+                True,
+                f"All {len(profile_slugs)} profiles have exactly one canonical "
+                "publication receipt.",
+            )
+        )
+
+    for path in canonical_receipt_paths:
+        file = path.relative_to(root).as_posix()
+        raw_text = path.read_text(encoding="utf-8")
+        try:
+            receipt = json.loads(raw_text)
+        except json.JSONDecodeError as error:
+            receipt_results.append(
+                ReceiptResult(
+                    file=file,
+                    checks=[
+                        _check(
+                            "receipt-json",
+                            "receipt_json.invalid",
+                            False,
+                            f"Invalid receipt JSON: {error}",
+                            file=file,
+                        )
+                    ],
+                )
+            )
+            continue
+        if not isinstance(receipt, dict):
+            receipt_results.append(
+                ReceiptResult(
+                    file=file,
+                    checks=[
+                        _check(
+                            "receipt-json",
+                            "receipt_json.not_object",
+                            False,
+                            "A publication receipt must be a JSON object.",
+                            file=file,
+                        )
+                    ],
+                )
+            )
+            continue
+        profile_record = profile_by_slug.get(receipt.get("entitySlug"))
+        profile_path = profile_record[1] if profile_record else None
+        profile = profile_record[2] if profile_record else None
+        receipt_results.append(
+            verify_receipt(
+                receipt,
+                raw_text,
+                file,
+                validators["receipt"],
+                profile,
+                profile_path,
+                now=now,
+            )
         )
 
     repository_checks.extend(_identity_checks(parsed_profiles))
     repository_checks.extend(_index_checks(root))
+    repository_checks.extend(_manifest_checks(root, validators["manifest"]))
 
     return VerificationReport(
         repository=str(root),
         generated_at=generated_at,
         profiles=profile_results,
+        receipts=receipt_results,
         repository_checks=repository_checks,
     )
 
@@ -1073,13 +1763,17 @@ def render_text(report: VerificationReport):
     lines = [
         f"Registry verification {status}",
         (
-            f"Profiles: {summary['profiles']} | Checks: {summary['checks']} | "
+            f"Profiles: {summary['profiles']} | Receipts: "
+            f"{summary['provenanceReceipts']} | Checks: {summary['checks']} | "
             f"Failed: {summary['failedChecks']}"
         ),
     ]
     for profile in report.profiles:
         profile_status = "PASS" if profile.passed else "FAIL"
         lines.append(f"[{profile_status}] {profile.file}")
+    for receipt in report.receipts:
+        receipt_status = "PASS" if receipt.passed else "FAIL"
+        lines.append(f"[{receipt_status}] {receipt.file}")
     failed = [check for check in report.checks if not check.passed]
     if failed:
         lines.append("")

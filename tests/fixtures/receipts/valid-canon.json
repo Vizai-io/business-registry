@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0",
+  "receiptId": "publication:fixture-co:1",
+  "entitySlug": "fixture-co",
+  "profileVersion": 1,
+  "artifact": {
+    "path": "registry/fixture-co/profile.json",
+    "mediaType": "application/json",
+    "bytes": 1057,
+    "sha256": "sha256:701a27eb2f453dc877eac255dcbac1d18f7d1dcddccd56710382f19d98c3570e",
+    "canonicalJsonSha256": "sha256:2029ecf0ca055323058794f591c318714753ed3d4cf545f4eca3f12c7320098b"
+  },
+  "source": {
+    "type": "vizai-discovery-canon",
+    "system": "vizai-discovery",
+    "repository": "Vizai-io/vizai-discovery",
+    "commitSha": "df5e82bda00efb65f224e3da3a540da3266d3e23",
+    "canonVersion": "1.0",
+    "lineage": [
+      {
+        "kind": "canon",
+        "sourceClass": "business-supplied",
+        "reference": "canon:fixture-co:1.0",
+        "observedAt": "2026-01-15T12:00:00Z",
+        "contentDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    ]
+  },
+  "publication": {
+    "policyVersion": "1.0",
+    "consentReceipt": {
+      "status": "recorded",
+      "reference": "canon:fixture-co:1.0"
+    }
+  },
+  "approval": {
+    "status": "approved",
+    "preparedAt": "2026-01-15T12:10:00Z",
+    "approvedAt": "2026-01-15T12:15:00Z",
+    "workflow": "human-approved-publication"
+  }
+}

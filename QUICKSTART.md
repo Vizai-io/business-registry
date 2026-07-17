@@ -17,6 +17,7 @@ registry/<entity-slug>/profile.json
 ```
 
 Generated lookup files live under `index/`.
+Public-safe publication receipts live under `provenance/`.
 
 ## 2. Install Verifier Dependencies
 
@@ -36,26 +37,43 @@ For a machine-readable report:
 python -m registry_verify --report registry-verification-report.json
 ```
 
-## 4. Rebuild Generated Indexes
+## 4. Rebuild Generated Artifacts
 
 ```bash
 python tools/build_indexes.py
+python -m registry_supply_chain write-manifest
 python -m registry_verify
 ```
 
 The generator must find only real, approved public profiles. Examples, tests,
-and fixtures must never be stored under `registry/`.
+and fixtures must never be stored under `registry/`. Every profile must have
+exactly one receipt, and every receipt hash must match its committed profile.
 
-## 5. Publish Through a Pull Request
+## 5. Build a Reproducible Snapshot
+
+```bash
+python -m registry_supply_chain snapshot --output dist
+```
+
+The command produces a deterministic tarball, a copy of the registry manifest,
+and `SHA256SUMS`. Published workflow artifacts can be verified with:
+
+```bash
+gh attestation verify registry-snapshot.tar.gz \
+  --repo Vizai-io/business-registry
+```
+
+## 6. Publish Through a Pull Request
 
 Business-profile changes follow this controlled path:
 
 1. Collect submissions, evidence, and authorization privately.
 2. Prepare only the minimal approved public profile.
-3. Validate the profile and regenerate all indexes.
-4. Open a pull request and complete the publication checklist.
-5. Obtain human review and the `human-approved-publication` label.
-6. Merge through the protected `main` branch.
+3. Generate a public-safe receipt with source lineage and current hashes.
+4. Regenerate indexes and the deterministic manifest.
+5. Open a pull request and complete the publication checklist.
+6. Obtain human review and the `human-approved-publication` label.
+7. Merge through the protected `main` branch.
 
 Agents may prepare and validate the branch. They may not independently approve
 or merge public business-profile changes.
@@ -88,4 +106,5 @@ details, authorization evidence, or unpublished material in a public issue,
 pull request, commit, or profile.
 
 See [Publication Containment](docs/publication-containment.md) for the governing
-policy.
+policy and [Supply-Chain Integrity](docs/supply-chain-integrity.md) for hashes,
+receipts, snapshots, and attestations.
