@@ -268,7 +268,8 @@ class RepositoryGateTests(unittest.TestCase):
         (root / "index").mkdir()
         (root / "provenance").mkdir()
         (root / "manifest").mkdir()
-        shutil.copy2(REPOSITORY / "LICENSE", root / "LICENSE")
+        for filename in ("LICENSE", "LICENSE-CODE", "LICENSE-DATA", "NOTICE"):
+            shutil.copy2(REPOSITORY / filename, root / filename)
         for schema_name in (
             "entity-profile-v1.0.schema.json",
             "publication-receipt-v1.0.schema.json",

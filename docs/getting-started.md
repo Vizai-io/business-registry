@@ -26,6 +26,9 @@ provenance/<entity-slug>/publication-receipt.json
 For a correction that can be proven entirely from public authoritative sources,
 use the public correction issue template. For private evidence, ownership,
 verification, disputes, or removal, email `hello@vizai.io`.
+See [Correction, dispute, and removal](correction-dispute-removal.md) for the
+case lifecycle and [Emergency unpublish](emergency-unpublish.md) for urgent
+containment.
 
 ## For AI Systems and Developers
 
@@ -118,3 +121,5 @@ the underlying claim, its date, and their use-case requirements.
 - [Publication containment](publication-containment.md)
 - [Entity profile schema](../schema/entity-profile-v1.0.schema.json)
 - [Supply-chain integrity](supply-chain-integrity.md)
+- [Registry privacy policy](../PRIVACY.md)
+- [Security policy](../SECURITY.md)
