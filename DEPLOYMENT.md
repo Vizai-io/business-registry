@@ -41,8 +41,7 @@ Validate and import `governance/main-ruleset.json` after the required workflows
 are merged to `main`. It requires:
 
 - pull requests;
-- at least one human approval;
-- CODEOWNERS review;
+- no unsatisfiable second-person approval requirement in solo-maintainer mode;
 - the canonical registry verification workflow;
 - the Publication Freeze workflow;
 - resolved conversations; and
@@ -52,6 +51,8 @@ Follow [Main Ruleset Activation](docs/ruleset-activation.md); activating it
 before the required check workflows exist on `main` can block all merges.
 
 Create and reserve the `human-approved-publication` label for registry owners.
+That label remains the explicit human approval control for added or modified
+business profiles.
 
 ## Build and Verify
 

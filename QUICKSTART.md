@@ -85,15 +85,15 @@ Run `python -m registry_governance validate`, then follow
 ruleset after its three required workflows are present on `main`. The ruleset
 requires:
 
-- pull requests and at least one approval;
-- CODEOWNERS review;
+- pull requests without a second-person approval requirement in solo mode;
 - the authoritative registry verification command;
 - the Publication Freeze check;
 - conversation resolution; and
 - blocked force pushes and branch deletion.
 
 Create the `human-approved-publication` repository label before enabling the
-Publication Freeze check as required.
+Publication Freeze check as required. Added or modified profiles still require
+the solo maintainer to apply that label explicitly.
 
 Exercise the emergency path without changing the repository:
 
