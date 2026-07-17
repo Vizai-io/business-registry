@@ -39,15 +39,19 @@ Repository administrators must configure a `main` ruleset that:
 
 - creates and uses the `human-approved-publication` label;
 - requires pull requests;
-- requires at least one approval;
-- requires CODEOWNERS review for `registry/`, `index/`, `schema/`, and workflow
-  changes;
+- requires no second-person approval or CODEOWNER review while VizAI operates
+  this repository with one maintainer;
 - requires all registry validation and Publication Freeze checks;
 - requires conversation resolution;
 - blocks force pushes and branch deletion;
 - has no standing bypass actors. Emergency removal uses a deletion-only pull
   request, so review and validation remain in force without the publication
   approval label.
+
+For additions and modifications, the solo maintainer's explicit
+`human-approved-publication` label is the human review boundary. The ruleset
+must be upgraded to independent approval and required CODEOWNER review when a
+second human maintainer is available.
 
 The validated definition is committed at `governance/main-ruleset.json`.
 Administrators must follow [Main Ruleset Activation](ruleset-activation.md)

@@ -31,13 +31,15 @@ class RulesetPolicyTests(unittest.TestCase):
         errors = validate_ruleset_data(payload)
         self.assertTrue(any("bypass" in error.lower() for error in errors))
 
-    def test_pull_request_control_weakening_is_rejected(self):
+    def test_multi_reviewer_lockout_is_rejected_for_solo_policy(self):
         payload = self.load_ruleset()
         pull = next(rule for rule in payload["rules"] if rule["type"] == "pull_request")
-        pull["parameters"]["require_code_owner_review"] = False
-        pull["parameters"]["required_approving_review_count"] = 0
+        pull["parameters"]["require_code_owner_review"] = True
+        pull["parameters"]["require_last_push_approval"] = True
+        pull["parameters"]["required_approving_review_count"] = 1
         errors = validate_ruleset_data(payload)
         self.assertTrue(any("CODEOWNER" in error for error in errors))
+        self.assertTrue(any("latest-push" in error for error in errors))
         self.assertTrue(any("approving review" in error for error in errors))
 
     def test_required_check_drift_is_rejected(self):

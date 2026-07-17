@@ -13,7 +13,7 @@ Do not activate the ruleset until all of the following are true on `main`:
 - `.github/workflows/governance-audit.yml` is present;
 - a pull request has produced the three required check contexts;
 - the `human-approved-publication` label exists;
-- CODEOWNERS resolves to at least one available independent reviewer; and
+- CODEOWNERS resolves to the write-enabled `Vizai-io` maintainer account; and
 - an administrator has confirmed the repository allows squash merges.
 
 Requiring checks before their workflows exist on the default branch can block
@@ -30,8 +30,8 @@ are merged.
    controls, and exact required check names.
 5. Save the ruleset as **Active**.
 6. Open a documentation-only test pull request and confirm direct pushes,
-   force pushes, deletion, unresolved conversations, missing approvals, and
-   failed checks are blocked.
+   force pushes, deletion, unresolved conversations, and failed checks are
+   blocked.
 
 The same payload can be applied through GitHub's repository rulesets REST API
 by a token with repository Administration write permission. Never embed that
@@ -40,8 +40,8 @@ token in this repository or CI logs.
 ## Required controls
 
 - pull request before merge;
-- one approving review, stale-review dismissal, CODEOWNER review, and approval
-  of the most recent push;
+- no required approving review, CODEOWNER review, stale-review dismissal, or
+  latest-push approval while the repository has one maintainer;
 - resolved review conversations;
 - strict required status checks;
 - linear history with squash merges only;
@@ -51,3 +51,15 @@ token in this repository or CI logs.
 Emergency removal remains possible through a deletion-only pull request. The
 Publication Freeze workflow skips the publication label for deletion-only
 changes, while the review and validation rules remain in force.
+
+## Solo-maintainer boundary
+
+The solo policy does not treat automation as a human reviewer. New or modified
+business profiles still require the write-enabled maintainer to inspect the
+artifact and apply `human-approved-publication`; the Publication Freeze check
+enforces that explicit action. Code and documentation changes require the full
+CI suite but do not require a second account to approve them.
+
+When a second human maintainer is added, update this policy through a pull
+request to require one independent approval, CODEOWNER review, stale-review
+dismissal, and latest-push approval before changing the live ruleset.

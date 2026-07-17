@@ -92,19 +92,27 @@ def validate_ruleset_data(payload: Any) -> list[str]:
     pull = (typed_rules.get("pull_request") or {}).get("parameters") or {}
     _error(
         errors,
-        pull.get("required_approving_review_count", 0) >= 1,
-        "Pull requests must require at least one approving review.",
+        pull.get("required_approving_review_count") == 0,
+        "Solo-maintainer ruleset must not require an approving review.",
     )
-    required_flags = {
-        "dismiss_stale_reviews_on_push": "Stale reviews must be dismissed.",
-        "require_code_owner_review": "CODEOWNER review must be required.",
-        "require_last_push_approval": "The latest push must be approved.",
-        "required_review_thread_resolution": (
-            "Review conversations must be resolved."
+    disabled_review_flags = {
+        "dismiss_stale_reviews_on_push": (
+            "Solo-maintainer ruleset must not require stale-review dismissal."
+        ),
+        "require_code_owner_review": (
+            "Solo-maintainer ruleset must not require CODEOWNER review."
+        ),
+        "require_last_push_approval": (
+            "Solo-maintainer ruleset must not require latest-push approval."
         ),
     }
-    for key, message in required_flags.items():
-        _error(errors, pull.get(key) is True, message)
+    for key, message in disabled_review_flags.items():
+        _error(errors, pull.get(key) is False, message)
+    _error(
+        errors,
+        pull.get("required_review_thread_resolution") is True,
+        "Review conversations must be resolved.",
+    )
     _error(
         errors,
         pull.get("allowed_merge_methods") == ["squash"],
